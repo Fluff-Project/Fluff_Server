@@ -24,6 +24,6 @@
     "request-promise": "^4.2.5",
     "sequelize": "^5.21.3",
     "socket.io": "^2.3.0",
-    "sse": "0.0.8",
+    "sse": "0.0.8"
   }
 }

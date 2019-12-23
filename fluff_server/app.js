@@ -4,11 +4,12 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
-// const { sequelize } = require('./models');
+
 require('dotenv').config();
 
 const app = express();
-// sequelize.sync();
+var { sequelize } = require('./models');
+sequelize.sync();
 
 app.use(logger('dev'));
 app.use(express.json());
