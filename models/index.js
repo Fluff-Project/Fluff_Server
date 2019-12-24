@@ -36,7 +36,7 @@ db.Sequelize = Sequelize;
 
 //추가
 
-db.Recommend = require('./keyword')(sequelize, Sequelize);
+db.Keyword = require('./keyword')(sequelize, Sequelize);
 db.User = require('./users')(sequelize, Sequelize);
 db.Item = require('./items')(sequelize, Sequelize);
 db.Hashtag = require('./hashtag')(sequelize, Sequelize);
@@ -65,7 +65,7 @@ db.User.belongsToMany(db.User,  {
   through:  'Follow'
 });
 
-//4. user와 recommend의 관계 1:1
+//4. user와 Keyword의 관계 1:1
 db.User.hasOne(db.Keyword);
 db.Keyword.belongsTo(db.User);
 
