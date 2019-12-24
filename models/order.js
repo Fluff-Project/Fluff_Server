@@ -16,4 +16,5 @@ module.exports = (sequelize, DataTypes)  => {
       timestamps: true,  // 언제 생성되었는지 시간 추적도 가능하고 db에 따로 create 뭔가가 생긴다.
       // paranoid: true
   });
+
 };
