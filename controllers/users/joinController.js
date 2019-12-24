@@ -1,3 +1,6 @@
+const nodemailer = require('nodemailer');
+const jwt = require('../../modules/auth/jwt');
+
 const { User } = require('../../models');
 const { au, sc, rm } = require('../../modules/utils');
 
@@ -11,74 +14,84 @@ BASE_URI = 'http://localhost:3000'
     password
   }
 */
-const checkExist = async (user) => {
-  const savedUser = await User.findOne({ where: { email: user.email } });
-  if (savedUser) {
-    throw new Error('user exists');
-  }
-  return user;
-};
+exports.join = async (req, res) => {
+  const user = req.body;  // { userId, pwd, email, gender }
 
-// 가데이터 저장
-const storeCache = (user) => {
-  try {
-    client.hmset(user.email, "username", user.username, "email", user.email, "password", user.password);
-  } catch (err) {
-    console.log('Redis store error!!!');
-  }
-  return user;
-};
-
-// 인증 이메일 전송
-const sendEmail = (user) => {
-  if (!user.username || !user.email) {
+  const checkExist = async (user) => {
+    const savedUser = await User.findOne({ where: { email: user.email } });
+    if (savedUser) {
+      throw new Error('User가 존재합니다!');
+    }
+    return user;
+  };
+  
+  // 가데이터 저장
+  const storeCache = (user) => {
+    try {
+      client.hmset(user.email, "userId", user.userId, "email", user.email, "pwd", user.pwd, "gender", user.gender);
+    } catch (err) {
+      console.log('Redis store error!!!');
+    }
+    return user;
+  };
+  
+  // 인증 이메일 전송
+  const sendEmail = async (user) => {
+    if (!user.userId || !user.email) {
+      return {
+        code: sc.BAD_REQUEST, // Bad request
+        json: au.successFalse(rm.BAD_REQUEST)
+      };
+    }
+    
+    // tranceporter initialization
+    const tranceporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: process.env.HOST_EMAIL,
+        pass: process.env.HOST_EMAIL_PWD
+      }
+    });
+  
+    const token = await jwt.sign(user.userId, user.email);
+    
+    const html = 
+    `<p>아래의 링크를 클릭해주세요!</p>
+    <a href='${BASE_URI}/users/emailAuthorization?email="${user.email}&token=${token.token}'>인증하기</a>`;
+  
+    const mailOptions = {
+      from: process.env.HOST_EMAIL,
+      to: user.email,
+      subject: 'sending test',
+      html: html
+    };
+  
+    tranceporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(`Email Send: ${info.response}`);
+    })
     return {
-      code: 400, // Bad request
-      message: 'username 또는 email이 없음.'
+      code: 200,
+      message: 'Send mail'
+    };
+  };
+  
+  // error occured
+  const onError = (error) => {
+    console.log(`Login Error: ${error}`);
+    return {
+      code: sc.BAD_REQUEST,
+      json: au.successFalse(rm.LOGIN_FAIL)
     };
   }
-  
-  // tranceporter initialization
-  const tranceporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.HOST_EMAIL,
-      pass: process.env.HOST_EMAIL_PWD
-    }
-  });
-
-  const token = jwt.sign(user.username, user.email);
-  const html = 
-  `<p>아래의 링크를 클릭해주세요!</p>
-  <a href='${BASE_URI}/api/auth/emailAuthorization?email="${user.email}&token=${token.token}'>인증하기</a>`;
-
-  const mailOptions = {
-    from: process.env.HOST_EMAIL,
-    to: user.email,
-    subject: 'sending test',
-    html: html
-  };
-
-  tranceporter.sendMail(mailOptions, (err, info) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(`Email Send: ${info.response}`);
-  })
-  return {
-    code: 200,
-    message: 'Send mail'
-  };
-};
-
-const join = (req, res) => {
-  const user = req.body;  // { email, username, password }
 
   const result = await checkExist(user)
   .then(storeCache)
   .then(sendEmail)
   .catch(onError)
-
+  
   res.json({
     code: sc.OK,
     json: au.successTrue(rm.SIGNUP_SUCCESS, result)
@@ -86,30 +99,36 @@ const join = (req, res) => {
 };
 
 // JOIN SERVE LOGIC
-const emailAuthorization = async (req, res) => {
+exports.emailAuthorization = async (req, res) => {
   const { email, token } = req.query;
   try {
     const check = jwt.verify(token);
     if (check) {
-      client.hgetall(email, (err, obj) => {
-        const result = await User.create({
-          username: obj.username,
+      let result = null;
+      await client.hgetall(email, async (err, obj) => {
+        result = await User.create({
+          userId: obj.userId,
           email: obj.email,
-          password: obj.password
-        })
+          pwd: obj.pwd,
+          gender: obj.gender
+        });
+        if (err) {  // catch error
+          console.log(`cache memory -> Database store중 error 발생!`);
+          res.json({
+            code: sc.INTERNAL_SERVER_ERROR,
+            json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
+          })
+        }
       });
-      res.send({
+
+      res.json({
         code: sc.OK,
         json: au.successTrue(rm.SIGNUP_SUCCESS, result)
       })
     }
   } catch (err) {
-    console.log(`Error: Email 인증하기 에러 / ${err}`);
+    console.log(`Error: Email 인증하기 에러 ${err}`);
   }
 }
 
-module.exports = {
-  join: join,
-  emailAuthorization: emailAuthorization,
-}
 

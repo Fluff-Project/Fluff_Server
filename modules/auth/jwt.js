@@ -10,16 +10,16 @@ const options = {
 module.exports = {
   sign: async (user) => {
     const payload = {
-      username: user.username,
+      userId: user.userId,
       email: user.email
     };
 
-    let token = null;
     try {
-      await jwt.sign(payload, process.env.JWT_SECRET, options, (err, newToken) => {
-        token = newToken;
-      });
-      return token;
+      const token = jwt.sign(payload, process.env.JWT_SECRET, options);
+      return {
+        token: token,
+        refreshToken: randToken.uid(256)
+      }
     } catch (err) {
       console.log(`Token sign Error!!!: ${err}`);
     }
@@ -27,7 +27,6 @@ module.exports = {
 
   verify: (token) => { 
     let decoded;
-
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET);
     } catch (err) {
@@ -47,7 +46,7 @@ module.exports = {
 
   refresh: (user) => { 
     const payload = {
-      username: user.username,
+      userId: user.userId,
       email: user.email
     };
     return jwt.sign(payload, process.env.JWT_SECRET, options); 
