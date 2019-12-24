@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes)  => {  
-  const hashtag = sequelize.define('hashtag', {
+  return sequelize.define('hashtag', {
     tagName: {
       type: DataTypes.STRING(20),
       allowNull:  false,
@@ -7,8 +7,6 @@ module.exports = (sequelize, DataTypes)  => {
     }
   },{
     timestamps: true,
-    paranoid: true,
+    // paranoid: true,
     });
-
-    return hashtag;
 };
