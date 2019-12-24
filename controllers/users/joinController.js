@@ -16,7 +16,6 @@ BASE_URI = 'http://localhost:3000'
 */
 exports.join = async (req, res) => {
   const user = req.body;  // { userId, pwd, email, gender }
-
   const checkExist = async (user) => {
     const savedUser = await User.findOne({ where: { email: user.email } });
     if (savedUser) {
@@ -26,8 +25,8 @@ exports.join = async (req, res) => {
   };
   
   // 가데이터 저장
-  const storeCache = (user) => {
-    try {
+  const storeCache = async (user) => {
+    try {      
       client.hmset(user.email, "userId", user.userId, "email", user.email, "pwd", user.pwd, "gender", user.gender);
     } catch (err) {
       console.log('Redis store error!!!');
