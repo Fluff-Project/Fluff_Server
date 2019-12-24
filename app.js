@@ -8,8 +8,13 @@ const logger = require('morgan');
 require('dotenv').config();
 
 const app = express();
+<<<<<<< HEAD
 var { sequelize } = require('./models');
 sequelize.sync();
+=======
+// sequelize.sync();
+client = redis.createClient(6379,'127.0.0.1');
+>>>>>>> c0eb67fd4d009b9454b39a98af7dacd45061eb4e
 
 app.use(logger('dev'));
 app.use(express.json());
