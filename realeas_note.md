@@ -1,12 +1,12 @@
 # Realease Note
 \
 []()
-## **0.0.1** -Snapshot
+## **1.0.1** -Snapshot
 * **DB Modeling** : users, hashtag, iterms, order, recommand
 \
 \
 []()
-## **0.0.2** -Snapshot
+## **1.0.2** -Snapshot
 ### User Auth
 ```json
 "dependencies": {
@@ -25,7 +25,7 @@
 
 1. 회원 가입할 정보 입력.
 2. DB에서 중복된 정보가 있는지 확인 후, 없다면 계속 진행.
-3. 회원 정보를 Redis cache memory에 저장 후, 유저 email로 인증메 일을 발송. (Token을 포함)
+3. 회원 정보를 Redis cache memory에 저장 후, 유저 email로 인증 메일을 발송. (Token을 포함)
 4. 유저가 Email에서 인증버튼을 누를시 token이 다시 서버로 돌아옴.
 5. Token decoded 결과 문제가 없다면 Redis에 있던 유저의 정보를 DB로 저장.
 

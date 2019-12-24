@@ -36,7 +36,7 @@ db.Sequelize = Sequelize;
 
 //추가
 
-db.Recommend = require('./recommend')(sequelize, Sequelize);
+db.Recommend = require('./keyword')(sequelize, Sequelize);
 db.User = require('./users')(sequelize, Sequelize);
 db.Item = require('./items')(sequelize, Sequelize);
 db.Hashtag = require('./hashtag')(sequelize, Sequelize);
@@ -44,20 +44,16 @@ db.Order = require('./order')(sequelize, Sequelize);
 
 //model간 관계 정의 
 //1. user와 상품(item)관계  1:N
-db.User.hasMany(db.Item, {
-  foreignKey: 'seller', 
-  sourceKey:  'id'
-});
-db.Item.belongsTo(db.User, {
-  foreignKey: 'seller', 
-  sourceKey:  'id'
-});
+db.User.hasMany(db.Item, { foreignKey: 'seller', sourceKey:  'id' });
+db.Item.belongsTo(db.User, { foreignKey: 'seller', sourceKey:  'id' });
 
 db.Order.belongsTo(db.User, {foreignKey: 'customer', sourceKey:  'id'});
+
 //2. Item과 해쉬태그의 관계  N:M
 db.Item.belongsToMany(db.Hashtag, { through:  'ItemHashtag' });
 db.Hashtag.belongsToMany(db.Item, { through: 'ItemHashtag' });
 //3. follow 관계
+
 db.User.belongsToMany(db.User,  {
   foreignKey: 'followingId',
   as: 'Followers',
@@ -68,9 +64,11 @@ db.User.belongsToMany(db.User,  {
   as: 'Followings',
   through:  'Follow'
 });
+
 //4. user와 recommend의 관계 1:1
-db.User.hasOne(db.Recommend);
-db.Recommend.belongsTo(db.User);
+db.User.hasOne(db.Keyword);
+db.Keyword.belongsTo(db.User);
+
 //5. user와 order의 관계  1:N
 db.User.hasMany(db.Order, {
   foreignKey: 'customer', 

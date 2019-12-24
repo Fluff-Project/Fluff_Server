@@ -4,7 +4,7 @@ const jwt = require('../../modules/auth/jwt');
 const { User } = require('../../models');
 const { au, sc, rm } = require('../../modules/utils');
 
-BASE_URI = 'http://localhost:3000'
+BASE_URI = '15.164.47.5:3000'
 
 /* 
   POST /users/join

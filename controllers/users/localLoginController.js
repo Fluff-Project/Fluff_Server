@@ -1,7 +1,6 @@
 const { User } = require('../../models');
 const { au, sc, rm } = require('../../modules/utils');
 const jwt = require('../../modules/auth/jwt');
-const bcrypt = require('bcrypt');
 
 exports.login = async (req, res) => {
   const { email, pwd } = req.body;
@@ -17,12 +16,19 @@ exports.login = async (req, res) => {
       };
     }
 
-    const result = await bcrypt.compare(user.pwd, savedUser.pwd);
-    if (!result) {
-      console.log('비밀번호가 일치하지 않습니다.');
-      throw new Error(`비밀번호가 일치하지 않습니다.`);
-
+    if (user.pwd === avedUser.pwd) {
+      return savedUser;
     }
+    // err
+    console.log('비밀번호가 일치하지 않습니다.');
+    throw new Error(`비밀번호가 일치하지 않습니다.`);
+
+    //   throw new Error(`비밀번호가 일치하지 않습니다.`);
+    // const result = await bcrypt.compare(user.pwd, savedUser.pwd);
+    // if (!result) {
+    //   console.log('비밀번호가 일치하지 않습니다.');
+    //   throw new Error(`비밀번호가 일치하지 않습니다.`);
+    // }
     // Success End Point
     return savedUser;
       
