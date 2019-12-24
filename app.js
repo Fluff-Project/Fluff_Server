@@ -3,15 +3,21 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
+const redis = require('redis');
 
 require('dotenv').config();
 
 const app = express();
+<<<<<<< HEAD
 
 var { sequelize } = require('./models');
 sequelize.sync();
 
+=======
+var { sequelize } = require('./models');
+sequelize.sync();
+client = redis.createClient(6379,'127.0.0.1');
+>>>>>>> 8aff965a25963da1b522b0327637e8663e6f0674
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -19,7 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', require('./routes/index'));
+app.use('/', require('./routes'));
 app.use('/myPage', require('./routes/myPage'));
 app.use('/recommend', require('./routes/recommend'));
 app.use('/sales', require('./routes/sales'));

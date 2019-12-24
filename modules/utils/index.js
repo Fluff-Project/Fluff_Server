@@ -1,5 +1,5 @@
 module.exports = {
-    au: require('./util'),
+    au: require('./authUtil'),
     rm: require('./responseMessage'),
     sc: require('./statusCode')
 }

@@ -29,9 +29,14 @@ module.exports = (sequelize, DataTypes)  => {
       type: DataTypes.STRING(20),  
       allowNull: true
     },
+<<<<<<< HEAD
   },  {
       timestamps: true,
       // paranoid:true
     });
+=======
+  }, {
+    timestamps: true
+  });
+>>>>>>> 8aff965a25963da1b522b0327637e8663e6f0674
 };
-

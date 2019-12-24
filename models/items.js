@@ -50,7 +50,13 @@ module.exports = (sequelize, DataTypes)  => {
       allowNull: false,
     },
   }, {
+<<<<<<< HEAD
       timestamps: true,
       // paranoid:true
     });
+=======
+      timestamps: true
+  });
+
+>>>>>>> 8aff965a25963da1b522b0327637e8663e6f0674
 };
