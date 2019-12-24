@@ -3,13 +3,10 @@
 
  */
 
-
 const express = require('express');
 const router = express.Router();
-
 const reControllers = require('../../controllers/reController');
 
 router.post('/', reControllers.create);
-
 
 module.exports = router;

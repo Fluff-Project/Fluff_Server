@@ -78,5 +78,4 @@ db.User.hasMany(db.Order, {
 });
 db.Order.belongsTo(db.User);
 
-
 module.exports = db;
