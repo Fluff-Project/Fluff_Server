@@ -34,10 +34,29 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-//추가
+// Items 폴더
+db.Item = require('./item')(sequelize, Sequelize);
+db.Category = require('./category')(sequelize, Sequelize);
+db.Color = require('./color')(sequelize, Sequelize);
+db.Size = require('./size')(sequelize, Sequelize);
+db.Hashtag = require('./hashtag')(sequelize, Sequelize);
 
+// Sales 폴더
+db.Auction = require('./auction')(sequelize, Sequelize);
+
+// Supports 폴더
+db.SupportCase = require('./supportCase')(sequelize, Sequelize);
+
+// Users 폴더
 db.Keyword = require('./keyword')(sequelize, Sequelize);
-db.User = require('./users')(sequelize, Sequelize);
-db.Item = require('./items')(sequelize, Sequelize);
+db.Seller = require('./seller')(sequelize, Sequelize);
+db.User = require('./user')(sequelize, Sequelize);
+
+/*
+ * DB 관계 설정
+*/
+
+// user-> item
+
 
 module.exports = db;

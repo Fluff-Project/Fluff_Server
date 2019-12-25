@@ -9,8 +9,8 @@ require('dotenv').config();
 
 const app = express();
 var { sequelize } = require('./models');
-sequelize.sync();
-const client = redis.createClient(6379,'127.0.07');
+//sequelize.sync();
+const client = redis.createClient(6379,'54.180.65.91');
 
 app.use(logger('dev'));
 app.use(express.json());
