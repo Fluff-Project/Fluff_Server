@@ -8,6 +8,7 @@ module.exports = {
     LOGIN_FAIL:"로그인이 실패하였습니다.",
     EXIST_USER_ERROR:"사용자가 이미 있습니다.",
     WAIT_EMAIL_AUTHORIZATION: '이메일 인증을 기다리고 있습니다.',
+    FAILED_TO_SEND_EMAIL: '이메일 전송을 실패했습니다.',
 
     //token
     NO_TOKEN: "토큰이 없습니다." ,

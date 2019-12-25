@@ -2,6 +2,13 @@ const { User } = require('../../models');
 const { au, sc, rm } = require('../../modules/utils');
 const jwt = require('../../modules/auth/jwt');
 
+/* 
+  POST /users/join
+  {
+    email,
+    pwd
+  }
+*/
 exports.login = async (req, res) => {
   const { email, pwd } = req.body;
 

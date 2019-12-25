@@ -33,5 +33,3 @@
 []()
 ### Middle ware
 해당 기능을 사용할 때 마다 Token decoded를 통해서 로그인된 유저인지 확인.
-
-

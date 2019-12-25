@@ -11,11 +11,12 @@ BASE_URI = '15.164.47.5:3000'
   {
     email,
     username,
-    password
+    pwd,
+    gender
   }
 */
 exports.join = async (req, res) => {
-  const user = req.body;  // { userId, pwd, email, gender }
+  const user = req.body;  // { username, pwd, email, gender }
   const checkExist = async (user) => {
     const savedUser = await User.findOne({ where: { email: user.email } });
     if (savedUser) {
@@ -27,7 +28,7 @@ exports.join = async (req, res) => {
   // 가데이터 저장
   const storeCache = async (user) => {
     try {      
-      client.hmset(user.email, "userId", user.userId, "email", user.email, "pwd", user.pwd, "gender", user.gender);
+      client.hmset(user.email, "username", user.username, "email", user.email, "pwd", user.pwd, "gender", user.gender);
     } catch (err) {
       console.log('Redis store error!!!');
     }
@@ -36,10 +37,10 @@ exports.join = async (req, res) => {
   
   // 인증 이메일 전송
   const sendEmail = async (user) => {
-    if (!user.userId || !user.email) {
+    if (!user.username || !user.email) {
       return {
         code: sc.BAD_REQUEST, // Bad request
-        json: au.successFalse(rm.BAD_REQUEST)
+        json: au.successFalse(rm.WAIT_EMAIL_AUTHORIZATION)
       };
     }
     
@@ -52,7 +53,7 @@ exports.join = async (req, res) => {
       }
     });
   
-    const token = await jwt.sign(user.userId, user.email);
+    const token = await jwt.sign(user.username, user.email);
     
     const html = 
     `<p>아래의 링크를 클릭해주세요!</p>
@@ -72,7 +73,6 @@ exports.join = async (req, res) => {
       console.log(`Email Send: ${info.response}`);
     })
     return {
-      code: 200,
       message: 'Send mail'
     };
   };
@@ -106,7 +106,7 @@ exports.emailAuthorization = async (req, res) => {
       let result = null;
       await client.hgetall(email, async (err, obj) => {
         result = await User.create({
-          userId: obj.userId,
+          username: obj.username,
           email: obj.email,
           pwd: obj.pwd,
           gender: obj.gender

@@ -10,7 +10,7 @@ const options = {
 module.exports = {
   sign: async (user) => {
     const payload = {
-      userId: user.userId,
+      username: user.username,
       email: user.email
     };
 
@@ -46,7 +46,7 @@ module.exports = {
 
   refresh: (user) => { 
     const payload = {
-      userId: user.userId,
+      username: user.username,
       email: user.email
     };
     return jwt.sign(payload, process.env.JWT_SECRET, options); 

@@ -17,10 +17,6 @@ module.exports = (sequelize, DataTypes)  => {
       type: DataTypes.STRING(20),
       allowNull: false,
     },
-    category: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-    },
     kinds: {
       type: DataTypes.STRING(20),
       allowNull: false,
@@ -41,7 +37,7 @@ module.exports = (sequelize, DataTypes)  => {
       type: DataTypes.STRING(20),
       allowNull: false,
     },
-    status: {
+    condition: {
       type: DataTypes.STRING(20),
       allowNull: false,
     },
