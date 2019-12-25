@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes)  => { 
-  return sequelize.define('users', {
-    userId: {
+  return sequelize.define('user', {
+    username: {
       type: DataTypes.STRING(20),  
       allowNull: false,
       unique: true
@@ -16,11 +16,7 @@ module.exports = (sequelize, DataTypes)  => {
     gender: {
       type: DataTypes.CHAR(1),  
       allowNull: false
-    },    
-    seller: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
-    },    
+    },      
     address: {
       type: DataTypes.STRING(200),  
       allowNull: true
@@ -28,7 +24,7 @@ module.exports = (sequelize, DataTypes)  => {
     phone: {
       type: DataTypes.STRING(20),  
       allowNull: true
-    },
+    }
   }, {
     timestamps: true
   });

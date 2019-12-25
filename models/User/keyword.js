@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes)  => {  
-  return sequelize.define('recommend', {
+  return sequelize.define('keyword', {
     simple : {
       type: DataTypes.INTEGER(20),  
       allowNull: true,

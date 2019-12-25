@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes)  => {  
-  return sequelize.define('items', {
+  return sequelize.define('item', {
     name: {
       type: DataTypes.STRING(20),  
       allowNull: false,
@@ -17,19 +17,7 @@ module.exports = (sequelize, DataTypes)  => {
       type: DataTypes.STRING(20),
       allowNull: false,
     },
-    kinds: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-    },
-    textile: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-    },
-    color: {
-      type: DataTypes.STRING(20),
-      allowNull: false,
-    },
-    brand: {
+    gender: {
       type: DataTypes.STRING(20),
       allowNull: false,
     },
@@ -37,12 +25,20 @@ module.exports = (sequelize, DataTypes)  => {
       type: DataTypes.STRING(20),
       allowNull: false,
     },
+    // brand: {
+    //   type: DataTypes.STRING(20),
+    //   allowNull: false,
+    // },
     condition: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.INTEGER(20),
+      allowNull: false
+    },
+    comment: {
+      type: DataTypes.STRING(500),
       allowNull: false,
     },
     likes: {
-      type: DataTypes.STRING(20),
+      type: DataTypes.INTEGER(50),
       allowNull: false,
     },
   }, {
