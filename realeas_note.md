@@ -33,3 +33,11 @@
 []()
 ### Middle ware
 해당 기능을 사용할 때 마다 Token decoded를 통해서 로그인된 유저인지 확인.
+\
+\
+[]()
+## **1.0.3** -Snapshot
+Database modeling완료. -> **ERD** v1.0.3
+\
+[]()
+<img src="./readmeImg/erd_v1.0.3.png" width="60%"/>

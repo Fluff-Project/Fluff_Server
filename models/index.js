@@ -66,9 +66,6 @@ db.Item.belongsToMany(db.Hashtag, { through: 'item_hashtag' });
 db.Hashtag.belongsToMany(db.Item, { through: 'item_hashtag' });
 
 // SupportCase, Keyword -> User ( 1:1 )
-// db.Keyword.belongsTo(db.User);
-// db.SupportCase.belongsTo(db.User);
-
 db.User.hasOne(db.Keyword);
 db.User.hasOne(db.SupportCase);
 
