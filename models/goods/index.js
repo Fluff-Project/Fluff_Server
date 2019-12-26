@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
+const { Schema } = mongoose;
 const size = require('./size');
-const Schema = mongoose.Schema
 
 const goodsSchema = new Schema({
   // 상품 명
@@ -72,6 +72,20 @@ const goodsSchema = new Schema({
 
   // 사이즈
   size: size,
+
+  // 옷 상태
+  condition: {
+    type: Number,
+    required: true,
+    unique: false,
+  },
+
+  // 스타일
+  style: {
+    type: [String],
+    required: true,
+    unique: false,
+  },
 
   // 생성 시간 : (값 고정 필요)
   createdAt: {

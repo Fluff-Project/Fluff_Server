@@ -1,6 +1,6 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 const keyword = require('./keyword');
-const Schema = mongoose.Schema
 
 const userSchema = new Schema({
   // 이메일
@@ -84,7 +84,7 @@ const userSchema = new Schema({
   ],
 
   // 관심사
-  keword: keyword,
+  keyword: keyword,
 
   // 생성 시간
   createdAt: {

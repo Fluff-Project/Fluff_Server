@@ -1,13 +1,13 @@
 const nodemailer = require('nodemailer');
 const jwt = require('../../modules/auth/jwt');
 
-const { User } = require('../../models');
+let { User } = require('../../models');
 const { au, sc, rm } = require('../../modules/utils');
 
 BASE_URI = '15.164.47.5:3000'
 
 /* 
-  POST /users/join
+  POST /auth/join
   {
     email,
     username,
@@ -15,10 +15,10 @@ BASE_URI = '15.164.47.5:3000'
     gender
   }
 */
-exports.join = async (req, res) => {
-  const user = req.body;  // { username, pwd, email, gender }
+exports.signUp = async (req, res) => {
+  const { user } = req.body;  // { username, pwd, email, gender }
   const checkExist = async (user) => {
-    const savedUser = await User.findOne({ where: { email: user.email } });
+    const savedUser = await User.findOne().where('email').equals(user.email);
     if (savedUser) {
       throw new Error('User가 존재합니다!');
     }
@@ -98,19 +98,16 @@ exports.join = async (req, res) => {
 };
 
 // JOIN SERVE LOGIC
-exports.emailAuthorization = async (req, res) => {
+exports.emailAuth = async (req, res) => {
   const { email, token } = req.query;
   try {
     const check = jwt.verify(token);
     if (check) {
       let result = null;
       await client.hgetall(email, async (err, obj) => {
-        result = await User.create({
-          username: obj.username,
-          email: obj.email,
-          pwd: obj.pwd,
-          gender: obj.gender
-        });
+        let user = new User(obj);
+        result = await user.save();
+
         if (err) {  // catch error
           console.log(`cache memory -> Database store중 error 발생!`);
           res.json({
