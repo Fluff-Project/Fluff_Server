@@ -21,9 +21,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', require('./routes'));
 app.use('/myPage', require('./routes/myPage'));
 app.use('/recommend', require('./routes/recommend'));
-app.use('/sales', require('./routes/sales'));
+app.use('/sales/items', require('./routes/sales/items'));
 app.use('/search', require('./routes/search'));
 app.use('/users', require('./routes/users'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

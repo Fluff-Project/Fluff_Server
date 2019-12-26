@@ -4,7 +4,7 @@ module.exports = {
     EXIST_ID:"아이디가 이미 있습니다.",
     MISS_MATCH_PW: "비밀번호가 일치하지 않습니다",
     NOT_FOUND_ID:"아이디를 찾을 수 없습니다.",
-    LOGIN_SUCCESS:"로그인이 성공하였습니다.",
+    LOGIN_SUCCESS:"로그인을 성공하였습니다.",
     LOGIN_FAIL:"로그인이 실패하였습니다.",
     EXIST_USER_ERROR:"사용자가 이미 있습니다.",
     WAIT_EMAIL_AUTHORIZATION: '이메일 인증을 기다리고 있습니다.',
@@ -20,6 +20,16 @@ module.exports = {
     DB_REFERENCE_ERROR: '잘못된 외래키입니다.',
     DB_NOT_MATCHED_ERROR: '해당 조건에 일치하는 데이터가 없습니다.',
     DB_DUPLICATE_ENTRY_ERROR: '중복되는 값이 이미 존재합니다',
+
+    // item
+    ITEM_DETAIL_SUCESS: '제품 디테일 조회를 성공하였습니다.',
+    ITEM_DETAIL_FAIL: '제품 디테일 조회를 실패하였습니다.',
+    ITEM_FILTERING_SUCESS: '제품 필터링을 성공하였습니다.',
+    ITEM_FILTERING_FAIL: '제품 필터링을 실패하였습니다.',
+    ITEM_LIST_SUCESS: '제품 리스트를 성공적으로 받아왔습니다.',
+    ITEM_LIST_FAIL: '제품 리스트를 받아오지 못했습니다..',
+
+
 
     //util
     NOT_CREATE_INFO:(x) => `${x} 생성 실패하였습니다.`,
