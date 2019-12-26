@@ -1,36 +1,21 @@
-// test 코드
-const { keyword } = require('../../models');
+/*
+  GET | survey
+*/
+let survey = require('../../models/survey'); //가정
 const { au, sc, rm } = require('../../modules/utils');
-//const keyword = require('../../models/keyword');
-//const imgUrl = require('../../models/items');
-//exports.ss = async() => {  //test 뺄까?
-exports.ss = async (req, res) => {
+
+exports.survey = async (req, res) => {
   try{
-    const test = {// = await survey.create({
-      data : [{ 
-        imageUrl:  'url',
-        keyword:[ 
-          "chic", 
-          "modern",
-          "lovely"
-        ]}, { 
-        imageUrl:  'url1',
-        keyword:[ 
-          "chic1", 
-          "modern1",
-          "lovely1"
-        ]}, { 
-        imageUrl:  'url2',
-        keyword:[ 
-          "chic2", 
-          "modern2",
-          "lovely2"
-        ]},
-    ]};
-    res.json(test);
-    console.log(test);
-    }catch(err){
-      console.log(err);
-      res.status(sc.INTERNAL_SERVER_ERROR).send(au.successFalse(rm.INTERNAL_SERVER_ERROR));  
+      res.json({
+        code: sc.OK,
+        json: au.successTrue(rm.ITEM_LIST_SUCCESS, survey)
+      });
+    //확인차 
+    console.log(survey);
+  } catch (err) {
+    res.json({
+      code: sc.NO_CONTENT,
+      json: au.successFalse(rm.ITEM_LIST_FAIL)
+    });
   }
 };

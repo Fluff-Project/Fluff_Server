@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const jwt = require('../../modules/auth/jwt');
 
-const { User } = require('../../models');
+const { User } = require('../../models/User');
 const { au, sc, rm } = require('../../modules/utils');
 
 BASE_URI = '15.164.47.5:3000'

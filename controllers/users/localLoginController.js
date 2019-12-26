@@ -1,4 +1,4 @@
-const { User } = require('../../models');
+const { User } = require('../../models/User');
 const { au, sc, rm } = require('../../modules/utils');
 const jwt = require('../../modules/auth/jwt');
 

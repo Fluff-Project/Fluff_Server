@@ -5,7 +5,7 @@ POST | recommend/keyDB
     keyword : cnt
 } * 30개
 */
-const { Keyword } = require('../../models');
+const { Keyword } = require('../../models/User');
 const { au, sc, rm } = require('../../modules/utils');
 exports.keyDB = async (req, res) => {
   const keywords = req.body;
