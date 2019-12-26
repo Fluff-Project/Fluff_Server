@@ -27,9 +27,9 @@ exports.detail = async (req, res) => {
 /*
   POST /sales/items/filter
   {
-    color,
-    category,
-    size
+    color: 'red',
+    category: 'outer',
+    size: 'XXLarge'
   }
 */
 exports.filter = async (req, res) => {
@@ -79,3 +79,13 @@ exports.thumbnail = async (req, res) => {
     });
   }
 };
+
+/*
+  POST /sales/items/likes
+  {
+    like: '윤자이짱'
+  }
+*/
+exports.likes = (req, res) => {
+  const { like } = req.body;
+}

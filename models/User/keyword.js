@@ -1,51 +1,46 @@
-module.exports = (sequelize, DataTypes)  => {  
-  return sequelize.define('keyword', {
-    simple : {
-      type: DataTypes.INTEGER(20),  
-      allowNull: true,
-    },
-    street : {
-      type: DataTypes.INTEGER(20),  
-      allowNull: true,
-    },
-    lovely : {
-      type: DataTypes.INTEGER(20),  
-      allowNull: true,
-    },
-    modernchic : {
-      type: DataTypes.INTEGER(20),  
-      allowNull: true,
-    },
-    unique : {
-      type: DataTypes.INTEGER(20),  
-      allowNull: true,
-    },
-    formal : {
-      type: DataTypes.INTEGER(20),  
-      allowNull: true,
-    },
-    ethnic : {
-      type: DataTypes.INTEGER(20),  
-      allowNull: true,
-    },
-    sporty : {
-      type: DataTypes.INTEGER(20),  
-      allowNull: true,
-    },
-    oldschool : {
-      type: DataTypes.INTEGER(20),  
-      allowNull: true,
-    },
-    hiphop : {
-      type: DataTypes.INTEGER(20),  
-      allowNull: true,
-    },
-    amekaji : {
-      type: DataTypes.INTEGER(20),  
-      allowNull: true,
-    }
-  }, {
-    timestamps: true,
-    // paranoid: true
-  });
-};
+module.exports = {
+  simple: {
+    type: Number,
+    default: 0,
+  },
+  street: {
+    type: Number,
+    default: 0,
+  },
+  lovely: {
+    type: Number,
+    default: 0,
+  },
+  modernchic: {
+    type: Number,
+    default: 0,
+  },
+  unique: {
+    type: Number,
+    default: 0,
+  },
+  formal: {
+    type: Number,
+    default: 0,
+  },
+  ethnic: {
+    type: Number,
+    default: 0,
+  },
+  sporty: {
+    type: Number,
+    default: 0,
+  },
+  oldschool: {
+    type: Number,
+    default: 0,
+  },
+  hiphop: {
+    type: Number,
+    default: 0,
+  },
+  amekaji: {
+    type: Number,
+    default: 0,
+  }
+}

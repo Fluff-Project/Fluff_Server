@@ -4,12 +4,19 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const redis = require('redis');
+const mongoose = require('mongoose');
 
 require('dotenv').config();
 
+let db = mongoose.connection;
+db.on('error', console.error);
+db.once('open', function(){
+    console.log("Connected to mongod server");
+});
+mongoose.connect('mongodb+srv://fluff:'+process.env.MONOOSE_PWD+'@fluff-kitpk.mongodb.net/fluff?retryWrites=true&w=majority', {useUnifiedTopology: true , useNewUrlParser: true });
+
+
 const app = express();
-var { sequelize } = require('./models');
-sequelize.sync();
 const client = redis.createClient(6379,'127.0.0.7');
 
 app.use(logger('dev'));
