@@ -29,6 +29,12 @@ module.exports = {
     ITEM_LIST_SUCESS: '제품 리스트를 성공적으로 받아왔습니다.',
     ITEM_LIST_FAIL: '제품 리스트를 받아오지 못했습니다..',
 
+    // auction
+    AUCTION_LOW_BID_THAN_START_PRICE: '시작 가격보다 높게 입찰되어야 합니다.',
+    AUCTION_LOW_BID_THAN_BEFORE_PRICE: '이전 가격보다 높게 입찰되어야 합니다.',
+    AUCTION_IS_ALREADY_END: '경매가 이미 종료되었습니다.',
+
+
 
 
     //util

@@ -9,7 +9,7 @@ const connect = require('./models/mongoConnect');
 require('dotenv').config();
 
 const app = express();
-const client = redis.createClient(6379,'127.0.0.1');
+const client = redis.createClient(6379,'redis');
 connect();
 
 app.use(logger('dev'));
