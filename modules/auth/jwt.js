@@ -10,8 +10,9 @@ const options = {
 module.exports = {
   sign: async (user) => {
     const payload = {
+      _id: user._id,
       username: user.username,
-      email: user.email
+      email: user.email,
     };
 
     try {
@@ -52,3 +53,4 @@ module.exports = {
     return jwt.sign(payload, process.env.JWT_SECRET, options); 
   }
 };
+

@@ -1,10 +1,11 @@
 module.exports = {
     //auth
     SIGNUP_SUCCESS:"회원가입에 성공하였습니다.",
+    MAIL_SUCCESS: "메일 전송을 성공하였습니다.",
     EXIST_ID:"아이디가 이미 있습니다.",
     MISS_MATCH_PW: "비밀번호가 일치하지 않습니다",
     NOT_FOUND_ID:"아이디를 찾을 수 없습니다.",
-    LOGIN_SUCCESS:"로그인이 성공하였습니다.",
+    LOGIN_SUCCESS:"로그인을 성공하였습니다.",
     LOGIN_FAIL:"로그인이 실패하였습니다.",
     EXIST_USER_ERROR:"사용자가 이미 있습니다.",
     WAIT_EMAIL_AUTHORIZATION: '이메일 인증을 기다리고 있습니다.',
@@ -20,6 +21,25 @@ module.exports = {
     DB_REFERENCE_ERROR: '잘못된 외래키입니다.',
     DB_NOT_MATCHED_ERROR: '해당 조건에 일치하는 데이터가 없습니다.',
     DB_DUPLICATE_ENTRY_ERROR: '중복되는 값이 이미 존재합니다',
+
+    // item
+    ITEM_FILTERING_SUCCESS: '제품 필터링을 성공하였습니다.',
+    ITEM_FILTERING_FAIL: '제품 필터링을 실패하였습니다.',
+    ITEM_LIST_SUCCESS: '제품 리스트를 성공적으로 받아왔습니다.',
+    ITEM_LIST_FAIL: '제품 리스트를 받아오지 못했습니다.',
+    LIKE_APROVE_SUCCESS: '좋아요를 하였습니다.',
+    LIKE_CANCEL_SUCCESS: '좋아요를 취소하였습니다.',
+    LIKE_INTERNAL_ERROR: '좋아요 기능 에러가 발생하였습니다.',
+    SELLER_DOES_NOT_EXIST: '판매자가 존재하지 않습니다.',
+
+
+    // auction
+    AUCTION_LOW_BID_THAN_START_PRICE: '시작 가격보다 높게 입찰되어야 합니다.',
+    AUCTION_LOW_BID_THAN_BEFORE_PRICE: '이전 가격보다 높게 입찰되어야 합니다.',
+    AUCTION_IS_ALREADY_END: '경매가 이미 종료되었습니다.',
+
+
+
 
     //util
     NOT_CREATE_INFO:(x) => `${x} 생성 실패하였습니다.`,

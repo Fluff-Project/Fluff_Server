@@ -12,4 +12,4 @@ module.exports = {
     INTERNAL_SERVER_ERROR: 500,
     SERVICE_UNAVAILABLE: 503, 
     DB_ERROR: 600,
-    }
+}

@@ -1,8 +1,14 @@
 version: '3'
 
 services:
-  javaclient:
-    build: .
   redis:
     image: redis
+    expose: 
+      - "6379"
     container_name: redisdb
+  fluff:
+    image: ooeunz/fluff:v1
+    links: 
+      - redis
+    ports: 
+      - "3000"
