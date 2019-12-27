@@ -45,6 +45,13 @@ Database modeling완료. -> **ERD** v1.0.3
 \
 []()
 ## **1.0.4** -Snapshot
-* docker-compose를 이용해서 Multi-container 아키텍처 구성.\
+* docker-compose를 이용해서 Multi-container 아키텍처 구성.
 * NoSQL로 Database 변경.
-* 필터링 기능.
+* API
+  - 썸네일 리스트 조회
+  - 상품 상세 페이지
+  - 판매자의 다른 상품 조회
+  - 좋아요 여부 조회
+  - 좋아요 누르기/취소
+  - 좋아요(찜) 개수 조회
+  - 상품 필터링
