@@ -41,3 +41,10 @@ Database modeling완료. -> **ERD** v1.0.3
 \
 []()
 <img src="./readmeImg/erd_v1.0.3.png" width="60%"/>
+\
+\
+[]()
+## **1.0.4** -Snapshot
+* docker-compose를 이용해서 Multi-container 아키텍처 구성.\
+* NoSQL로 Database 변경.
+* 필터링 기능.

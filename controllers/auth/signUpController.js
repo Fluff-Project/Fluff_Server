@@ -16,7 +16,9 @@ BASE_URI = '15.164.47.5:3000'
   }
 */
 exports.signUp = async (req, res) => {
-  const { user } = req.body;  // { username, pwd, email, gender }
+  const { username, pwd, email, gender } = req.body;  // { username, pwd, email, gender }
+  const user = { username, pwd, email, gender };
+  
   const checkExist = async (user) => {
     const savedUser = await User.findOne().where('email').equals(user.email);
     if (savedUser) {

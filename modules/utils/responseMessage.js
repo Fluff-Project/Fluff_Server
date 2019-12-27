@@ -22,12 +22,15 @@ module.exports = {
     DB_DUPLICATE_ENTRY_ERROR: '중복되는 값이 이미 존재합니다',
 
     // item
-    ITEM_DETAIL_SUCESS: '제품 디테일 조회를 성공하였습니다.',
+    ITEM_DETAIL_SUCCESS: '제품 디테일 조회를 성공하였습니다.',
     ITEM_DETAIL_FAIL: '제품 디테일 조회를 실패하였습니다.',
-    ITEM_FILTERING_SUCESS: '제품 필터링을 성공하였습니다.',
+    ITEM_FILTERING_SUCCESS: '제품 필터링을 성공하였습니다.',
     ITEM_FILTERING_FAIL: '제품 필터링을 실패하였습니다.',
-    ITEM_LIST_SUCESS: '제품 리스트를 성공적으로 받아왔습니다.',
-    ITEM_LIST_FAIL: '제품 리스트를 받아오지 못했습니다..',
+    ITEM_LIST_SUCCESS: '제품 리스트를 성공적으로 받아왔습니다.',
+    ITEM_LIST_FAIL: '제품 리스트를 받아오지 못했습니다.',
+    LIKE_APROVE_SUCCESS: '좋아요를 하였습니다.',
+    LIKE_CANCEL_SUCCESS: '좋아요를 취소하였습니다.',
+    LIKE_INTERNAL_ERROR: '좋아요 기능 에러가 발생하였습니다.',
 
     // auction
     AUCTION_LOW_BID_THAN_START_PRICE: '시작 가격보다 높게 입찰되어야 합니다.',

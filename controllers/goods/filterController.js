@@ -22,14 +22,14 @@ exports.filter = async (req, res) => {
 
     res.json({
       code: sc.OK,
-      json: au.successTrue(rm.ITEM_FILTERING_SUCESS, filter)
+      json: au.successTrue(rm.ITEM_FILTERING_SUCCESS, filter)
     });
 
   } catch (err) {
     console.log(`Internal server error: ${err}`);
     res.json({
       code: sc.BAD_REQUEST,
-      json: au.successFalse(rm.ITEM_FILTERING_SUCESS)
+      json: au.successFalse(rm.ITEM_FILTERING_SUCCESS)
     });
   }
 };

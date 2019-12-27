@@ -1,4 +1,5 @@
 let Goods = require('../../models/Goods');
+let User = require('../../models/User');
 
 /*
   GET /goods/:goodsId
@@ -12,7 +13,7 @@ exports.goodsDetail = async (req, res) => {
 
     res.json({
       code: sc.OK,
-      json: au.successTrue(rm.ITEM_DETAIL_SUCESS, goodsDetail)
+      json: au.successTrue(rm.ITEM_DETAIL_SUCCESS, goodsDetail)
     });
 
   } catch (err) {
@@ -37,7 +38,7 @@ exports.sellerDetail = async (req, res) => {
 
     res.json({
       code: sc.OK,
-      json: au.successTrue(rm.ITEM_DETAIL_SUCESS, sellerGoods)
+      json: au.successTrue(rm.ITEM_DETAIL_SUCCESS, sellerGoods)
     });
     
   } catch (err) {
@@ -47,3 +48,41 @@ exports.sellerDetail = async (req, res) => {
     });
   }
 };
+
+/*
+  POST /goods/:goodsId/like
+  {
+    like: '윤자이짱'
+  }
+*/
+exports.like = async (req, res) => {
+  try {
+    const user = User.find().where('email').equals(req.user.email);
+    const { goodsId } = req.params;
+    for (li in user.like) {
+      if (user.like[li].toString() === goodsId) {
+        user.like.remove(goodsId);
+        const result = await user.update();
+
+        console.log(`좋아요를 취소하였습니다.`);
+        res.json({
+          code: sc.OK,
+          json: au.successTrue(rm.LIKE_CANCEL_SUCCESS, result)
+        });
+      }
+    }
+    user.like.push(ObjectId(goodsId));
+    const result = await user.update();
+    console.log(`좋아요를 하였습니다.`);
+    res.json({
+      code: sc.OK,
+      json: au.successTrue(rm.LIKE_APROVE_SUCCESS, result)
+    });
+  } catch (err) {
+    console.log(`좋아요 기능 에러 발생!`);
+    res.json({
+      code: sc.INTERNAL_SERVER_ERROR,
+      json: au.successFalse(rm.LIKE_INTERNAL_ERROR)
+    });
+  }
+}

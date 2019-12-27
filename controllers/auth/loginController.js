@@ -3,42 +3,29 @@ const { au, sc, rm } = require('../../modules/utils');
 const jwt = require('../../modules/auth/jwt');
 
 /* 
-  POST /users/join
+  POST /auth/localLogin
   {
     email,
     pwd
   }
 */
-exports.login = async (req, res) => {
+exports.localLogin = async (req, res) => {
   const { email, pwd } = req.body;
-
+  
   // verify
   const verify =  async (user) => {
-    const savedUser = await User.findOne({ where: { email: user.email }});
+    const savedUser = await User.findOne().where('email').equals(user.email);
     if (!savedUser) {
       console.log('가입되지 않은 사용자입니다.');
-      return {
-        code: sc.BAD_REQUEST,
-        json: au.successFalse(rm.EXIST_USER_ERROR)
-      };
+      throw new Error(`가입되지 않은 사용자입니다.`);
     }
 
-    if (user.pwd === avedUser.pwd) {
-      return savedUser;
-    }
     // err
-    console.log('비밀번호가 일치하지 않습니다.');
-    throw new Error(`비밀번호가 일치하지 않습니다.`);
-
-    //   throw new Error(`비밀번호가 일치하지 않습니다.`);
-    // const result = await bcrypt.compare(user.pwd, savedUser.pwd);
-    // if (!result) {
-    //   console.log('비밀번호가 일치하지 않습니다.');
-    //   throw new Error(`비밀번호가 일치하지 않습니다.`);
-    // }
-    // Success End Point
+    if (user.pwd != savedUser.pwd) {
+      console.log('비밀번호가 일치하지 않습니다.');
+      throw new Error(`비밀번호가 일치하지 않습니다.`);
+    }
     return savedUser;
-      
   }
 
   const createToken = async (user) => {
@@ -56,7 +43,7 @@ exports.login = async (req, res) => {
     console.log(`Login Error: ${error}`);
     res.json({
       code: sc.BAD_REQUEST,
-      json: au.successFalse(rm.MISS_MATCH_PW)
+      json: au.successFalse(error)
     });
   }
 
@@ -66,6 +53,7 @@ exports.login = async (req, res) => {
   
   res.json({
     code: sc.OK,
-    json: au.successTrue(rm.LOGIN_SUCCESS, token)
+    json: au.successTrue(rm.LOGIN_SUCCESS, null),
+    token,
   });
 }

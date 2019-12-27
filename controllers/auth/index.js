@@ -1,4 +1,4 @@
 module.exports = {
-  joinController: joinController,
-  localLoginController: localLoginController,
+  signUpController: require('./signUpController'),
+  loginController: require('./loginController'),
 }

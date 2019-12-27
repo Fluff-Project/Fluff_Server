@@ -6,12 +6,7 @@ let User = require('../models/User');
 router.use('/recommend',require('./recommend'));
 router.use('/survey',require('./survey'));
 
-router.get('/', async (req, res) => {
-  const userObj = req.body;
-  const result = User.find();
-
-  console.log(result);
-  res.send(result);
+router.get('/', (req,res) => {
+  console.log(`Server ig running!!!`);
 });
-
 module.exports = router;

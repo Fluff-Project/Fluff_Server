@@ -9,6 +9,7 @@ router.get('/:goodsId', authMiddleware, detailController.goodsDetail);
 router.get('/:sellerId', authMiddleware, detailController.goodsDetail);
 
 router.post('/filter', authMiddleware, filterController.filter);
+router.post('/:goodsId/like', authMiddleware, detailController.goodsDetail);  // todo
 
 
 module.exports = router;
