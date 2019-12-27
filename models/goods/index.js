@@ -28,7 +28,7 @@ const goodsSchema = new Schema({
   img: { type: [String], required: false, unique: false },
 
   // 가격
-  prise: { type: Number, required: true },
+  price: { type: Number, required: true },
 
   // 평점
   grade: { type: Number, required: false, unique: false },
