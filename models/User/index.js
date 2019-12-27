@@ -83,6 +83,12 @@ const userSchema = new Schema({
     },
   ],
 
+  cart: [
+    {
+      cartGoods: { type: mongoose.Schema.Types.ObjectId, ref: 'Goods' },
+    }
+  ],
+
   // 관심사
   keyword: keyword,
 

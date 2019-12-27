@@ -93,7 +93,7 @@ exports.checkLike = async (req, res) => {
     like: true or false
   }
 */
-exports.useLike = (req, res) => {
+exports.useLike = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
     const { goodsId } = req.params;
@@ -125,7 +125,7 @@ exports.useLike = (req, res) => {
 /*
   GET /goods/likeCnt
 */
-exports.likeCnt = (req, res) => {
+exports.likeCnt = async (req, res) => {
   try {
     const userLike = await User.findById(req.user._id).select('like')
     if (!userLike) {

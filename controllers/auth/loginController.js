@@ -9,7 +9,7 @@ const jwt = require('../../modules/auth/jwt');
     pwd
   }
 */
-exports.localLogin = async (req, res) => {
+exports.login = async (req, res) => {
   const { email, pwd } = req.body;
   
   // verify

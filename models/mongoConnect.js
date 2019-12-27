@@ -2,13 +2,13 @@ const mongoose = require('mongoose');
 
 module.exports = () => {
   const connect = () => {
-    mongoose.connect(`mongodb+srv://fluffiness:${process.env.MONOOSE_PWD}@fluff-kitpk.mongodb.net/fluff?retryWrites=true&w=majority`, {
+    mongoose.connect(`mongodb+srv://fluffiness:${process.env.MONGOOSE_PWD}@fluff-kitpk.mongodb.net/fluff?retryWrites=true&w=majority`, {
       dbName: 'fluff',
     }, (err) => {
       if (err) {
         console.log(`몽고디비 연결 에러: ${err}`);
       }
-      console.log(`몽고디비 열결 성공!!!`);
+      console.log(`몽고디비 연결 성공!!!`);
     });
   };
   connect();

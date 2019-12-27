@@ -29,7 +29,7 @@ exports.filter = async (req, res) => {
     console.log(`Internal server error: ${err}`);
     res.json({
       code: sc.BAD_REQUEST,
-      json: au.successFalse(rm.ITEM_FILTERING_SUCCESS)
+      json: au.successFalse(rm.ITEM_FILTERING_FAIL)
     });
   }
 };

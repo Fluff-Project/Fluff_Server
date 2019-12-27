@@ -7,6 +7,6 @@ router.post('/signUp', signUpController.signUp);
 router.get('/emailAuthorization', signUpController.emailAuth);
 
 // locaLogin
-router.post('/localLogin', loginController.localLogin);
+router.post('/login', loginController.login);
 
 module.exports = router;
