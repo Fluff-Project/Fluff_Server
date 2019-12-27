@@ -95,7 +95,7 @@ exports.signUp = async (req, res) => {
   
   res.json({
     code: sc.OK,
-    json: au.successTrue(rm.SIGNUP_SUCCESS, result)
+    json: au.successTrue(rm.MAIL_SUCCESS, result)
   });
 };
 

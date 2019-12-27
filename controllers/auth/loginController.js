@@ -53,7 +53,6 @@ exports.localLogin = async (req, res) => {
   
   res.json({
     code: sc.OK,
-    json: au.successTrue(rm.LOGIN_SUCCESS, null),
-    token,
+    json: au.successTrue(rm.LOGIN_SUCCESS, token),
   });
 }
