@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 let User = require('../models/User');
+const authmiddleware = require('../middleware/authMiddleware');
 
 /* GET home page. */
 router.use('/recommend',require('./recommend'));
 router.use('/survey',require('./survey'));
 
-router.get('/', (req,res) => {
+router.get('/', authmiddleware, (req,res) => {
+  console.log(`decoded: ${req.decoded}`);
   console.log(`Server ig running!!!`);
 });
 module.exports = router;
