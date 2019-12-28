@@ -168,7 +168,6 @@ exports.bid = async (req, res) => {
     req.app.get('io').to(id).emit('bid', bid);
     console.log(result);
     
-    
   } catch(err) {
     console.log(`입찰 서버 내부 오류`);
     res.json({
