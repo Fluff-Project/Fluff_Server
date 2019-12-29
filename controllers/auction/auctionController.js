@@ -54,20 +54,20 @@ exports.authorize = async (req, res) => {
     if (auth) {
       auction.authorize = true;
       const result = await auction.update();
-      console.log(`경매물품을 인가하였습니다.`);
+      console.log(`경매 상품을 인가하였습니다.`);
       res.json({
         code: sc.OK,
-        json: au.successTrue(`경매물품을 인가되였습니다.`, result)
+        json: au.successTrue(`경매 상품이 인가되었습니다.`, result)
       });
     }
     const result = await auction.delete();
     console.log(`경매물품이 거부되었습니다.`);
     res.json({
       code: sc.OK,
-      json: au.successTrue(`경매물품이 거부되었습니다.`, result)
+      json: au.successTrue(`경매 상품이 거부되었습니다.`, result)
     });
   } catch (err) {
-    console.log(`경매물품 인가 중 에러가 발생했습니다.`);
+    console.log(`경매 상품 인가 중 에러가 발생했습니다.`);
     res.json({
       code: sc.INTERNAL_SERVER_ERROR,
       json: au.successFalse(rm.INTERNAL_SERVER_ERROR, result)
@@ -110,6 +110,9 @@ exports.auctionList = async (req, res) => {
   }
 };
 
+/*
+  POST /autcion/bid
+*/
 exports.bid = async (req, res) => {
   try {
     const { id } = req.params;
@@ -144,7 +147,7 @@ exports.bid = async (req, res) => {
       console.log(`입찰 정보가 유효하지 않습니다.`);
       res.json({
         code: sc.FORBIDDEN,
-        json: au.successFalse(rm.OUT_OF_VALUE)
+        json: au.successFalse(`입찰 정보가 유효하지 않습니다.`)
       })
     }
 
@@ -163,8 +166,16 @@ exports.bid = async (req, res) => {
         json: au.successFalse(`이전 입찰가보다 높아야 합니다.`)
       });
     }
-    auction.bid.push(bid);
+
+    const bidObj = {
+      userId: req.decoded._id,
+      bid: bid.bid,
+      msg: bid.msg
+    };
+    auction.bid.push(bidObj);
     const result = await auction.update();
+
+    console.log(`입찰이 완료되었습니다.`);
     req.app.get('io').to(id).emit('bid', bid);
     console.log(result);
     

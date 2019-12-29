@@ -12,7 +12,7 @@ const auctionSchema = new Schema({
 
   category: { type: String, required: true, unique: false },
 
-  hashtag: { type: [String], required: false, unique: true },
+  hashtag: [{ type: [String], required: false, unique: true }],
 
   startCost: { type: Number, default: 10000, required: true },
 
@@ -35,11 +35,6 @@ const auctionSchema = new Schema({
       bid: Number,
       msg: String
     }],
-  
-  authorization: {
-    type: Boolean,
-    default: false,
-  },
 
   createdAt: { type: Date, default: Date.now }
 });

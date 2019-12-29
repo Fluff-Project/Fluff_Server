@@ -4,7 +4,7 @@ exports.module = async (keyword) => {
   option = {
     uri: 'http://www.juso.go.kr/addrlink/addrLinkApi.do',
     method: 'POST',
-    confmKey: 'devU01TX0FVVEgyMDE5MTIyODE4NTIwMzEwOTM1NjQ=',
+    confmKey: process.env.ADDRESS_APPROVE_KEY,
     currentPage: 1,
     countPerPage: 10,
     keyword: keyword,
@@ -24,6 +24,6 @@ exports.module = async (keyword) => {
     }
   });
   return result;
-}
+};
 
 

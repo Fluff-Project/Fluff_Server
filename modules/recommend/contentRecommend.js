@@ -24,6 +24,7 @@ module.exports = (user) => {
     content: user.hashtag.join(' ')
   })
   
+  // get goods list and convert element 
   const exDocuments = Goods.find().select('_id hashtag');
   for (document of exDocuments) {
     let content = document.hashtag.join(' ')
