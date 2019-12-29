@@ -3,15 +3,16 @@ const jwt = require('jsonwebtoken');
 
 const options = {
   algorithm: 'HS256',
-  expiresIn: '1h',
+  expiresIn: '20h',
   issuer: 'ooeunz'
 };
 
 module.exports = {
   sign: async (user) => {
     const payload = {
+      _id: user._id,
       username: user.username,
-      email: user.email
+      email: user.email,
     };
 
     try {
