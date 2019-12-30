@@ -1,80 +1,41 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const keyword = require('./keyword');
+const style = require('./style');
 
 const userSchema = new Schema({
   // 이메일
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+  email: { type: String, required: true, unique: true, },
   
   // 비밀번호
-  pwd: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+  pwd: { type: String, required: true, unique: true, },
 
   // 닉네임
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
+  username: { type: String, required: true, unique: true, },
 
   // 성별
-  gender: {
-    type: String,
-    required: true,
-    unique: false,
-  },
+  gender: { type: String, required: true, unique: false, },
 
   // 배송지
-  address: {
-    type: String,
-    required: false,
-    unique: false,
-  },
+  address: { type: String, required: false, unique: false, },
 
   // 휴대폰 번호
-  phone: {
-    type: String,
-    required: false,
-    unique: false,
-  },
+  phone: { type: String, required: false, unique: false, },
 
   // 판매자 권한
-  seller: {
-    type: Boolean,
-    required: false,
-    unique: false,
-    default: false,
-  },
+  sellerAuth: { type: Boolean, required: false, unique: false, default: false, },
 
   // 팔로우 리스트
   following: [
-    {
-      followingUser: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    }
+    { followingUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }}
   ],
 
   // 팔로워 리스트
   follower: [
-    {
-      followerUser: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    },
+    { followerUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }},
   ],
 
   // 찜 목록
-  like: [{ likeGoods: { type: mongoose.Schema.Types.ObjectId, ref: 'Goods' } }],
+  like: [{ likeGoods: { type: mongoose.Schema.Types.ObjectId, ref: 'Goods' }, default: false }],
 
   // 장바구니
   cart: [{ cartGoods: { type: mongoose.Schema.Types.ObjectId, ref: 'Goods' } }],
@@ -83,13 +44,10 @@ const userSchema = new Schema({
   order: [{ cartGoods: { type: mongoose.Schema.Types.ObjectId, ref: 'Order' } }],
   
   // 관심사
-  keyword: keyword,
+  style: style,
 
   // 생성 시간
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  }
+  createdAt: { type: Date, default: Date.now, }
 });
 
 module.exports = mongoose.model('User', userSchema);

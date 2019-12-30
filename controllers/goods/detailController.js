@@ -1,5 +1,7 @@
+const mongoose = require('mongoose');
 let Goods = require('../../models/Goods');
 let User = require('../../models/User');
+const { au, sc, rm } = require('../../modules/utils');
 
 /*
   GET /goods/:goodsId
@@ -7,8 +9,11 @@ let User = require('../../models/User');
 exports.goodsDetail = async (req, res) => {
   try {
     const { goodsId } = req.params;
+    console.log(`goodId: ${goodsId}`);
+
     const goodsDetail = await Goods.findById(goodsId)
       .select('mainImg img size condition comment grade');
+    console.log(`goodDetail: ${goodsDetail}`);
 
     res.json({
       code: sc.OK,
@@ -24,12 +29,13 @@ exports.goodsDetail = async (req, res) => {
 };
 
 /*
-  GET /goods/:sellerId
+  GET /goods?seller={sellerId}
 */
 exports.sellerDetail = async (req, res) => {
   try {
-    const { sellerId } = req.params;
-    const sellerGoods = await Item.find()
+    const { sellerId } = req.query;
+    const sellerGoods = await Goods.find()
+      .where('seller').equals(sellerId)
       .sort('createAt')
       .select('_id goodsName mainImg prise')
       .limit(5);
@@ -59,12 +65,11 @@ exports.sellerDetail = async (req, res) => {
 */
 exports.checkLike = async (req, res) => {
   try {
-    const email = req.user.email;
-    const goodsId = req.params.goodsId;
-
-    const user = await User.findOne()
-      .where('email').equals(email)
-      .where('like').equals(goodsId);
+    const { goodsId } = req.params;
+    
+    const user = await User.findById(req.decoded._id)
+      .where('like').in([{ _id: mongoose.Types.ObjectId(goodsId) }])
+      .select('like');
 
     if (user) {
       console.log(`존재하는 좋아요 입니다.`);
@@ -76,7 +81,7 @@ exports.checkLike = async (req, res) => {
     console.log(`존재하지 않는 좋아요 입니다.`);
     res.json({
       code: sc.BAD_REQUEST,
-      json: au.successTrue(rm.NO_X(`좋아요`))
+      json: au.successTrue(rm.NO_X(`좋아요`), false)
     });
   } catch (err) {
     console.log(`좋아요 여부 조회 실패`);
@@ -85,7 +90,7 @@ exports.checkLike = async (req, res) => {
       json: au.successFalse(rm.X_READ_FAIL(`좋아요 여부`))
     });
   }
-} 
+};
 
 /*
   POST /goods/:goodsId/like
@@ -95,24 +100,27 @@ exports.checkLike = async (req, res) => {
 */
 exports.useLike = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
     const { goodsId } = req.params;
     const { like } = req.body;
+    
     if (like) {
-      user.like.remove({ likeGoods: goodsId })
-      const result = user.update;
-
-      console.log(`'좋아요 하기' 작성 성공`);
+      let user = await User.findById(req.decoded._id);
+      await user.updateOne({ $push: { like: mongoose.Types.ObjectId(goodsId) }}).where({ _id: req.decoded._id });
+      
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.X_CREATE_SUCCESS(`좋아요 하기`), result.like)
+        json: au.successTrue(rm.X_CREATE_SUCCESS(`좋아요 하기`), { goodsId, state: true })
       });
     }
+    let user = await User.findById(req.decoded._id);
+    let result = await user.updateOne({ $push: { like: mongoose.Types.ObjectId(goodsId) }}).where({ _id: req.decoded._id });
+
     console.log(`'좋아요 취소' 작성 성공`);
     res.json({
       code: sc.OK,
       json: au.successTrue(rm.X_CREATE_SUCCESS(`좋아요 취소`), result.like)
     });
+
   } catch (err) {
     console.log(`좋아요 작성 실패`);
     res.json({
@@ -121,81 +129,3 @@ exports.useLike = async (req, res) => {
     });
   }
 }
-
-/*
-  GET /goods/likeCnt
-*/
-exports.likeCnt = async (req, res) => {
-  try {
-    const userLike = await User.findById(req.user._id).select('like')
-    if (!userLike) {
-      console.log(`필요한 값이 없습니다.`);
-      res.json({
-        code: sc.BAD_REQUEST,
-        json: au.successTrue(rm.NULL_VALUE)
-      });
-    }
-    const result = {
-      likeCnt: userLike.length,
-    }
-    console.log(`좋아요 개수 조회 성공`);
-    res.json({
-      code: sc.OK,
-      json: au.successTrue(rm.X_READ_SUCCESS(`좋아요`), result)
-    });
-  } catch (err) {
-    console.log(`좋아요 개수 조회 실패`);
-    res.json({
-      code: sc.INTERNAL_SERVER_ERROR,
-      json: au.successTrue(rm.X_READ_FAIL(`좋아요`))
-    });
-  }
-}
-
-
-
-
-
-
-
-
-
-// // 좋아요정보 가져오기
-// // 좋아요 하기, 취소하기
-// /*
-//   POST /goods/:goodsId/like
-//   {
-//     like: '윤자이짱'
-//   }
-// */
-// exports.like = async (req, res) => {
-//   try {
-//     const user = User.find().where('email').equals(req.user.email);
-//     const { goodsId } = req.params;
-//     for (li in user.like) {
-//       if (user.like[li].toString() === goodsId) {
-//         user.like.remove(goodsId);
-//         const result = await user.update();
-
-//         console.log(`좋아요를 취소하였습니다.`);
-//         res.json({
-//           code: sc.OK,
-//           json: au.successTrue(rm.LIKE_CANCEL_SUCCESS, false)
-//         });
-//       }
-//     }
-//     user.like.push(ObjectId(goodsId));
-//     const result = await user.update();
-//     console.log(`좋아요를 하였습니다.`);
-//     res.json({
-//       code: sc.OK,
-//       json: au.successTrue(rm.LIKE_APROVE_SUCCESS, true)
-//     });
-//   } catch (err) {
-//     console.log(`좋아요 기능 에러 발생!`);
-//     res.json({
-//       code: sc.INTERNAL_SERVER_ERROR,
-//       json: au.successFalse(rm.LIKE_INTERNAL_ERROR)
-//     });
-//   }
-// }

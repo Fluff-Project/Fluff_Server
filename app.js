@@ -10,7 +10,7 @@ require('dotenv').config();
 
 const app = express();
 const client = redis.createClient(6379,'127.0.0.1');  // Local 실행
-// const client = redis.createClient(6379,'redis');  // AWS 실행
+// const client = redis.createClient(6379,'fluff-redis');  // AWS 실행
 
 connect();
 

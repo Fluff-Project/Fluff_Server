@@ -1,4 +1,5 @@
 let Goods = require('../../models/Goods');
+const { au, sc, rm } = require('../../modules/utils');
 
 /*
   GET /goods/thumbnail
@@ -8,7 +9,7 @@ exports.thumbnail = async (req, res) => {
     const thumbnail = 
       await Goods.find()
         .sort('createAt')
-        .select('goodsName sellerName mainImg prise')
+        .select('goodsName seller mainImg price _id ')
         .limit(30);
     
     console.log(`제품 리스트를 성공적으로 load하였습니다!`);
