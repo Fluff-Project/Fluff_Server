@@ -93,3 +93,23 @@ Database modeling완료. -> **ERD** v1.0.3
 **image**
  
 ![image](./readmeImg/contentRecommendFilter.png)
+
+\
+[]()
+
+---
+\
+\
+[]()
+## **1.1.1**
+AWS S3를 이용한 Image upload
+```json
+"dependencies": {
+  "multer": "^1.4.2",
+  "multer-s3": "^2.9.0",
+}
+```
+* multer 이미지 업로드
+* 장바구니
+* 주문 목록
+* 좋아요(찜)

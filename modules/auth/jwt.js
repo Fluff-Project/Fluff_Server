@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const options = {
   algorithm: 'HS256',
-  expiresIn: '1h',
+  expiresIn: '6h',
   issuer: 'ooeunz'
 };
 
