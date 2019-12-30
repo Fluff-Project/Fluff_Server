@@ -1,9 +1,9 @@
 /*
   내가 팔로우한 상점 리스트 조회
-  GET | follow/:userId/followingList
+  GET | follow/:userId/followList
   
   팔로우/언팔로우 여부 체크 조회
-  GET | follow/
+  GET | follow/:sellerId
 
   팔로우 하기/취소하기
   POST | follow/
@@ -58,12 +58,17 @@ exports.followCheck = async (req, res) => {
   const {
     sellerId
   } = req.params;
-
+  console.log(sellerId);
   try {
     let user = await User.findById(userId);
-    const followCheck = user.following[0]._id;
+    const n = [];
+    for (i in user.following) {
+      if (user.following[i]._id == sellerId) {
+        n.push(user.following[i]._id);
+      }
+    };
 
-    if (followCheck == sellerId) {
+    if (n.length > 0) {
       console.log(`이미 팔로우하고 있습니다.`);
       const result = {
         sellerId,
@@ -106,34 +111,61 @@ exports.follow = async (req, res) => {
   } = req.body;
 
   try {
-    const user = await User.findById(userId);
-    // sellerId 에 해당하는 followingList 지우기
-    if (sellerId && state == true) {
+    let user = await User.findOne({
+      _id: userId
+    });
+    const n = [];
+    for (i in user.following) {
+      if (user.following[i]._id == sellerId) {
+        n.push(user.following[i]._id);
+      }
+    };
+    console.log(n.length);
+    // DB에 존재하고 status가 true면 팔로우 -> 팔로우 취소
+    if (n.length > 0 & state == true) {
       user.following.remove({
         _id: sellerId
       });
       user.save();
-      console.log(`팔로우 취소`);
+
       res.json({
         code: sc.OK,
         json: au.successTrue(rm.X_CREATE_SUCCESS(`팔로우 취소`))
       });
     } else {
-      // 팔로우 리스트에 추가하기
-      user.following.push({_id: sellerId});
-      user.save();
-      
-      console.log(`팔로우 성공`);
-      res.json({
-        code: sc.OK,
-        json: au.successTrue(rm.X_CREATE_SUCCESS(`팔로우 성공`))
-      });
+      if (n.length > 0 & state == false) {
+        console.log(`이미 있는 값임.`);
+        res.json({
+          code: sc.BAD_REQUEST,
+          json: au.successFalse(rm.X_UPDATE_FAIL(`이미 팔로우 되어있어서`))
+        });
+      } else {
+        if (n.length == 0 & state == true) {
+          res.json({
+            code: sc.BAD_REQUEST,
+            json: au.successFalse(rm.X_UPDATE_FAIL(`팔로우 안되어 있는데 상태가 true여서`))
+          });
+        } else {
+          user.following.push({
+            following: {
+              _id: sellerId
+            }
+          });
+          user.save();
+          console.log(`팔로우 성공`);
+
+          res.json({
+            code: sc.OK,
+            json: au.successTrue(rm.X_CREATE_SUCCESS(`팔로우 성공`))
+          });
+        };
+      };
     };
   } catch (err) {
-    console.log(`팔로우 실패`);
+    console.log(`팔로우 상태 변경 실패`);
     res.json({
       code: sc.INTERNAL_SERVER_ERROR,
-      json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
+      json: au.successFalse(rm.X_READ_FAIL(`팔로우 여부`))
     });
   };
 };
