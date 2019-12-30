@@ -30,6 +30,8 @@ app.use('/myPage', require('./routes/myPage'));
 app.use('/recommend', require('./routes/recommend'));
 app.use('/goods', require('./routes/goods'));
 app.use('/search', require('./routes/search'));
+app.use('/follow', require('./routes/follow'));
+app.use('/shopper', require('./routes/shopper'));
 app.use('/auth', require('./routes/auth'));
 app.use('/recommend', require('./routes/recommend'));
 app.use('/survey', require('./routes//survey'));
