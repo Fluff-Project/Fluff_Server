@@ -1,7 +1,7 @@
 const request = require('request-promise');
 
 exports.module = async (keyword) => {
-  option = {
+  var option = {
     uri: 'http://www.juso.go.kr/addrlink/addrLinkApi.do',
     method: 'POST',
     confmKey: process.env.ADDRESS_APPROVE_KEY,
