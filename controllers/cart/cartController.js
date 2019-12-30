@@ -55,7 +55,7 @@ exports.cartList = async (req, res)=>{
   try{
     const cartList = await User.findOne({ email: userEmail });
     
-    if (cartList.length == 0) { 
+    if (cartList.length === 0) { 
       return res.json({
         code: sc.BAD_REQUEST,
         json: au.successFalse(rm.DB_NOT_MATCHED_ERROR)
@@ -76,7 +76,7 @@ exports.cartList = async (req, res)=>{
 };
 
 /*
-  장바구니에서 일부 상품 삭제  -> 12/29일 아직 해결 못함.
+  장바구니에서 일부 상품 삭제
   DELETE | /cart
  */
 exports.cartDelete = async (req, res)=>{

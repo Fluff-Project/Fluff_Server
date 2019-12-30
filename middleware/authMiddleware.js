@@ -4,7 +4,6 @@ const { sc, au, rm } = require('../modules/utils');
 module.exports = async (req, res, next) => {
     // read the token from header or url 
     const token = req.headers['x-access-token'] || req.query.token;
-
     
     // token does not exist
     if(!token) {
@@ -26,5 +25,4 @@ module.exports = async (req, res, next) => {
         json: au.successFalse(rm.INVALID_TOKEN)
       });
     }
-}
 }

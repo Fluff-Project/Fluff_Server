@@ -54,16 +54,9 @@ const userSchema = new Schema({
   },
 
   // 팔로우 리스트
-  following: [
-    {
-      followingUser: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-      },
-    }
-  ],
+  following: [{ followingUser :{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }} ],
 
-  // 팔로워 리스트
+  // 팔로워 리스트fokc
   follower: [
     {
       followerUser: {
@@ -79,7 +72,7 @@ const userSchema = new Schema({
   // 장바구니
   cart: [{ cartGoods: { type: mongoose.Schema.Types.ObjectId, ref: 'Goods' } }],
 
-  // 주문서
+  // 주문서 주문했던 아이디 값을 넣을 것.
   order: [{ cartGoods: { type: mongoose.Schema.Types.ObjectId, ref: 'Order' } }],
   
   // 관심사

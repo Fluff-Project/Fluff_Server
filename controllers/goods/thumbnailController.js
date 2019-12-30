@@ -8,7 +8,7 @@ exports.thumbnail = async (req, res) => {
     const thumbnail = 
       await Goods.find()
         .sort('createAt')
-        .select('goodsName sellerName mainImg prise')
+        .select('goodsName seller mainImg prise')
         .limit(30);
     
     console.log(`제품 리스트를 성공적으로 load하였습니다!`);

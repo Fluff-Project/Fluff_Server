@@ -6,7 +6,9 @@ let User = require('../../models/User');
 */
 exports.goodsDetail = async (req, res) => {
   try {
-    const { goodsId } = req.params;
+    const {
+      goodsId
+    } = req.params;
     const goodsDetail = await Goods.findById(goodsId)
       .select('mainImg img size condition comment grade');
 
@@ -28,7 +30,9 @@ exports.goodsDetail = async (req, res) => {
 */
 exports.sellerDetail = async (req, res) => {
   try {
-    const { sellerId } = req.params;
+    const {
+      sellerId
+    } = req.params;
     const sellerGoods = await Item.find()
       .sort('createAt')
       .select('_id goodsName mainImg prise')
@@ -45,7 +49,7 @@ exports.sellerDetail = async (req, res) => {
       code: sc.OK,
       json: au.successTrue(rm.ALREADY_X(`판매자의 다른 상품`), sellerGoods)
     });
-    
+
   } catch (err) {
     res.json({
       code: sc.INTERNAL_SERVER_ERROR,
@@ -59,12 +63,15 @@ exports.sellerDetail = async (req, res) => {
 */
 exports.checkLike = async (req, res) => {
   try {
-    const email = req.user.email;
-    const goodsId = req.params.goodsId;
+    const {
+      goodsId
+    } = req.params;
 
-    const user = await User.findOne()
-      .where('email').equals(email)
-      .where('like').equals(goodsId);
+    const user = await User.findById(req.decoded._id)
+      .where('like').in([{
+        _id: mongoose.Types.ObjectId(goodsId)
+      }])
+      .select('like');
 
     if (user) {
       console.log(`존재하는 좋아요 입니다.`);
@@ -85,7 +92,7 @@ exports.checkLike = async (req, res) => {
       json: au.successFalse(rm.X_READ_FAIL(`좋아요 여부`))
     });
   }
-} 
+}
 
 /*
   POST /goods/:goodsId/like
@@ -98,8 +105,11 @@ exports.useLike = async (req, res) => {
     const user = await User.findById(req.user._id);
     const { goodsId } = req.params;
     const { like } = req.body;
+    
     if (like) {
-      user.like.remove({ likeGoods: goodsId })
+      user.like.remove({
+        likeGoods: goodsId
+      })
       const result = user.update;
 
       console.log(`'좋아요 하기' 작성 성공`);
