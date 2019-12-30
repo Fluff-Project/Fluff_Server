@@ -25,5 +25,4 @@ module.exports = async (req, res, next) => {
         json: au.successFalse(rm.INVALID_TOKEN)
       });
     }
-}
-}
+};

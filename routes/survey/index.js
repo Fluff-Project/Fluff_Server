@@ -4,4 +4,5 @@ const surveyController = require('../../controllers/survey/surveyController');
 
 router.get('/', surveyController.ss);
 
+
 module.exports = router;

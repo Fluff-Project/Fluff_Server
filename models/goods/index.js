@@ -10,25 +10,23 @@ const goodsSchema = new Schema({
     name: String,
   },
 
-  comment: { type: String, required: false, unique: false },
+  comment: { type: String, required: false, unique: false, default: null },
 
-  color: { type: String, required: false, unique: false },
+  color: { type: String, required: false, unique: false, default: null },
 
-  category: { type: String, required: false, unique: false },
+  style: { type: String, required: false, unique: false, default: null},
 
-  mainImg: { type: String, required: true },
+  gender: { type: String, required: true, default: 'unisex', default: null},
 
   img: [String],
 
-  price: { type: Number, required: true },
+  price: { type: Number, required: true, default: 0},
 
-  grade: { type: Number, required: false, unique: false },
+  grade: { type: Number, required: false, unique: false, default: 0},
 
   size: size,
 
-  condition: { type: Number, required: true, unique: false },
-
-  style: { type: [String], required: true, unique: false },
+  condition: { type: Number, required: true, unique: false, default: 0 },
 
   createdAt: { type: Date, default: Date.now }
 });
