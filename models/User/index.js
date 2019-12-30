@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const keyword = require('./keyword');
+const style = require('./style');
 
 const userSchema = new Schema({
   // 이메일
@@ -44,7 +44,7 @@ const userSchema = new Schema({
   order: [{ cartGoods: { type: mongoose.Schema.Types.ObjectId, ref: 'Order' } }],
   
   // 관심사
-  keyword: keyword,
+  style: style,
 
   // 생성 시간
   createdAt: { type: Date, default: Date.now, }
