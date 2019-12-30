@@ -3,7 +3,7 @@ const { au, sc, rm } = require('../../modules/utils');
 
 exports.styleRec = (req, res) => {
   try {
-    const result = contentRecommend(req.decoded);
+    const rec = contentRecommend(req.decoded);
     console.log(`스타일 추천 sucess`);
     res.json({
       code: sc.OK,
