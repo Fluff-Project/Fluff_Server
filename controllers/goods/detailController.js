@@ -105,18 +105,15 @@ exports.useLike = async (req, res) => {
     
     if (like) {
       let user = await User.findById(req.decoded._id);
-      
-      let result = await user.updateOne({ $push: { like: goodsId }}).where({ _id: req.decoded._id });
-      console.log(result);
+      await user.updateOne({ $push: { like: mongoose.Types.ObjectId(goodsId) }}).where({ _id: req.decoded._id });
       
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.X_CREATE_SUCCESS(`좋아요 하기`), result.like)
+        json: au.successTrue(rm.X_CREATE_SUCCESS(`좋아요 하기`), { goodsId, state: true })
       });
     }
     let user = await User.findById(req.decoded._id);
-    let result = await user.updateOne({ $push: { like: goodsId }}).where({ _id: req.decoded._id });
-    console.log(result);  // debug
+    let result = await user.updateOne({ $push: { like: mongoose.Types.ObjectId(goodsId) }}).where({ _id: req.decoded._id });
 
     console.log(`'좋아요 취소' 작성 성공`);
     res.json({
