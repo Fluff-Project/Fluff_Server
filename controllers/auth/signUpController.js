@@ -4,7 +4,7 @@ const jwt = require('../../modules/auth/jwt');
 let { User } = require('../../models');
 const { au, sc, rm } = require('../../modules/utils');
 
-BASE_URI = '15.164.47.5:3000'
+BASE_URI = 'localhost:3000'
 
 /* 
   POST /auth/join
@@ -18,7 +18,7 @@ BASE_URI = '15.164.47.5:3000'
 exports.signUp = async (req, res) => {
   const { username, pwd, email, gender } = req.body;  // { username, pwd, email, gender }
   const user = { username, pwd, email, gender };
-  
+
   const checkExist = async (user) => {
     const savedUser = await User.findOne().where('email').equals(user.email);
     if (savedUser) {
@@ -30,9 +30,11 @@ exports.signUp = async (req, res) => {
   // 가데이터 저장
   const storeCache = async (user) => {
     try {      
-      client.hmset(user.email, "username", user.username, "email", user.email, "pwd", user.pwd, "gender", user.gender);
+      console.log(`debug1: ${user.email}`);
+      req.cache.hmset(user.email, "username", user.username, "email", user.email, "pwd", user.pwd, "gender", user.gender);
     } catch (err) {
       console.log('Redis store error!!!');
+      console.log(`Error logs: ${err}`);
     }
     return user;
   };
@@ -55,12 +57,16 @@ exports.signUp = async (req, res) => {
       }
     });
   
-    const token = await jwt.sign(user.username, user.email);
+    const token = await jwt.sign({ 
+      username: user.username,
+      email: user.email,
+      _id: 'sdfdsfaddfe',
+    });
     
-    const html = 
-    `<p>아래의 링크를 클릭해주세요!</p>
-    <a href='${BASE_URI}/users/emailAuthorization?email="${user.email}&token=${token.token}'>인증하기</a>`;
-  
+    console.log(`token: ${token.token}`);
+    
+    const html = `<p>아래의 링크를 클릭해주세요!</p> <a href='${BASE_URI}/auth/emailAuth?email=${user.email}&token=${token.token}'>인증하기</a>`;
+
     const mailOptions = {
       from: process.env.HOST_EMAIL,
       to: user.email,
@@ -106,7 +112,10 @@ exports.emailAuth = async (req, res) => {
     const check = jwt.verify(token);
     if (check) {
       let result = null;
-      await client.hgetall(email, async (err, obj) => {
+      await req.cache.hgetall(email, async (err, obj) => {
+        console.log(`**Debug: Email: ${obj.email}, username: ${obj.username} `);
+        console.log(`redis -> mongodb save 전`);
+        
         let user = new User(obj);
         result = await user.save();
 

@@ -12,6 +12,11 @@ const app = express();
 const client = redis.createClient(6379,'127.0.0.1');  // Local 실행
 // const client = redis.createClient(6379,'fluff-redis');  // AWS 실행
 
+app.use(function(req,res,next){
+  req.cache = client;
+  next();
+})
+
 connect();
 
 app.use(logger('dev'));
@@ -26,6 +31,10 @@ app.use('/recommend', require('./routes/recommend'));
 app.use('/goods', require('./routes/goods'));
 app.use('/search', require('./routes/search'));
 app.use('/auth', require('./routes/auth'));
+app.use('/recommend', require('./routes/recommend'));
+app.use('/survey', require('./routes//survey'));
+app.use('/cart', require('./routes//cart'));
+app.use('/order', require('./routes//order'));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

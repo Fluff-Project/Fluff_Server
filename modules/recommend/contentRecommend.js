@@ -25,9 +25,11 @@ module.exports = (user) => {
   })
   
   // get goods list and convert element 
-  const exDocuments = Goods.find().select('_id hashtag');
+  const exDocuments = Goods.findById(user._id).select('_id style');
+  exDocuments.style.sort();
+
   for (document of exDocuments) {
-    let content = document.hashtag.join(' ')
+    let content = document.style.join(' ')
 
     documents.push({
       id: document._id,

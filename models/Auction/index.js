@@ -10,10 +10,6 @@ const auctionSchema = new Schema({
 
   color: { type: [String], required: true, unique: false },
 
-  category: { type: String, required: true, unique: false },
-
-  hashtag: [{ type: [String], required: false, unique: true }],
-
   startCost: { type: Number, default: 10000, required: true },
 
   size: { type: String, required: true },
@@ -23,8 +19,6 @@ const auctionSchema = new Schema({
   style: { type: [String], required: true, unique: false },
 
   highestCost: { type: Number, default: 0 },
-
-  mainImg: { type: String, required: true },
 
   img: [String],
 
