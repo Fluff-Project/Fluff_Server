@@ -15,8 +15,33 @@ BASE_URI = '3.212.182.137:3000'
     gender
   }
 */
+exports.checkEmail = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const savedUser = await User.findOne().where('email').equals(email).select()
+    if (savedUser) {
+      console.log(`${email}는 이미 회원가입한 email입니다.`);
+      res.json({
+        code: sc.OK,
+        json: au.successTrue(`${email}는 이미 회원 가입한 email입니다.`, { email })
+      });
+    }
+    console.log(`${email}는 이미 회원가입 가능한 email입니다.`);
+      res.json({
+        code: sc.OK,
+        json: au.successTrue(`${email}는 회원 가입 가능한 email입니다.`, { email })
+      });
+  } catch (err) {
+    console.log(`email 중복 조회를 실패하였습니다.`);
+    res.json({
+      code: sc.INTERNAL_SERVER_ERROR,
+      json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
+    });
+  }
+}
+
 exports.signUp = async (req, res) => {
-  const { username, pwd, email, gender } = req.body;  // { username, pwd, email, gender }
+  const { username, email, pwd, gender } = req.body;  // { username, pwd, email, gender }
   const user = { username, pwd, email, gender };
 
   const checkExist = async (user) => {
