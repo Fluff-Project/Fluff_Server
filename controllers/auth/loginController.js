@@ -23,6 +23,10 @@ exports.login = async (req, res) => {
     // err
     if (user.pwd != savedUser.pwd) {
       console.log('비밀번호가 일치하지 않습니다.');
+      res.json({
+        code: BAD_REQUEST,
+        json: au.successFalse(`비밀번호가 일치하지 않습니다.`)
+      })
       throw new Error(`비밀번호가 일치하지 않습니다.`);
     }
     return savedUser;

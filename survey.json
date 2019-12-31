@@ -1,0 +1,163 @@
+{
+  "survey": {
+    "surveyVersion": "v1.0.1",
+    "surveyList": [
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/amekaji/%EC%95%84%EB%A9%94%EC%B9%B4%EC%A7%80%2C+%EB%9F%AC%EB%B8%94%EB%", 
+        "style": ["amekaji", "lovely"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/amekaji/%EC%95%84%EB%A9%94%EC%B9%B4%EC%A7%80%2C+%ED%8E%98%EB%AF%B8%EB%8B%", 
+        "style": ["amekaji", "feminine"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/amekaji/%EC%95%84%EB%A9%94%EC%B9%B4%EC%A7%80%2C%EB%9F%AC%EB%B8%94%EB%A6%AC(1).jpg", 
+        "style": ["amekaji", "lovely"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/amekaji/%EC%95%84%EB%A9%94%EC%B9%B4%EC%A7%80%2C%EB%9F%AC%EB%B8%94%EB%A6%AC.jpg", 
+        "style": ["amekaji", "lovely"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/ethnic/%EC%97%90%EC%8A%A4%EB%8B%89%2C+%EC%9C%A0%EB%8B%88%ED%81%AC.png", 
+        "style": ["ethnic", "unique"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/ethnic/%EC%97%90%EC%8A%A4%EB%8B%89%2C+%ED%8E%98%EB%AF%B8%EB%8B%8C.png", 
+        "style": ["ethnic", "feminine"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/ethnic/%EC%97%90%EC%8A%A4%EB%8B%89%2C%ED%8E%98%EB%AF%B8%EB%8B%8C.jpg", 
+        "style": ["ethnic", "feminine"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/feminine/%ED%8E%98%EB%AF%B8%EB%8B%8C%2C+%EC%9C%A0%EB%8B%88%ED%81%AC.jpg", 
+        "style": ["feminine", "unique"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/feminine/%ED%8E%98%EB%AF%B8%EB%8B%8C%2C%EB%9F%AC%EB%B8%94%EB%A6%AC.jpg", 
+        "style": ["feminine", "lovely"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/feminine/%ED%8E%98%EB%AF%B8%EB%8B%8C%2C%EB%9F%AC%EB%B8%94%EB%A6%AC.png", 
+        "style": ["feminine", "lovely"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/formal/%ED%8E%98%EB%AF%B8%EB%8B%8C%2C%ED%8F%AC%EB%A9%80.jpeg", 
+        "style": ["formal", "feminine"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/formal/%ED%8E%98%EB%AF%B8%EB%8B%8C%2C%ED%8F%AC%EB%A9%80.jpg", 
+        "style": ["formal", "feminine"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/formal/%ED%8F%AC%EB%A9%80%2C+%ED%8E%98%EB%AF%B8%EB%8B%8C.jpg", 
+        "style": ["formal", "feminine"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/formal/%ED%8F%AC%EB%A9%80%2C%EB%AA%A8%EB%8D%98%EC%8B%9C%ED%81%AC.jpg", 
+        "style": ["formal", "modernchic"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/lovely/%EB%9F%AC%EB%B8%94%EB%A6%AC%2C+%EC%97%90%EC%8A%A4%EB%8B%89.jpg",
+        "style": ["lovely", "ethnic"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/lovely/%EB%9F%AC%EB%B8%94%EB%A6%AC%2C%EC%8B%AC%ED%94%8C.jpg", 
+        "style": ["lovely", "simple"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/lovely/%EB%9F%AC%EB%B8%94%EB%A6%AC%2C%EC%95%84%EB%A9%94%EC%B9%B4%EC%A7%80.jpg", 
+        "style": ["lovely", "amekaji"]
+      },
+      { 
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/lovely/%EB%9F%AC%EB%B8%94%EB%A6%AC%2C%ED%8E%98%EB%AF%B8%EB%8B%8C.jpg",
+        "style": ["lovely", "feminine"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/modernchic/%EB%AA%A8%EB%8D%98%EC%8B%9C%ED%81%AC%2C+%EC%8B%AC%ED%94%8C", 
+        "style": ["modernchic", "simple"]
+      },       
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/modernchic/%EB%AA%A8%EB%8D%98%EC%8B%9C%ED%81%AC%2C+%EC%9C%A0%EB%8B%88AC.jpg", 
+        "style": ["modernchic", "unique"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/modernchic/%EB%AA%A8%EB%8D%98%EC%8B%9C%ED%81%AC%2C+%ED%8F%AC%EB%A9%80", 
+        "style": ["modernchic", "formal"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/oldschool/%EC%98%AC%EB%93%9C%EC%8A%A4%EC%BF%A8%2C+%EC%8A%A4%ED%8A%B8%EB%A6%BF(1).jpg", 
+        "style": ["oldschool", "street"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/oldschool/%EC%98%AC%EB%93%9C%EC%8A%A4%EC%BF%A8%2C+%EC%8A%A4%ED%8A%B8%EB%A6%BF.jpg", 
+        "style": ["oldschool", "street"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/oldschool/%EC%98%AC%EB%93%9C%EC%8A%A4%EC%BF%A8%2C%EC%8A%A4%ED%8F%AC%ED%8B%B0(1).jpg", 
+        "style": ["oldschool", "sporty"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/oldschool/%EC%98%AC%EB%93%9C%EC%8A%A4%EC%BF%A8%2C%EC%8A%A4%ED%8F%AC%ED%8B%B0.jpg", 
+        "style": ["oldschool", "sporty"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/simple/%EB%9F%AC%EB%B8%94%EB%A6%AC%2C%EC%8B%AC%ED%94%8C.jpg", 
+        "style": ["simple", "lovely"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/simple/%EC%8B%AC%ED%94%8C%2C+%ED%8E%98%EB%AF%B8%EB%8B%8C.jpg", 
+        "style": ["simple", "feminine"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/simple/%ED%8E%98%EB%AF%B8%EB%8B%8C%2C%EC%8B%AC%ED%94%8C.jpg", 
+        "style": ["simple", "feminine"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/sporty/%EC%8A%A4%ED%8F%AC%ED%8B%B0%2C+%EC%8A%A4%ED%8A%B8%EB%A6%BF(1).jpg", 
+        "style": ["sporty", "street"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/sporty/%EC%8A%A4%ED%8F%AC%ED%8B%B0%2C+%EC%8A%A4%ED%8A%B8%EB%A6%BF.jpg", 
+        "style": ["sporty", "street"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/sporty/%EC%8A%A4%ED%8F%AC%ED%8B%B0%2C+%EC%98%AC%EB%93%9C%EC%8A%A4%EC%BF%A8.jpg", 
+        "style": ["sporty", "oldschool"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/street/%EC%8A%A4%ED%8A%B8%EB%A6%BF%2C+%EC%8A%A4%ED%8F%AC%ED%8B%B0.jpg", 
+        "style": ["street", "sporty"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/street/%EC%8A%A4%ED%8A%B8%EB%A6%BF%2C+%EC%9C%A0%EB%8B%88%ED%81%AC.jpg", 
+        "style": ["street", "unique"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/street/%EC%8A%A4%ED%8A%B8%EB%A6%BF%2C%EC%9C%A0%EB%8B%88%ED%81%AC.jpg", 
+        "style": ["street", "unique"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/street/%EC%8B%9C%ED%81%AC%EB%A6%BF%2C+%EC%8A%A4%ED%8F%AC%ED%8B%B0.jpg", 
+        "style": ["street", "sporty"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/unique/%EC%9C%A0%EB%8B%88%ED%81%AC%2C+%EB%9F%AC%EB%B8%94%EB%A6%AC.jpg", 
+        "style": ["unique", "lovely"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/unique/%EC%9C%A0%EB%8B%88%ED%81%AC%2C+%ED%8E%98%EB%AF%B8%EB%8B%8C(1).jpg", 
+        "style": ["unique", "feminine"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/unique/%EC%9C%A0%EB%8B%88%ED%81%AC%2C+%ED%8E%98%EB%AF%B8%EB%8B%8C.jpg", 
+        "style": ["unique", "feminine"]
+      },
+      {
+        "img": "https://fluff-s3.s3.ap-northeast-2.amazonaws.com/survey/unique/%EC%9C%A0%EB%8B%88%ED%81%AC%2C%EB%AA%A8%EB%8D%98%EC%8B%9C%ED%81%AC.jpg", 
+        "style": ["unique", "modernchic"]
+      }
+    ]
+  }
+}

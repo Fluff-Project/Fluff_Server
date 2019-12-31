@@ -35,7 +35,7 @@ module.exports = {
     type: Number,
     default: 0,
   },
-  hiphop: {
+  feminine: {
     type: Number,
     default: 0,
   },

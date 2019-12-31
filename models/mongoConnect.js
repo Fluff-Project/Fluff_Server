@@ -21,4 +21,8 @@ module.exports = () => {
   });
   require('./User');
   require('./Goods');
+  require('./Order');
+  require('./Auction');
+  require('./Magazine');
+  require('./Survey');
 }

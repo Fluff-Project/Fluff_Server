@@ -1,16 +1,14 @@
-/**매거진 등록
- * POST | magazine/
- */
+/* 매거진 등록
+  POST magazine
+*/
 const Magazine = require('../../models/Magazine');
 const { au, sc, rm } = require('../../modules/utils');
 /*s3의 이미지 가져오기 */
 
 exports.postMagazine = async (req, res) => {
-
-  const articleImg = req.decoded.articleImg;
-  const magazine = new Magazine({ articleImg });
-
   try{
+    const articleImg = req.decoded.articleImg;
+    const magazine = new Magazine({ articleImg });
 
     magazine.save();
     console.log(magazine);  
@@ -22,12 +20,13 @@ exports.postMagazine = async (req, res) => {
         json: au.successFalse(rm.ARTICLE_LIST_NONE)
       });
     }
-
+    
     res.json({
       code: sc.OK,
       json: au.successTrue(rm.ARTICLE_SEND_SUCCESS, magazine)
     });
-  }catch(err){
+
+  } catch (err) {
     console.log(`item register failed error: ${err}`);
     res.json({
       code: sc.BAD_REQUEST,

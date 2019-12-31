@@ -4,96 +4,102 @@
 let Goods = require('../../models/Goods');
 const { au, sc, rm } = require('../../modules/utils');
 
+const generateRandom = (min, max) => {
+  let ranNum = Math.floor(Math.random()*(max-min+1)) + min;
+  return ranNum;
+}
+
 exports.register = async (req, res) => {
-  const { goodsName, sellerName, comment, color, category, price, gender, grade, size, condition, hashtag, style, createdAt} = req.body;
+  const { goodsName, comment, color, category, price, gender, size, condition, style} = req.body;
 
   let files = req.files;
   
   try{
 
-    const test = await Goods.findOne({ goodsName:goodsName });
+    const savedGoods = await Goods.findOne({ goodsName:goodsName });
 
-    if(!test.goodsName || !test.condition || !test.style || !test.price){
+    if(savedGoods){
+      console.log(`같은 이름으로 등록된 상품이 존재합니다.`);
       res.json({
         code: sc.BAD_REQUEST,
         json: au.successFalse(rm.ITEM_DATA_NOT_COMPLETE),
       }); 
-    } else{
+    }
 
-      if(files.length==0){
+    if(files.length==0){
+      console.log('업로드할 파일을 등록하지 않았습니다.');
+      res.json({
+        code: sc.BAD_REQUEST,
+        json: au.successFalse(rm.FILE_NONE),
+      }); 
+    }
+
+    let imageArr = files.map(it => it.location);
+    let mainImg = imageArr[0];
+    let images = imageArr.splice(1, imageArr.length-1);
   
-        console.log('업로드할 파일을 등록하지 않았습니다.');
-        res.json({
-          code: sc.BAD_REQUEST,
-          json: au.successFalse(rm.FILE_NONE),
-        }); 
-      }else{
-
-          let imageArr = files.map(it => it.location);
-          let mainImg = imageArr[0];
-          let images = imageArr.splice(1, imageArr.length-1);
-        
-          let goods =  new Goods({
-            goodsName: goodsName,
-            sellerName: sellerName,
-            comment: comment,
-            color: color,
-            gender: gender,
-            category: category,
-            mainImg: mainImg,   //image[0],
-            img: images,       //image[1] ~
-            price: price,
-            grade: grade,
-            size: size,
-            condition: condition,
-            hashtag: hashtag,
-            style: style,
-            createdAt: createdAt
-          })
-          
-          goods.save(); 
-          res.json({
-            code: sc.CREATED,
-            json: au.successTrue(rm.ITEM_INSERT_SUCCESS, goods),
-          }); 
+    let goods =  new Goods({
+      goodsName: goodsName,
+      sellerName: req.decoded.username,
+      comment: comment,
+      color: color,
+      gender: gender,
+      category: category,
+      mainImg: mainImg,   //image[0],
+      img: images,       //image[1] ~
+      price: price,
+      grade: generateRandom(0, 5),  // 난수 생성
+      size: size,
+      condition: condition,
+      style: style,
+    });
     
-      } //end else
-    } 
+    goods.save(); 
+    res.json({
+      code: sc.OK,
+      json: au.successTrue(rm.ITEM_INSERT_SUCCESS, goods),
+    }); 
+  
   } catch(err){
       console.log(`item register failed error: ${err}`);
       res.json({
-        code: sc.BAD_REQUEST,
-        json: au.successFalse(rm.ITEM_INSERT_FAIL)
+        code: sc.INTERNAL_SERVER_ERROR,
+        json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
       });
   } 
 }
 
-/** 상품 삭제
- * DELETE | management/delete
- */
-
+/* 상품 삭제
+  DELETE management/delete
+*/
 exports.delete = async (req, res) => {
-
-    const goodsName = req.decoded.goodsName;
-//  const { goodsName }  = req.body;
+  const { goodsId }  = req.body;
   try{
-    // db에서 조회해서 저 값이 있는지를 확인해야함. 
-    const test = await Goods.findOne({ goodsName: goodsName});
-    if(!test){
+
+    const result = await Goods.findByIdAndRemove(goodsId, { sellerId: req.decoded._id}, (err, documents) => {
+      if (err) {
+        console.log(`해당 유저의 상품이 아닙니다.`);
+        res.json({
+          code: sc.BAD_REQUEST,
+          json: au.successFalse(`해당 유저의 상품이 아닙니다.`)
+        });
+      }
+      console.log(`goodsId:[${goodsId}] 상품을 성공적으로 삭제하였습니다.`);
+      res.json({
+        code: sc.OK,
+        json: au.successTrue(rm.ITEM_DELETE_SUCCESS, documents)
+      });
+    });
+
+    if (!result) {
       console.log('삭제할 아이템이 존재하지 않습니다.')
       res.json({
         code: sc.BAD_REQUEST,
         json: au.successFalse(rm.NOT_FOUND_ID),
       }); 
-    };  
+    }
+    
 
-    const removeItem = await  Goods.findOneAndRemove({ goodsName });
-    removeItem.save();
-
-    res.json({
-      code: sc.OK,
-      json: au.successTrue(rm.ITEM_DELETE_SUCCESS, removeItem)
-    });
   } catch(err){
       console.log(`item delete failed error: ${err}`);
       res.json({
@@ -104,64 +110,52 @@ exports.delete = async (req, res) => {
 }
 
 
-/** 상품수정
- * PUT | management/update
- */
+/* 상품수정
+  PUT management/update
+*/
 exports.update = async (req, res) => {
-  
-  const { images, mainImg, sellerName, comment, color, category, price, grade, size, condition, hashtag, style, createdAt} = req.body;
-
-// 실제 작동시 이 코드로 사용하기!
-    const goodsName = req.decoded.goodsName;
-//  const { goodsName } = req.body;
-  
-  try{
-  
-    console.log(goodsName);
-
-    if(!goodsName){
-      console.log("권한없음");
+  try {
+    const { goodsId, goodsName, comment, color, category, price, gender, size, condition, style } = req.body;
+    
+    // all unaltered values are required.
+    if (!goodsId | !goodsName | !comment | !color | !category | !price| !gender | !size | !condition | !style) {
+      console.log(`수정을 위한 모든 값들이 충족되지 않았습니다.`);
       res.json({
-        code: sc.UNAUTHORIZED,
-        json: au.successFalse(rm.ITEM_UPDATE_FAIL)
+        code: sc.BAD_REQUEST,
+        json: au.successFalse(`수정을 위한 모든 값들이 충족되지 않았습니다.`)
+      });
+      
+    }
+    const options = { goodsName, comment, color, category, price, gender, size, condition, style };
+
+    const result = await Goods.findByIdAndUpdate(goodsId, options, (err, documents) => {
+      if (err) {
+        console.log(`해당 유저의 상품이 아닙니다.`);
+        res.json({
+          code: sc.BAD_REQUEST,
+          json: au.successFalse(`해당 유저의 상품이 아닙니다.`)
+        });
+      }
+      console.log(`goodsId:[${goodsId}] 상품을 성공적으로 수정하였습니다.`);
+      res.json({
+        code: sc.OK,
+        json: au.successTrue(rm.ITEM_UPDATE_SUCCESS, documents)
+      });
+    });
+    
+    if(!result){
+      console.log(`삭제할 상품이 존재하지 않습니다.`);
+      res.json({
+        code: sc.BAD_REQUEST,
+        json: au.successFalse(rm.BAD_REQUEST)
       });
     };
-/*
-    let files = req.files;
-    let imageArr = files.map(it => it.location);
-    let mainImg = imageArr[0];
-    let images = imageArr.splice(1, imageArr.length-1);
-  */
- //업데이트시 바뀌지 않은 값도 바뀌지 않은 그대로 넣어주세요
-    const change = await Goods.update(
-      { goodsName: goodsName}, 
-      { $set: {
-        sellerName: sellerName,
-        comment: comment,
-        color: color,
-        gender: gender,
-        category: category,
-        hashtag: hashtag,
-        mainImg: mainImg, 
-        img: images,  
-        price: price,
-        grade: grade,
-        size: size,
-        condition: condition,
-        hashtag: hashtag,
-        style: style,
-        createdAt: createdAt, 
-    }});
-
+    
+  } catch (err) {
+    console.log(`item update failed error: ${err}`);
     res.json({
-      code: sc.OK,
-      json: au.successTrue(rm.ITEM_UPDATE_SUCCESS, change)
+      code: sc.DB_ERROR,
+      json: au.successFalse(rm.ITEM_UPDATE_FAIL)
     });
-  } catch(err){
-      console.log(`item update failed error: ${err}`);
-      res.json({
-        code: sc.DB_ERROR,
-        json: au.successFalse(rm.ITEM_UPDATE_FAIL)
-      });
-    }
+  }
 }

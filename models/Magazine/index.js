@@ -7,7 +7,5 @@ const magazineSchema = new Schema({
     required: true
   },
 })
-//이미지하나로 때려박음!
-
 
 module.exports = mongoose.model('Magazine', magazineSchema);
