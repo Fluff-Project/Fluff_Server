@@ -33,10 +33,12 @@ app.use('/search', require('./routes/search'));
 app.use('/follow', require('./routes/follow'));
 app.use('/shopper', require('./routes/shopper'));
 app.use('/auth', require('./routes/auth'));
-app.use('/recommend', require('./routes/recommend'));
-app.use('/survey', require('./routes//survey'));
-app.use('/cart', require('./routes//cart'));
-app.use('/order', require('./routes//order'));
+app.use('/survey', require('./routes/survey'));
+app.use('/cart', require('./routes/cart'));
+app.use('/order', require('./routes/order'));
+app.use('/magazine', require('./routes/magazine'));
+app.use('/management', require('./routes/management'));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

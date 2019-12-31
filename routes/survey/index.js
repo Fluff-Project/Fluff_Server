@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const surveyController = require('../../controllers/survey/surveyController');
+const surveyController = require('../../controllers/survey/surveyController')
+const authMiddleware = require('../../middleware/authMiddleware');
 
-router.get('/', surveyController.ss);
+router.post('/', authMiddleware, surveyController.postSurvey);
+router.get('/', authMiddleware, surveyController.showSurvey);
 
 
 module.exports = router;

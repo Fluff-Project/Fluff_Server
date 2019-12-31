@@ -13,8 +13,8 @@
   DELETE	| /cart
  */
 
- let User = require('../../models/User');
- const { au,sc,rm } = require('../../modules/utils');
+let User = require('../../models/User');
+const { au,sc,rm } = require('../../modules/utils');
 
 exports.cartAdd = async (req, res) => {
   const userEmail = req.decoded.email; 
