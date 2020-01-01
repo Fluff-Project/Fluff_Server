@@ -9,8 +9,8 @@ const connect = require('./models/mongoConnect');
 require('dotenv').config();
 
 const app = express();
-// const client = redis.createClient(6379,'127.0.0.1');  // Local 실행
-const client = redis.createClient(6379,'fluff-redis');  // AWS 실행
+const client = redis.createClient(6379,'127.0.0.1');  // Local 실행
+// const client = redis.createClient(6379,'fluff-redis');  // AWS 실행
 
 app.use(function(req,res,next){
   req.cache = client;
@@ -38,6 +38,7 @@ app.use('/cart', require('./routes/cart'));
 app.use('/order', require('./routes/order'));
 app.use('/magazine', require('./routes/magazine'));
 app.use('/management', require('./routes/management'));
+app.use('/auction', require('./routes/auction'));
 
 
 // catch 404 and forward to error handler

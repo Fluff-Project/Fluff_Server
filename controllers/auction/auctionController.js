@@ -21,8 +21,8 @@ const { au, sc, rm } = require('../../modules/utils');
 */
 exports.regist = async (req, res) => {  // img는 multer로
   try {
-    const { auctionNmae, mainImg, img, color, category, hashtag, size, startCost, comment, condition, style } = req.body;
-    const auction = new Auction({ auctionNmae, mainImg, img, color, category, hashtag, size, startCost, comment, condition, style });
+    const { auctionNmae, img, color, category, hashtag, size, startCost, comment, condition, style } = req.body;
+    const auction = new Auction({ auctionNmae, img, color, category, hashtag, size, startCost, comment, condition, style });
     auction.save();
     console.log(`경매 등록완료`);
     res.json({
@@ -111,7 +111,11 @@ exports.auctionList = async (req, res) => {
 };
 
 /*
-  POST /autcion/bid
+  
+  GET /auction/:id
+*/
+/*
+  POST /auction/:id/bid
 */
 exports.bid = async (req, res) => {
   try {

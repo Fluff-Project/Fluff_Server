@@ -15,7 +15,6 @@ exports.register = async (req, res) => {
   let files = req.files;
   
   try{
-
     const savedGoods = await Goods.findOne({ goodsName:goodsName });
 
     if(savedGoods){
@@ -39,6 +38,7 @@ exports.register = async (req, res) => {
     let images = imageArr.splice(1, imageArr.length-1);
   
     let goods =  new Goods({
+      sellerId: req.decoded._id,
       goodsName: goodsName,
       sellerName: req.decoded.username,
       comment: comment,

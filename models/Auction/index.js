@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
 const auctionSchema = new Schema({
-  auctionNmae: { type: String, required: true, unique: true },
+  auctionName: { type: String, required: true, unique: true },
 
   sellerName: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 
@@ -15,6 +15,8 @@ const auctionSchema = new Schema({
   size: { type: String, required: true },
 
   condition: { type: Number, required: true, unique: false },
+
+  authorize: { type: Boolean, required: false },
 
   style: { type: [String], required: true, unique: false },
 

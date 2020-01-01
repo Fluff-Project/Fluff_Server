@@ -4,15 +4,13 @@ const jwt = require('../../modules/auth/jwt');
 let { User } = require('../../models');
 const { au, sc, rm } = require('../../modules/utils');
 
-BASE_URI = '3.212.182.137:3000'
+BASE_URI = process.env.BASE_URI;
 
 /* 
-  POST /auth/join
+  이메일 중복 체크
+  POST /auth/checkEmail
   {
-    email,
-    username,
-    pwd,
-    gender
+    email
   }
 */
 exports.checkEmail = async (req, res) => {
@@ -23,23 +21,76 @@ exports.checkEmail = async (req, res) => {
       console.log(`${email}는 이미 회원가입한 email입니다.`);
       res.json({
         code: sc.OK,
-        json: au.successTrue(`${email}는 이미 회원 가입한 email입니다.`, { email })
-      });
+        json: au.successTrue(rm.DB_DUPLICATE_ENTRY_ERROR, { email, duplication: true })
+      }); // rm is not an error here.
     }
-    console.log(`${email}는 이미 회원가입 가능한 email입니다.`);
+    console.log(`${email}는 회원가입 가능한 email입니다.`);
       res.json({
         code: sc.OK,
-        json: au.successTrue(`${email}는 회원 가입 가능한 email입니다.`, { email })
+        json: au.successTrue(rm.DB_NOT_MATCHED_ERROR, { email, duplication: false })
       });
   } catch (err) {
     console.log(`email 중복 조회를 실패하였습니다.`);
     res.json({
       code: sc.INTERNAL_SERVER_ERROR,
-      json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
+      json: au.successFalse(rm.DB_ERROR)
     });
   }
 }
 
+/*
+  이메일 인증 없이 바로 가입
+  POST /auth/directSignUp
+  {
+    email,
+    username,
+    pwd,
+    gender
+  }
+*/
+exports.directSignUp = async (req, res) => {
+  try {
+    const { username, email, pwd, gender } = req.body;  // { username, pwd, email, gender }
+
+    let user = new User({ username, pwd, email, gender });
+    const result = await user.save();
+    if (result) {
+      console.log(`Database에 저장하는 중 error가 발생했습니다.`);
+      res.json({
+        code: sc.FORBIDDEN,
+        json: au.successTrue(rm.DB_ERROR, result)
+      });
+    }
+
+    
+    console.log(`${email} 회원가입 성공`);
+    res.json({
+      code: sc.OK,
+      json: au.successTrue(X_CREATE_SUCCESS(`signUp`), result)
+    });
+  } catch (err) {
+    console.log(`Internal 데이터 베이스 저장`);
+    res.json({
+      code: sc.INTERNAL_SERVER_ERROR,
+      json: au.successTrue(rm.INTERNAL_SERVER_ERROR, result)
+    });
+  }
+
+
+}
+
+
+
+// This is optional ---------------------------------------------
+/* 
+  POST /auth/signUp
+  {
+    email,
+    username,
+    pwd,
+    gender
+  }
+*/
 exports.signUp = async (req, res) => {
   const { username, email, pwd, gender } = req.body;  // { username, pwd, email, gender }
   const user = { username, pwd, email, gender };
@@ -162,5 +213,6 @@ exports.emailAuth = async (req, res) => {
     console.log(`Error: Email 인증하기 에러 ${err}`);
   }
 }
+
 
 

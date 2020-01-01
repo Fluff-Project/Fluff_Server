@@ -18,7 +18,7 @@ exports.filter = async (req, res) => {
         .where('category').equals(category)
         .where('size').equals(size)
         .sort('createAt')
-        .select('_id goodsName mainImg prise')
+        .select('_id goodsName img prise')
         .limit(30);
 
     res.json({

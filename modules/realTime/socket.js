@@ -6,6 +6,10 @@ module.exports = (server, app) => {
 
   io.on('connection', (socket) => {
     const req = socket.request;
+    const auctionId = socket.handshake.query.auctionId;
+
+    console.log(auctionId);
+    
     const { headers: { referer }} = req;
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     console.log(`New User 접속!! ${ip}, ${socket.id}, ${req.ip}`);
@@ -19,12 +23,25 @@ module.exports = (server, app) => {
       console.log(`Socket Error발생: ${error}`);
     });
 
-    socket.on('joinAuction', (auctionId, username) => {
-      socket.join(auctionId, () => {
-        io.to(auctionId).emit('joinAuction', username)
-      });
+    // immediately join auction room
+    socket.join(auctionId, () => {
+      console.log(`join: ${auctionId}`);
+      io.sockets.in(auctionId).emit('joinAuction',`${auctionId}님이 접속되었습니다.`);
+      io.to(auctionId).emit('joinAuction', `${auctionId}님이 접속되었습니다.`)
+      io.sockets.in(auctionId).emit('send:message', test);
     });
 
+    socket.on('send:message', function(data) {
+      io.sockets.in(auctionId).emit('send:message', data.message);
+    });
+    // join
+    // socket.on('joinAuction', (auctionId, username) => {
+    //   socket.join(auctionId, () => {
+    //     io.to(auctionId).emit('joinAuction', username)
+    //   });
+    // });
+
+    // leave
     socket.on('leaveAuction', (auctionId, username) => {
       socket.leave(auctionId, () => {
         io.to(auctionId).emit('leaveRoom', username);

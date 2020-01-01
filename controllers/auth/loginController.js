@@ -34,6 +34,13 @@ exports.login = async (req, res) => {
 
   const createToken = async (user) => {
     try {
+      if(!user.hasOwnProperty('style')) {
+        console.log(`${user.username}의 취향분석이 존재하지 않음.`);
+        let token = await jwt.sign(user);
+        token.style = false;
+        
+        return token;
+      }
       return await jwt.sign(user);
       
     } catch (err) {
