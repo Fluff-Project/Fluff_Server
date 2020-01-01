@@ -2,6 +2,7 @@ let Goods = require('../../models/Goods');
 const { au, sc, rm } = require('../../modules/utils');
 
 /*
+  상품 필터링하기
   POST /goods/filter
   {
     color: 'red',

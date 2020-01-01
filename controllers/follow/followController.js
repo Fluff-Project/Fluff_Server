@@ -10,6 +10,7 @@
 */
 
 let User = require("../../models/User");
+let ObjectId = require('mongodb').ObjectID;
 const {
   au,
   sc,
@@ -123,14 +124,14 @@ exports.follow = async (req, res) => {
     console.log(n.length);
     // DB에 존재하고 status가 true면 팔로우 -> 팔로우 취소
     if (n.length > 0 & state == true) {
-      user.following.remove({
-        _id: sellerId
+      let result = user.following.remove({
+        _id: ObjectId(sellerId)
       });
       user.save();
 
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.X_CREATE_SUCCESS(`팔로우 취소`))
+        json: au.successTrue(rm.X_CREATE_SUCCESS(`팔로우 취소`),result)
       });
     } else {
       if (n.length > 0 & state == false) {
@@ -146,9 +147,9 @@ exports.follow = async (req, res) => {
             json: au.successFalse(rm.X_UPDATE_FAIL(`팔로우 안되어 있는데 상태가 true여서`))
           });
         } else {
-          user.following.push({
+          let result =user.following.push({
             following: {
-              _id: sellerId
+              _id: ObjectId(sellerId)
             }
           });
           user.save();
@@ -156,7 +157,7 @@ exports.follow = async (req, res) => {
 
           res.json({
             code: sc.OK,
-            json: au.successTrue(rm.X_CREATE_SUCCESS(`팔로우 성공`))
+            json: au.successTrue(rm.X_CREATE_SUCCESS(`팔로우 성공`),result)
           });
         };
       };

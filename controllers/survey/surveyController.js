@@ -2,7 +2,7 @@ let Survey = require('../../models/Survey');
 const { au, sc, rm } = require('../../modules/utils');
 
 /* 취향분석
-  GET survey
+  GET |/survey
 */
 exports.getSurvey = async (req, res) => {
   try {

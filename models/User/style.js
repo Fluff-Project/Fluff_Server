@@ -1,46 +1,35 @@
 module.exports = {
   simple: {
-    type: Number,
-    default: 0,
+    type: String
   },
   street: {
-    type: Number,
-    default: 0,
+    type: String
   },
   lovely: {
-    type: Number,
-    default: 0,
+    type: String
   },
   modernchic: {
-    type: Number,
-    default: 0,
+    type: String
   },
   unique: {
-    type: Number,
-    default: 0,
+    type: String
   },
   formal: {
-    type: Number,
-    default: 0,
+    type: String
   },
   ethnic: {
-    type: Number,
-    default: 0,
+    type: String
   },
   sporty: {
-    type: Number,
-    default: 0,
+    type: String
   },
   oldschool: {
-    type: Number,
-    default: 0,
+    type: String
   },
   feminine: {
-    type: Number,
-    default: 0,
+    type: String
   },
   amekaji: {
-    type: Number,
-    default: 0,
+    type: String
   }
 }

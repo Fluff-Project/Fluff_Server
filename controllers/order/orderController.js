@@ -10,12 +10,12 @@ let User = require('../../models/User');
 const { au, sc, rm } = require('../../modules/utils');
 
 exports.orderList = async (req,res)=>{
-  const userEmail = req.decoded.email;
+  const userId = req.decoded._id;
   const { orderList } = req.body;
 
   try{
-    let order = await User.updateOne({$push:{ order: { orderList }}}).where({email: userEmail},);
-    console.log(order);
+    let order = await User.updateOne({$push:{ order: { orderList }}}).where({_id: userId},);
+    console.log(order.order);
 
     if (order.nModified === 0) { 
       return res.json({
@@ -25,7 +25,7 @@ exports.orderList = async (req,res)=>{
     } else {
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.CART_DELETE_SUCCESS) 
+        json: au.successTrue(rm.CART_DELETE_SUCCESS,order.order) 
       });
     };
   } catch(err){
@@ -37,12 +37,15 @@ exports.orderList = async (req,res)=>{
   }
 };
 
-// 주문 리스트 조회하기
+/* 
+  주문 리스트 조회하기
+  GET | order/goodsList
+*/
 exports.readOrder = async (req, res)=>{
-  const userEmail = req.decoded.email;
+  const userId = req.decoded._id;
 
   try{
-    const orderList = await User.findOne({ email: userEmail });
+    const orderList = await User.findOne({ _id: userId });
     
     if (orderList.length == 0) { 
       return res.json({

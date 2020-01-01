@@ -21,7 +21,10 @@ module.exports = {
     DB_REFERENCE_ERROR: '잘못된 외래키입니다.',
     DB_NOT_MATCHED_ERROR: '해당 조건에 일치하는 데이터가 없습니다.',
     DB_DUPLICATE_ENTRY_ERROR: '중복되는 값이 이미 존재합니다',
-
+    DB_KEYWORD_UPDATE_SUCCESS: '스타일 업데이트가 성공했습니다',
+    DB_CART_INPUT_SUCCESS : '상품이 장바구니에 업데이트 되었습니다.',
+    DB_CART_INPUT_FALSE : '장바구니 업데이트가 실패했습니다',
+    DB_CART_FALSE :'장바구니가 비어있습니다',
     // item
     ITEM_FILTERING_SUCCESS: '제품 필터링을 성공하였습니다.',
     ITEM_FILTERING_FAIL: '제품 필터링을 실패하였습니다.',
