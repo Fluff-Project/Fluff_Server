@@ -7,12 +7,11 @@ const goodsSchema = new Schema({
   goodsName: { type: String, required: true, unique: true },
 
   // 판매자 username
-  sellerName: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  sellerName: { type: String, required: false, unique: false },
   
-  // sellerId
+  // sellerId  => 판매자 정보 가져올 때 필요 
   sellerId: { 
-    id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    name: String,
+    id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
   },
 
   // 판매자 한줄 평

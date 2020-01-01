@@ -10,7 +10,7 @@ const generateRandom = (min, max) => {
 }
 
 exports.register = async (req, res) => {
-  const { goodsName, comment, color, category, price, gender, size, condition, style} = req.body;
+  const { goodsName, comment, color, price, gender, size, condition, style} = req.body;
 
   let files = req.files;
   
@@ -19,7 +19,7 @@ exports.register = async (req, res) => {
     const savedGoods = await Goods.findOne({ goodsName:goodsName });
 
     if(savedGoods){
-      console.log(`같은 이름으로 등록된 상품이 존재합니다.`);
+      console.log('같은 이름으로 등록된 상품이 존재합니다.');
       res.json({
         code: sc.BAD_REQUEST,
         json: au.successFalse(rm.ITEM_DATA_NOT_COMPLETE),
@@ -40,11 +40,9 @@ exports.register = async (req, res) => {
   
     let goods =  new Goods({
       goodsName: goodsName,
-      sellerName: req.decoded.username,
       comment: comment,
       color: color,
       gender: gender,
-      category: category,
       mainImg: mainImg,   //image[0],
       img: images,       //image[1] ~
       price: price,
@@ -52,19 +50,24 @@ exports.register = async (req, res) => {
       size: size,
       condition: condition,
       style: style,
+      sellerId: {id: req.decoded._id}
     });
     
     goods.save(); 
+
+    let show = await Goods.find({ goodsName: goodsName }).select(" _id  mainImg ");
+    console.log(show);
+
     res.json({
       code: sc.OK,
-      json: au.successTrue(rm.ITEM_INSERT_SUCCESS, goods),
+      json: au.successTrue(rm.ITEM_INSERT_SUCCESS, show),
     }); 
-  
+
   } catch(err){
       console.log(`item register failed error: ${err}`);
       res.json({
         code: sc.INTERNAL_SERVER_ERROR,
-        json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
+        json: au.successFalse(rm.ITEM_INSERT_FAIL)
       });
   } 
 }
@@ -115,10 +118,10 @@ exports.delete = async (req, res) => {
 */
 exports.update = async (req, res) => {
   try {
-    const { goodsId, goodsName, comment, color, category, price, gender, size, condition, style } = req.body;
+    const { goodsId, goodsName, comment, color, price, gender, size, condition, style } = req.body;
     
     // all unaltered values are required.
-    if (!goodsId | !goodsName | !comment | !color | !category | !price| !gender | !size | !condition | !style) {
+    if (!goodsId | !goodsName | !comment | !color | !price| !gender | !size | !condition | !style) {
       console.log(`수정을 위한 모든 값들이 충족되지 않았습니다.`);
       res.json({
         code: sc.BAD_REQUEST,
@@ -130,10 +133,10 @@ exports.update = async (req, res) => {
 
     const result = await Goods.findByIdAndUpdate(goodsId, options, (err, documents) => {
       if (err) {
-        console.log(`해당 유저의 상품이 아닙니다.`);
+        console.log('해당 유저의 상품이 아닙니다.');
         res.json({
           code: sc.BAD_REQUEST,
-          json: au.successFalse(`해당 유저의 상품이 아닙니다.`)
+          json: au.successFalse('해당 유저의 상품이 아닙니다.')
         });
       }
       console.log(`goodsId:[${goodsId}] 상품을 성공적으로 수정하였습니다.`);
@@ -144,10 +147,10 @@ exports.update = async (req, res) => {
     });
     
     if(!result){
-      console.log(`삭제할 상품이 존재하지 않습니다.`);
+      console.log('수정할 상품이 존재하지 않습니다.');
       res.json({
         code: sc.BAD_REQUEST,
-        json: au.successFalse(rm.BAD_REQUEST)
+        json: au.successFalse(rm.NOT_FOUND_ID)
       });
     };
     
