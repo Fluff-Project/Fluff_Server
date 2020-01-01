@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const style = require('./style');
 
 const userSchema = new Schema({
   // 이메일
@@ -44,7 +43,7 @@ const userSchema = new Schema({
   grade: { type: Number, required: false },
   
   // 관심사
-  style: style,
+  style: { type: String, required: false },
   
   // 생성 시간
   createdAt: { type: Date, default: Date.now, },

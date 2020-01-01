@@ -18,6 +18,7 @@ router.post('/filter', authMiddleware, filterController.filter);
 
 // check like condition
 router.get('/:goodsId/like', authMiddleware, detailController.checkLike);
+
 // get like
 router.post('/:goodsId/like', authMiddleware, detailController.useLike);
 

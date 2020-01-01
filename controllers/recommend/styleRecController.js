@@ -1,9 +1,10 @@
 const contentRecommend = require('../../modules/recommend/contentRecommend');
 const { au, sc, rm } = require('../../modules/utils');
 
-exports.styleRec = (req, res) => {
+exports.styleRec = async (req, res) => {
   try {
-    const result = contentRecommend(req.decoded);
+    const result = await contentRecommend(req.decoded, 10);
+
     console.log('스타일 추천 success');
     res.json({
       code: sc.OK,
