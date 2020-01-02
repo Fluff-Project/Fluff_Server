@@ -4,7 +4,9 @@ const { Schema } = mongoose;
 const auctionSchema = new Schema({
   auctionName: { type: String, required: true, unique: true },
 
-  sellerName: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  sellerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+
+  sellerName: { type: String, required: false },
 
   comment: { type: String, required: true, unique: false },
 

@@ -21,7 +21,7 @@ router.post('/:goodsId/like', authMiddleware, detailController.useLike);
 
 // get goods category list
 // /goods?category={category}&page={7}
-router.get('/', listController.category);
+router.get('/', authMiddleware, listController.category);
 
 
 // count like

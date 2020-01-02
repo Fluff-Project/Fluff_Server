@@ -11,22 +11,22 @@ POST | recommend/keyDB
 */
 exports.keyDB = async (req, res) => {
   const userId = req.decoded._id;
-  const { getKeyList } = req.body;
+  const { style } = req.body;
 
   try {
     let user = await User.findOne({ _id : userId }); // id에 해당하는 유저의 정보모델
-    if (user.length === 0) { 
+    if (!user) { 
       return res.json({
         code: sc.BAD_REQUEST,
         json: au.successFalse(rm.DB_NOT_MATCHED_ERROR)
       });
     } else {
-      user.style = getKeyList;
-      user.save();
+      user.style = style;
+      await user.save();
 
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.DB_KEYWORD_UPDATE_SUCCESS,user.keyword) 
+        json: au.successTrue(rm.DB_KEYWORD_UPDATE_SUCCESS) 
       });
     };
   } catch (err) {
@@ -37,14 +37,3 @@ exports.keyDB = async (req, res) => {
     });
   }
 };
-
-
-
-
-
-
-
-
-
-
-

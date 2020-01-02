@@ -34,7 +34,7 @@ exports.login = async (req, res) => {
 
   const createToken = async (user) => {
     try {
-      if(!user.hasOwnProperty('style')) {
+      if(!user.style[0]) {
         console.log(`${user.username}의 취향분석이 존재하지 않음.`);
         let token = await jwt.sign(user);
         token.style = false;
@@ -46,7 +46,7 @@ exports.login = async (req, res) => {
     } catch (err) {
       console.log(`Login 후 Token 발행 중 Error 발생!!!: ${err}`);
       throw new Error(`Login 후 Token 발행 중 Error 발생!!!`);
-    }
+    };
   };
 
   // error occured

@@ -24,6 +24,8 @@ module.exports = async (user, page) => {
 
   // get top3 user style
   const savedUser = await User.findById(user._id);
+  console.log(savedUser);
+  
   let styleList = savedUser.style;
   let topStyleList = styleList.sort((a, b) => { return a - b });
   

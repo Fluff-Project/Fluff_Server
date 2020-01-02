@@ -1,9 +1,11 @@
 let { Goods, User } = require('../../models');
-
 const { au, sc, rm } = require('../../modules/utils');
 
-/*
- * GET /goods?category={category}&&page={7}
+
+/**
+ * @author ooeunz
+ * @see GET /goods?category=category&page=7
+ * @see GET /goods?sort=newest&page=7
  */
 exports.category = async (req, res) => {
   const { category, page, sort } = req.query;
@@ -14,15 +16,18 @@ exports.category = async (req, res) => {
     if (category) {
       goods = await Goods.find()
         .where('category').equals(category)
-        .select('goodsName, img, sellerName, price, _id')
+        .select('img goodsName sellerName price _id')
         .limit(Number(page));
+
+      console.log(goods);
+      
     };
-    if (sort) {
+    if (sort === 'newest') {
       goods = await Goods.find()
-        .select('goodsName, img, sellerName, price, _id')
-        .sort('createdAt')
+        .sort('createAt')
+        .select('img goodsName sellerName price _id')
         .limit(Number(page))
-    };
+    } else if (sort === 'ole');
 
     if (!goods) {
       console.log(`${category} 리스트 조회 실패`);
@@ -32,23 +37,34 @@ exports.category = async (req, res) => {
       });
     };
 
-    goods.img = img[0];
+    const userLike = await User.findById(req.decoded._id).select('like -_id');
+    let like = userLike.like;
 
-    // push like statement in goods element
-    for (it of goods) {
-      let userLike = await User.findById(req.decoded._id).select('like');
-      if (userLike.indexOf({ _id: goods[it]._id })) {
-        goods[it].like = true
+    let result = [];
+    for (good of goods) {
+
+      let isExist = (like.indexOf(good._id)!== -1)
+      let obj = {
+        img: good.img,
+        price: good.price,
+        _id: good._id.toString(),
+        goodsName: good.goodsName,
+        sellerName: good.sellerName
+      }
+
+      if (isExist) {
+        obj.like = true;
       } else {
-        goods[it].like = false
-      };
-    };
+        obj.like = false
+      }
+      result.push(obj)
+    }
 
     // success and return to client
     console.log(`${category} 리스트 ${page}개 조회`);
     res.json({
       code: sc.OK,
-      json: au.successTrue(`${category} 리스트 ${page}개 조회`, goods)
+      json: au.successTrue(`${category} 리스트 ${page}개 조회`, result)
     });
 
   } catch (err) {

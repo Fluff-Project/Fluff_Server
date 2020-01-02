@@ -6,7 +6,7 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true, default: null },
   
   // 비밀번호
-  pwd: { type: String, required: true, unique: true, default: null },
+  pwd: { type: String, required: true, unique: false, default: null },
 
   // 닉네임
   username: { type: String, required: true, unique: true, default: null },

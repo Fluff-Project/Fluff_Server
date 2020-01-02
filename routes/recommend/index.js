@@ -4,6 +4,7 @@ const authMiddleware = require('../../middleware/authMiddleware');
 
 const { styleRecController, sellerRecController, keyDBController } = require('../../controllers/recommend');
 
+
 router.get('/style', authMiddleware, styleRecController.styleRec);
 router.get('/seller', authMiddleware, sellerRecController.sellerRec);
 
