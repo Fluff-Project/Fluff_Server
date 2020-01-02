@@ -2,6 +2,7 @@ let Goods = require('../../models/Goods');
 const { au, sc, rm } = require('../../modules/utils');
 
 /*
+  상품 썸네일 사진 조회해서 보내주기
   GET /goods/thumbnail
 */
 exports.thumbnail = async (req, res) => {

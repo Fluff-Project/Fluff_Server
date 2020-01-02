@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
 let Goods = require('../../models/Goods');
 let User = require('../../models/User');
+let ObjectId = require('mongodb').ObjectID;
 const { au, sc, rm } = require('../../modules/utils');
 
 /*
+  상품 상세 페이지 조회
   GET /goods/:goodsId
 */
 exports.goodsDetail = async (req, res) => {
@@ -29,6 +31,7 @@ exports.goodsDetail = async (req, res) => {
 };
 
 /*
+  판매자의 다른 상품 보기
   GET /goods/seller/:sellerId
 */
 exports.sellerDetail = async (req, res) => {
@@ -61,6 +64,7 @@ exports.sellerDetail = async (req, res) => {
 };
 
 /*
+  좋아요 여부 조회
   GET /goods/:goodsId/like
 */
 exports.checkLike = async (req, res) => {
@@ -68,7 +72,7 @@ exports.checkLike = async (req, res) => {
     const { goodsId } = req.params;
     
     const user = await User.findById(req.decoded._id)
-      .where('like').in([{ _id: mongoose.Types.ObjectId(goodsId) }])
+      .where('like').in([{ _id: ObjectId(goodsId) }])
       .select('_id like');
 
     if (user) {
@@ -93,6 +97,7 @@ exports.checkLike = async (req, res) => {
 };
 
 /*
+  좋아요 누르기/취소 (찜 기능)
   POST /goods/:goodsId/like
   {
     like: true or false
@@ -105,7 +110,7 @@ exports.useLike = async (req, res) => {
     
     if (like) {
       let user = await User.findById(req.decoded._id);
-      await user.updateOne({ $push: { like: mongoose.Types.ObjectId(goodsId) }}).where({ _id: req.decoded._id });
+      await user.updateOne({ $push: { like: ObjectId(goodsId) }}).where({ _id: req.decoded._id });
       
       res.json({
         code: sc.OK,
@@ -113,7 +118,7 @@ exports.useLike = async (req, res) => {
       });
     }
     let user = await User.findById(req.decoded._id);
-    let result = await user.updateOne({ $push: { like: mongoose.Types.ObjectId(goodsId) }}).where({ _id: req.decoded._id });
+    let result = await user.updateOne({ $push: { like: ObjectId(goodsId) }}).where({ _id: req.decoded._id });
 
     console.log(`'좋아요 취소' 작성 성공`);
     res.json({

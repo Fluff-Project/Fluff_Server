@@ -7,11 +7,11 @@ let User = require("../../models/User");
 const { au,sc,rm } = require('../../modules/utils');
 
 exports.dibList = async (req, res) => {
-  const userEmail = req.decoded.email;
+  const userId = req.decoded._id;
 
   try {
     const dibList = await User.findOne({
-      email: userEmail
+      _id: userId
     });
     if (dibList.length === 0) {
       return res.json({

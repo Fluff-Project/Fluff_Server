@@ -1,4 +1,6 @@
-let User = require('../../models/User');
+let { User } = require('../../models');
+const { au, sc, rm } = require('../../modules/utils');
+
 /**
  * @author 정민 
  * 클라에게서 받은 style array를 db에 저장
@@ -7,11 +9,11 @@ let User = require('../../models/User');
     "style": ["simple", "unique", "amekaji"]
   }
  */
-
 exports.keyDB = async (req, res) => {
   const { au,sc,rm } = require('../../modules/utils');
   const userId = req.decoded._id;
   const { getKeyList } = req.body;
+
   try {
     let user = await User.findOne({ _id : userId }); // id에 해당하는 유저의 정보모델
     if (user.length === 0) { 
@@ -22,9 +24,10 @@ exports.keyDB = async (req, res) => {
     } else {
       user.style = getKeyList;
       user.save();
+
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.DB_KEYWORD_UPDATE_SUCCESS) // result 보내주면 좋긴 함.
+        json: au.successTrue(rm.DB_KEYWORD_UPDATE_SUCCESS,user.keyword) 
       });
     };
   } catch (err) {
