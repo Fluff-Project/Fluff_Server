@@ -2,19 +2,28 @@ let { Goods, User } = require('../../models');
 
 const { au, sc, rm } = require('../../modules/utils');
 
-/* 
-  카테고리 별 리스트
-  GET /goods?category={category}&page={7}
-*/
+/**
+ * @author ooeunz
+ * @see GET /goods?category={category}&&page={7}
+ */
 exports.category = async (req, res) => {
-  const { category, page } = req.query;
+  const { category, page, sort } = req.query;
   console.log(`${category} 상품을 ${page}만큼 받아옵니다.`);
 
   try {
-    const goods = await Goods.find()
-      .where('category').equals(category)
-      .select('goodsName, img, sellerName, price, _id')
-      .limit(Number(page));
+    let goods = null;
+    if (category) {
+      goods = await Goods.find()
+        .where('category').equals(category)
+        .select('goodsName, img, sellerName, price, _id')
+        .limit(Number(page));
+    }
+    if (sort) {
+      goods = await Goods.find()
+        .select('goodsName, img, sellerName, price, _id')
+        .sort('createAt')
+        .limit(Number(page))
+    }
 
     if (!goods) {
       console.log(`${category} 리스트 조회 실패`);

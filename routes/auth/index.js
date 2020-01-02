@@ -6,6 +6,7 @@ const { signUpController, loginController } = require('../../controllers/auth');
 router.post('/checkEmail', signUpController.checkEmail);
 router.post('/signUp', signUpController.signUp);
 router.get('/emailAuth', signUpController.emailAuth);
+router.post('/directSignUp', signUpController.directSignUp);
 
 // localLogin
 router.post('/login', loginController.login);

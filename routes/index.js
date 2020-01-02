@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const { User, Goods } = require('../models');
+
 let Survey = require('../models/Survey')
 
 
@@ -8,7 +10,7 @@ let Survey = require('../models/Survey')
 router.get('/', (req, res) => {
   console.log(`Server is running`);
   res.send(`Server is running`);
-})
+});
 
 router.post('/', async (req, res) => {
   const { survey } = req.body;
@@ -18,10 +20,14 @@ router.post('/', async (req, res) => {
   
   res.send(result);
   console.log(result);
-  
-})
+});
 
-
+// test
+router.get('/test', async (req, res) => {
+  const user = await Goods.findById('5e088351822cb15824cdb0ce');
+  console.log(user);
+  res.json(user);
+});
 
 
 

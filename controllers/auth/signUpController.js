@@ -54,14 +54,13 @@ exports.directSignUp = async (req, res) => {
 
     let user = new User({ username, pwd, email, gender });
     const result = await user.save();
-    if (result) {
+    if (!result) {
       console.log(`Database에 저장하는 중 error가 발생했습니다.`);
       res.json({
         code: sc.FORBIDDEN,
         json: au.successTrue(rm.DB_ERROR, result)
       });
     }
-
     
     console.log(`${email} 회원가입 성공`);
     res.json({
@@ -72,11 +71,9 @@ exports.directSignUp = async (req, res) => {
     console.log(`Internal 데이터 베이스 저장`);
     res.json({
       code: sc.INTERNAL_SERVER_ERROR,
-      json: au.successTrue(rm.INTERNAL_SERVER_ERROR, result)
+      json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
     });
   }
-
-
 }
 
 

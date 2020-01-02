@@ -1,23 +1,19 @@
 let { Auction } = require('../../models');
 const { au, sc, rm } = require('../../modules/utils');
 
-/* 
-  POST auction
-  {
-    auctionNmae: "경매 상품 이름",
-    mainImg: "메인 이미지",
-    img: ["이미지", "리스트"]
-
-    color: "상품 색상",
-    category: "상품 카테고리",
-    hashtag: "상품 해시태그",
-    size: "사이즈",
-
-    startCost: "시작 가격",
-    comment: "판매자 한줄 평",
-    condition: "상품 상태",
-    style: "스타일",
-  }
+/**
+ * @author ooeunz
+ * @see POST /auction
+ * 
+ * @param auctionName $경매 상품이 름
+ * @param img $이미지 리스트
+ * @param color $상품 색상
+ * @param category $상품 카태고리
+ * @param style $상품의 스타일 (취향 분석에 사용됨)
+ * @param size $사이즈
+ * @param startCost $시작 가격
+ * @param comment $판매자 한줄 평
+ * @param condition $상품 상태
 */
 exports.regist = async (req, res) => {  // img는 multer로
   try {

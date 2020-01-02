@@ -1,5 +1,5 @@
 const ContentBasedRecommender = require('content-based-recommender')
-const Goods = require('../../models/Goods');
+const { User, Goods } = require('../../models');
 
 const shuffle = (arr) => {
   let delta;
@@ -10,39 +10,55 @@ const shuffle = (arr) => {
   return arr;
 }
 
-module.exports = (user) => {
-
+/**
+ * @author ooeunz
+ * 
+ * @param user $req.decoded
+ * @param page $paging
+ */
+module.exports = async (user, page) => {
   const recommender = new ContentBasedRecommender({
     minScore: 0.1,
     maxSimilarDocuments: 100
   });
 
-  // get user info and push hashtag to content based recommend
+  // get top3 user style
+  const savedUser = await User.findById(user._id);
+  let styleList = savedUser.style;
+  let topStyleList = styleList.sort((a, b) => { return a - b });
+  
+  // get user info and push style to content based recommend
   let documents = [];
   documents.push({
-    id: user._id,
-    content: user.hashtag.join(' ')
+    id: user._id.toString(),
+    content: topStyleList.join(' ')
   })
   
   // get goods list and convert element 
-  const exDocuments = Goods.findById(user._id).select('_id style');
-  exDocuments.style.sort();
+  let exDocuments = await Goods.find().select('_id style');
 
-  for (document of exDocuments) {
-    let content = document.style.join(' ')
+  for (let element in exDocuments) {
+    if (exDocuments[element]._id === user._id.toString()) {
+      continue;
+    }
 
+    // for raise accuracy
+    let doc = exDocuments[element]
+      .style.sort((a, b) => { return a - b })
+      .join(' ')
+    
     documents.push({
-      id: document._id,
-      content: content
-    });
+      id: exDocuments[element]._id,
+      content: doc
+    })
   }
 
   // start training
   recommender.train(documents);
   
   //get top 20 similar goods to document user._id
-  const similarDocuments = recommender.getSimilarDocuments(user._id, 0, 20);
-  let result = shuffle(similarDocuments);
-  
-  return result.slice(0, 10);
+  const similarDocuments = recommender.getSimilarDocuments(user._id, 0, 30);
+  let result = shuffle(similarDocuments);  
+
+  return result.slice(0, page);
 }
