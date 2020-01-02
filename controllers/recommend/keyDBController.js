@@ -22,11 +22,11 @@ exports.keyDB = async (req, res) => {
       });
     } else {
       user.style = style;
-      const result = await user.save();
+      await user.save();
 
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.DB_KEYWORD_UPDATE_SUCCESS, result) 
+        json: au.successTrue(rm.DB_KEYWORD_UPDATE_SUCCESS) 
       });
     };
   } catch (err) {
