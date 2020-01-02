@@ -1,36 +1,26 @@
 /* 
-*   PUT| shopper/toSeller  셀러로 전환 
+*   POST| shopper/toSeller  셀러로 전환 
 */
-
 let User = require("../../models/User");
-
 const { au,sc,rm } = require('../../modules/utils');
 
 exports.toSeller = async (req, res) => {
-  let id = req.decoded._id;
-  let file = req.file;
-  let sellerName = req.decoded.username;
 
-  console.log(`sellerId : ${ sellerId }`);
+  let file = req.file;
+  let id = req.decoded._id;
+
   try {
 
     let image = file.location;
     console.log(`확인: ${image}`);
 
-
-
     let seller = await User.findOneAndUpdate({ _id: id }, { 
-   //   $push: {saleList:{ saleList}},
-      $set: {sellerAuth: true, sellerImg:image, sellerName:sellerName }
+      $set: {sellerAuth: true, sellerImg:image }
     })
-    seller.save();
-    console.log(seller);
-    console.log(`goods!!!!!!!!!!!! :${goods}`);
 
-
-
-  //  let show = await User.find({_id: sellerId}).select("_id sellerAuth sellerImg sellerId");
+    let show = await User.find({_id: id}).select("_id sellerAuth sellerImg");
     console.log(show);
+
     if(!seller){
       res.json({
         code: sc.BAD_REQUEST,
@@ -40,7 +30,7 @@ exports.toSeller = async (req, res) => {
       console.log('셀러 전환 성공');
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.CHANGE_TO_SELLER_SUCCESS, seller)
+        json: au.successTrue(rm.CHANGE_TO_SELLER_SUCCESS, show)
       });
 
     }catch (err) {
