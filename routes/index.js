@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { User, Goods } = require('../models');
+const { User, Goods, Order } = require('../models');
 
 let Survey = require('../models/Survey')
 
@@ -24,11 +24,13 @@ router.post('/', async (req, res) => {
 
 // test
 router.get('/test', async (req, res) => {
-  const user = await Goods.findById('5e088351822cb15824cdb0ce');
-  console.log(user);
-  res.json(user);
+
+  let order = new Order();
+  order.orderName = 'abcdefg';
+  const result = await order.save();
+
+  console.log(result);
+  res.json(result);
 });
-
-
 
 module.exports = router;

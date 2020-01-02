@@ -10,23 +10,24 @@ const { au, sc, rm } = require('../../modules/utils');
 exports.category = async (req, res) => {
   const { category, page, sort } = req.query;
   console.log(`${category} 상품을 ${page}만큼 받아옵니다.`);
-  console.log('123213123123');
-  
-  
 
   try {
     let goods = null;
     if (category) {
       goods = await Goods.find()
         .where('category').equals(category)
-        // .select('img goodsName, sellerName, price, _id')
+        .select('img goodsName sellerName price _id')
         .limit(Number(page));
+
+      console.log(goods);
+      
     };
-    if (sort) {
+    if (sort === 'newest') {
       goods = await Goods.find()
         .sort('createAt')
+        .select('img goodsName sellerName price _id')
         .limit(Number(page))
-    };
+    } else if (sort === 'ole');
 
     if (!goods) {
       console.log(`${category} 리스트 조회 실패`);
@@ -36,36 +37,34 @@ exports.category = async (req, res) => {
       });
     };
 
-    // push like statement in goods element
+    const userLike = await User.findById(req.decoded._id).select('like -_id');
+    let like = userLike.like;
+
     let result = [];
-    for (idx of goods) {
-      let userLike = await (await User.findById(req.decoded._id)).isSelected('like');
-      console.log(userLike);
-      
+    for (good of goods) {
 
-      let product = {
-        goodsName: goods[idx].goodsName,
-        mainImg: goods[idx].img[0],
-        sellerName: goods[idx].sellerName,
-        price: goods[idx].price,
-        _id: goods[idx]._id,
+      let isExist = (like.indexOf(good._id)!== -1)
+      let obj = {
+        img: good.img,
+        price: good.price,
+        _id: good._id.toString(),
+        goodsName: good.goodsName,
+        sellerName: good.sellerName
       }
 
-      if (userLike.indexOf({ _id: goods[idx]._id })) {
-        product.like = true;
-        result.push(product);
-
+      if (isExist) {
+        obj.like = true;
       } else {
-        product.like = false;
-        result.push(product);
+        obj.like = false
       }
+      result.push(obj)
     }
 
     // success and return to client
     console.log(`${category} 리스트 ${page}개 조회`);
     res.json({
       code: sc.OK,
-      json: au.successTrue(`${category} 리스트 ${page}개 조회`, goods)
+      json: au.successTrue(`${category} 리스트 ${page}개 조회`, result)
     });
 
   } catch (err) {
