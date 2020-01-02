@@ -9,7 +9,6 @@ const { au, sc, rm } = require('../../modules/utils');
  * @param page $페이징
  */
 exports.styleRec = async (req, res) => {
-  
   const { page } = req.query;
 
   try {

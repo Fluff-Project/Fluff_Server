@@ -121,7 +121,6 @@ exports.follow = async (req, res) => {
         n.push(user.following[i]._id);
       }
     };
-    console.log(n.length);
     // DB에 존재하고 status가 true면 팔로우 -> 팔로우 취소
     if (n.length > 0 & state == true) {
       let result = user.following.remove({
@@ -147,17 +146,14 @@ exports.follow = async (req, res) => {
             json: au.successFalse(rm.X_UPDATE_FAIL(`팔로우 안되어 있는데 상태가 true여서`))
           });
         } else {
-          let result =user.following.push({
-            following: {
-              _id: ObjectId(sellerId)
-            }
-          });
+          let result = user.following.push({_id: ObjectId(sellerId)});
+          console.log(result);
           user.save();
           console.log(`팔로우 성공`);
 
           res.json({
             code: sc.OK,
-            json: au.successTrue(rm.X_CREATE_SUCCESS(`팔로우 성공`),result)
+            json: au.successTrue(rm.X_CREATE_SUCCESS(`팔로우 성공`),result.following)
           });
         };
       };

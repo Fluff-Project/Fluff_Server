@@ -6,7 +6,7 @@ const toSellerController = require('../../controllers/shopper/toSellerController
 const upload = require('../../config/multer');
 
 router.get('/dibList',authMiddleware,dibController.dibList);
-router.post('/toSeller',upload.single('image'),authMiddleware,toSellerController.toSeller);
+router.post('/toSeller',authMiddleware, upload.single('image'), toSellerController.toSeller);
 
 
 module.exports = router;

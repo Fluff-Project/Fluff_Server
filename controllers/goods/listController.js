@@ -1,6 +1,7 @@
 let { Goods, User } = require('../../models');
 const { au, sc, rm } = require('../../modules/utils');
 
+
 /**
  * @author ooeunz
  * @see GET /goods?category=category&page=7
@@ -20,13 +21,12 @@ exports.category = async (req, res) => {
         .where('category').equals(category)
         // .select('img goodsName, sellerName, price, _id')
         .limit(Number(page));
-    }
+    };
     if (sort) {
       goods = await Goods.find()
-        // .select('goodsName, img, sellerName, price, _id')
         .sort('createAt')
         .limit(Number(page))
-    }
+    };
 
     if (!goods) {
       console.log(`${category} 리스트 조회 실패`);
@@ -34,7 +34,7 @@ exports.category = async (req, res) => {
         code: sc.FORBIDDEN,
         json: au.successFalse(`${category} 리스트 조회 실패`)
       });
-    }
+    };
 
     // push like statement in goods element
     let result = [];
@@ -75,5 +75,5 @@ exports.category = async (req, res) => {
       code: sc.INTERNAL_SERVER_ERROR,
       json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
     });
-  }
+  };
 };
