@@ -2,10 +2,10 @@ let { Goods, User } = require('../../models');
 
 const { au, sc, rm } = require('../../modules/utils');
 
-/* 
-  카테고리 별 리스트
-  GET /goods?category={category}&&page={7}
-*/
+/**
+ * @author ooeunz
+ * @see GET /goods?category={category}&&page={7}
+ */
 exports.category = async (req, res) => {
   const { category, page, sort } = req.query;
   console.log(`${category} 상품을 ${page}만큼 받아옵니다.`);
@@ -20,7 +20,7 @@ exports.category = async (req, res) => {
     }
     if (sort) {
       goods = await Goods.find()
-        .select('goodsName, img, sellerName, price, _id ')
+        .select('goodsName, img, sellerName, price, _id')
         .sort('createAt')
         .limit(Number(page))
     }

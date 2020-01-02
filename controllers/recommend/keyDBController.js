@@ -1,16 +1,17 @@
-/*
-정민
-클라에게서 받은 keyword,cnt값을 그 userId를 가진 DB에 저장하기
-POST | recommend/keyDB
-{
-    keyword : cnt
-} * 30개
-*/
 let User = require('../../models/User');
-const { au,sc,rm } = require('../../modules/utils');
+/**
+ * @author 정민 
+ * 클라에게서 받은 style array를 db에 저장
+ * POST recommend/keyDB
+  {
+    "style": ["simple", "unique", "amekaji"]
+  }
+ */
+
 exports.keyDB = async (req, res) => {
+  const { au,sc,rm } = require('../../modules/utils');
   const userId = req.decoded._id;
-  const getKeyList = req.body;
+  const { getKeyList } = req.body;
   try {
     let user = await User.findOne({ _id : userId }); // id에 해당하는 유저의 정보모델
     if (user.length === 0) { 
@@ -19,7 +20,7 @@ exports.keyDB = async (req, res) => {
         json: au.successFalse(rm.DB_NOT_MATCHED_ERROR)
       });
     } else {
-      user.keyword = getKeyList;
+      user.style = getKeyList;
       user.save();
       res.json({
         code: sc.OK,

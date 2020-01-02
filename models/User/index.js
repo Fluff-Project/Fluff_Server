@@ -43,7 +43,7 @@ const userSchema = new Schema({
   grade: { type: Number, required: false },
   
   // 관심사
-  style: { type: String, required: false },
+  style: { type: [String], required: false },
   
   // 생성 시간
   createdAt: { type: Date, default: Date.now, },
