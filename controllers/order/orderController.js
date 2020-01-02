@@ -25,7 +25,7 @@ exports.orderList = async (req,res)=>{
     } else {
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.CART_DELETE_SUCCESS,order.order) 
+        json: au.successTrue(rm.CART_DELETE_SUCCESS,order.nModified) 
       });
     };
   } catch(err){
@@ -64,5 +64,4 @@ exports.readOrder = async (req, res)=>{
       json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
     });
   }
-
 };

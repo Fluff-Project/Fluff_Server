@@ -49,26 +49,22 @@ exports.checkEmail = async (req, res) => {
   }
 */
 exports.directSignUp = async (req, res) => {
-  try {
-    const { username, email, pwd, gender } = req.body;  // { username, pwd, email, gender }
+  const { username, email, pwd, gender } = req.body;  // { username, pwd, email, gender }
 
+  try {
     let user = new User({ username, pwd, email, gender });
+
     const result = await user.save();
-    if (!result) {
-      console.log(`Database에 저장하는 중 error가 발생했습니다.`);
-      res.json({
-        code: sc.FORBIDDEN,
-        json: au.successTrue(rm.DB_ERROR, result)
-      });
-    }
-    
     console.log(`${email} 회원가입 성공`);
     res.json({
       code: sc.OK,
-      json: au.successTrue(X_CREATE_SUCCESS(`signUp`), result)
+      json: au.successTrue(rm.X_CREATE_SUCCESS(`signUp`), result)
+
     });
   } catch (err) {
-    console.log(`Internal 데이터 베이스 저장`);
+    console.log(`데이터 베이스 Internal error`);
+    console.log(`Error Code: ${err}`);
+    
     res.json({
       code: sc.INTERNAL_SERVER_ERROR,
       json: au.successFalse(rm.INTERNAL_SERVER_ERROR)

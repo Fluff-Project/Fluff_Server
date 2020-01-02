@@ -130,7 +130,7 @@ exports.useLike = async (req, res) => {
     console.log(`좋아요 작성 실패`);
     res.json({
       code: sc.INTERNAL_SERVER_ERROR,
-      json: au.successTrue(rm.X_CREATE_FAIL(`좋아요`))
+      json: au.successFalse(rm.X_CREATE_FAIL(`좋아요`))
     });
   }
 }

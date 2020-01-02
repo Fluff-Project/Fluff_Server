@@ -1,26 +1,29 @@
 let { Goods, User } = require('../../models');
-
 const { au, sc, rm } = require('../../modules/utils');
 
 /**
  * @author ooeunz
- * @see GET /goods?category={category}&&page={7}
+ * @see GET /goods?category=category&page=7
+ * @see GET /goods?sort=newest&page=7
  */
 exports.category = async (req, res) => {
   const { category, page, sort } = req.query;
   console.log(`${category} 상품을 ${page}만큼 받아옵니다.`);
+  console.log('123213123123');
+  
+  
 
   try {
     let goods = null;
     if (category) {
       goods = await Goods.find()
         .where('category').equals(category)
-        .select('goodsName, img, sellerName, price, _id')
+        // .select('img goodsName, sellerName, price, _id')
         .limit(Number(page));
     }
     if (sort) {
       goods = await Goods.find()
-        .select('goodsName, img, sellerName, price, _id')
+        // .select('goodsName, img, sellerName, price, _id')
         .sort('createAt')
         .limit(Number(page))
     }
@@ -33,15 +36,28 @@ exports.category = async (req, res) => {
       });
     }
 
-    goods.img = img[0]
-
     // push like statement in goods element
-    for (it of goods) {
-      let userLike = await User.findById(req.decoded._id).select('like');
-      if (userLike.indexOf({ _id: goods[it]._id })) {
-        goods[it].like = true
+    let result = [];
+    for (idx of goods) {
+      let userLike = await (await User.findById(req.decoded._id)).isSelected('like');
+      console.log(userLike);
+      
+
+      let product = {
+        goodsName: goods[idx].goodsName,
+        mainImg: goods[idx].img[0],
+        sellerName: goods[idx].sellerName,
+        price: goods[idx].price,
+        _id: goods[idx]._id,
+      }
+
+      if (userLike.indexOf({ _id: goods[idx]._id })) {
+        product.like = true;
+        result.push(product);
+
       } else {
-        goods[it].like = false
+        product.like = false;
+        result.push(product);
       }
     }
 

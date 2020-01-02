@@ -2,10 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 
 const authMiddleware = require('../../middleware/authMiddleware');
-const { detailController, filterController, thumbnailController, listController } = require('../../controllers/goods')
-
-// get thumbnail list
-router.get('/thumbnail', authMiddleware, thumbnailController.thumbnail);
+const { detailController, filterController, listController } = require('../../controllers/goods')
 
 // get goods detail
 router.get('/:goodsId', authMiddleware, detailController.goodsDetail);
@@ -24,7 +21,7 @@ router.post('/:goodsId/like', authMiddleware, detailController.useLike);
 
 // get goods category list
 // /goods?category={category}&page={7}
-router.get('/', listController.category);
+router.get('/', authMiddleware, listController.category);
 
 
 // count like

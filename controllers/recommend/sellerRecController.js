@@ -38,7 +38,7 @@ exports.sellerRec = async (req, res) => {
         sellerId: seller[idx]._id,
         sellerName: seller[idx].username,
         sellerImg: seller[idx].sellerImg,
-        goodsMainImg: goods.img[0]
+        img: goods.img
       }
 
       result.push(obj);
