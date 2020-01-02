@@ -14,7 +14,7 @@ exports.goodsDetail = async (req, res) => {
     console.log(`goodId: ${goodsId}`);
 
     const goodsDetail = await Goods.findById(goodsId)
-      .select('_id mainImg img size condition comment grade');
+      .select('_id mainImg img size condition comment grade sellerId');
     console.log(`goodDetail: ${goodsDetail}`);
 
     res.json({
@@ -38,9 +38,9 @@ exports.sellerDetail = async (req, res) => {
   try {
     const { sellerId } = req.params;
     const sellerGoods = await Goods.find()
-      .where('seller').equals(sellerId)
+      .where('sellerId').equals(sellerId)
       .sort('createdAt')
-      .select('_id goodsName mainImg prise')
+      .select('_id goodsName mainImg price')
       .limit(5);
     console.log(sellerGoods,sellerId)
     if (!sellerGoods) {
@@ -135,8 +135,7 @@ exports.useLike = async (req, res) => {
     console.log(`좋아요 작성 실패`);
     res.json({
       code: sc.INTERNAL_SERVER_ERROR,
-      json: au.successFalse(rm.X_CREATE_FAIL(`좋아요`))
-
+      json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
     });
   };
 };

@@ -78,16 +78,16 @@ exports.cartList = async (req, res) => {
 
       // 이거가 여러개일 때 어떻게 배열로 넣어서 주지? -> shopper/dib도 같은 이슈였음.
       for (var i=0;i< c.length; i++) {
-        var user_name = await User.findById(c[i].sellerName);
+        var user_name = await User.findById(c[i].sellerId);
         var userName = user_name.username;
         var sellerName = c[i].userName;
-        var Img = c[i].mainImg;
+        var Img = c[i].img;
         var goodsId = c[i]._id;
         var goodsName = c[i].goodsName;
         var price = c[i].price;
         goodsList.push({userName,sellerName,Img,goodsId,goodsName,price});
       };
-    
+      
       res.json({
         code: sc.OK,
         json: au.successTrue(rm.CART_READ_SUCCESS,goodsList)
@@ -153,10 +153,11 @@ exports.cartDelete = async (req, res) => {
       } else {
         cartList.cart = cart;
         cartList.save();
+        const data = cartList.cart
 
         res.json({
           code: sc.OK,
-          json: au.successTrue(rm.X_DELETE_SUCCESS('장바구니에서'))
+          json: au.successTrue(rm.X_DELETE_SUCCESS('장바구니에서'),data)
         });
       };
     };

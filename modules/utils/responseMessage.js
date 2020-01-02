@@ -25,6 +25,7 @@ module.exports = {
     DB_CART_INPUT_SUCCESS : '상품이 장바구니에 업데이트 되었습니다.',
     DB_CART_INPUT_FALSE : '장바구니 업데이트가 실패했습니다',
     DB_CART_FALSE :'장바구니가 비어있습니다',
+    DB_NO_MATCH_FILTER : '필터링 조건에 맞는 상품이 없습니다.',
     // item
     ITEM_FILTERING_SUCCESS: '제품 필터링을 성공하였습니다.',
     ITEM_FILTERING_FAIL: '제품 필터링을 실패하였습니다.',

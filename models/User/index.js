@@ -22,12 +22,12 @@ const userSchema = new Schema({
 
   // 팔로우 리스트
   following: [
-    { followingUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User',  default: null }}
+    { followingUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}}
   ],
 
   // 팔로워 리스트
   follower: [
-    { followerUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User',  default: null }},
+    { followerUser: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}},
   ],
 
   // 찜 목록
