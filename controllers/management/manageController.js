@@ -2,7 +2,9 @@
  * POST | management/registration
 */
 let Goods = require('../../models/Goods');
+let Users = require('../../models/User');
 const { au, sc, rm } = require('../../modules/utils');
+let ObjectId = require('mongodb').ObjectID;
 
 const generateRandom = (min, max) => {
   let ranNum = Math.floor(Math.random()*(max-min+1)) + min;
@@ -13,7 +15,7 @@ exports.register = async (req, res) => {
   const { goodsName, comment, color, price, gender, size, condition, style} = req.body;
 
   let files = req.files;
-  
+  let id = req.decoded._id;
   try{
 
     const savedGoods = await Goods.findOne({ goodsName:goodsName });
@@ -35,27 +37,32 @@ exports.register = async (req, res) => {
     }
 
     let imageArr = files.map(it => it.location);
-    let mainImg = imageArr[0];
-    let images = imageArr.splice(1, imageArr.length-1);
   
     let goods =  new Goods({
       goodsName: goodsName,
       comment: comment,
       color: color,
       gender: gender,
-      mainImg: mainImg,   //image[0],
-      img: images,       //image[1] ~
+      img: imageArr,       
       price: price,
       grade: generateRandom(0, 5),  // 난수 생성
       size: size,
       condition: condition,
       style: style,
-      sellerId: {id: req.decoded._id}
+      sellerId: id
     });
     
-    goods.save(); 
+    goods.save();   //상품등록 성공하면 이제 판매자의 sale list 에도 들어가야함
+  
+    let goodsId = goods._id;
 
-    let show = await Goods.find({ goodsName: goodsName }).select(" _id  mainImg ");
+    let saleLists = await Users.findById(goods.sellerId);
+    saleLists.saleList.push({_id: ObjectId(goodsId)});
+    
+    saleLists.save();      //판매자의 saleList 에도 goodsId 가 들어감 
+
+    
+    let show = await Goods.findOne({ goodsName: goodsName }).select(" _id  img");
     console.log(show);
 
     res.json({
