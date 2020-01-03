@@ -8,10 +8,9 @@ router.get('/', (req, res) => {
   res.send('/auction')
 })
 
-// router.get('/', authMiddleware, )
-router.get('/test', (req, res) => {
-  app.get('io').to(3).emit('test', bid);
-  res.send('success')
-})
+router.post('/:auctionId/bid', authMiddleware, auctionController.bid);
+router.get('/auctionList', authMiddleware, auctionController.auctionList);
+
 router.post('/register',  authMiddleware, auctionController.register);
+
 module.exports = router;

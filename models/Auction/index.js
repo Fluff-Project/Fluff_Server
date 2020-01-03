@@ -26,11 +26,11 @@ const auctionSchema = new Schema({
 
   saleAuth: { type: Boolean, default: false },
 
-  // 경매 종료까지 남은 시간
-  restTime: { type: Date, default: true }, 
+  // 마감 시간(남은 시간)
+  deadline: { type: Date }, 
 
   // 경매 인가(시작) 시간
-  authTime: { type: Date, default: true },
+  authTime: { type: Date },
 
   // 마감 시간
   deadline: { type: Date },
@@ -43,7 +43,6 @@ const auctionSchema = new Schema({
       bid: { type: Number }, // 처음 가격으로 설정
       createdAt: { type: Date, default: Date.now }
   }],
-
 
   // 경매 시간
   period: { type: Number, required: false },
