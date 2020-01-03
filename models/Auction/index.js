@@ -31,8 +31,13 @@ const auctionSchema = new Schema({
   bid: [{
       userId: { type: mongoose.Schema.Types.ObjectId, ref:'User'},
       bid: Number,
-      msg: String
     }],
+
+  // 경매 시간
+  period: { type: Number, required: false },
+
+  // authroize: true와 동시에 기록됨.
+  deadline: { type: Date, required: false },
 
   createdAt: { type: Date, default: Date.now }
 });

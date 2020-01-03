@@ -6,8 +6,6 @@ const logger = require('morgan');
 const redis = require('redis');
 const connect = require('./models/mongoConnect');
 
-
-
 require('dotenv').config();
 
 const app = express();

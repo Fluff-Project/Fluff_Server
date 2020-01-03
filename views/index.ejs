@@ -21,11 +21,11 @@
     var socket = io();
     $('form').submit(function(e){
       e.preventDefault(); // prevents page reloading
-      socket.emit('send', $('#m').val());
+      socket.to('1').emit('bid', $('#m').val());
       $('#m').val('');
       return false;
     });
-    socket.on('send', function(msg){
+    socket.on('bid', function(msg){
       console.log(msg);
       $('#messages').append($('<li>').text(msg));
     });
