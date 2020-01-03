@@ -143,4 +143,9 @@ docker를 이용한 멀티 컨테이너 배포로 배포의 효율성을 늘리�
 
 &nbsp;
 
+## Database Modeling
+
+<div align="center" style="display:flex;">
+	<img src="./readmeImg/MongoDB.jpg" width="80%"/>
+</div>
 
