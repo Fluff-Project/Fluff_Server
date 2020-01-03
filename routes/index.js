@@ -22,9 +22,8 @@ router.post('/', async (req, res) => {
   console.log(result);
 });
 
-// test
-// app.get('/test', function(req, res){
-//   res.sendFile(__dirname + '/index.html');
-// });
+router.get('/test', (req, res) => {
+  res.render('index');
+});
 
 module.exports = router;

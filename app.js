@@ -6,6 +6,8 @@ const logger = require('morgan');
 const redis = require('redis');
 const connect = require('./models/mongoConnect');
 
+
+
 require('dotenv').config();
 
 const app = express();
@@ -16,6 +18,10 @@ app.use(function(req,res,next){
   req.cache = client;
   next();
 })
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
 
 connect();
 

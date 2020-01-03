@@ -1,11 +1,14 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 const authMiddleware = require('../../middleware/authMiddleware');
+const auctionController = require('../../controllers/auction/auctionController');
 const app = require('../../app');
 
 router.get('/', (req, res) => {
   res.send('/auction')
 })
+
+router.post('/:id/bid', auctionController.bid);
 
 // router.get('/', authMiddleware, )
 router.get('/test', (req, res) => {

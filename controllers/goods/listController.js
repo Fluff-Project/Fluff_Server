@@ -42,10 +42,9 @@ exports.category = async (req, res) => {
 
     let result = [];
     for (good of goods) {
-
       let isExist = (like.indexOf(good._id)!== -1)
       let obj = {
-        img: good.img,
+        mainImg: good.img[0],
         price: good.price,
         _id: good._id.toString(),
         goodsName: good.goodsName,

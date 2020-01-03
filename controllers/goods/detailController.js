@@ -14,8 +14,8 @@ exports.goodsDetail = async (req, res) => {
     console.log(`goodId: ${goodsId}`);
 
     const goodsDetail = await Goods.findById(goodsId)
-      .select('_id mainImg img size condition comment grade sellerId');
-    console.log(`goodDetail: ${goodsDetail}`);
+      .select('_id img size condition comment grade sellerId');
+    console.log(`goodsDetail: ${goodsDetail}`);
 
     res.json({
       code: sc.OK,
@@ -40,20 +40,33 @@ exports.sellerDetail = async (req, res) => {
     const sellerGoods = await Goods.find()
       .where('sellerId').equals(sellerId)
       .sort('createdAt')
-      .select('_id goodsName mainImg price')
+      .select('_id goodsName img price')
       .limit(5);
-    console.log(sellerGoods,sellerId)
+
     if (!sellerGoods) {
       console.log(`존재하지 않는 판매자 입니다.`);
       res.json({
         code: sc.BAD_REQUEST,
-        json: au.successTrue(rm.NO_X(`판매자의 다른 상품`), sellerGoods)
+        json: au.successFalse(rm.NO_X(`판매자의 다른 상품`))
       });
     }
 
+    let result = []
+    sellerGoods.forEach((element) => {
+      const obj = {
+        _id: element._id,
+        goodsName: element.goodsName,
+        mainImg: element.img[0],
+        price: element.price
+      }
+      result.push(obj)
+    })
+    
+    console.log(`result: ${result}`);
+
     res.json({
       code: sc.OK,
-      json: au.successTrue(rm.ALREADY_X(`판매자의 다른 상품`), sellerGoods)
+      json: au.successTrue(rm.ALREADY_X(`판매자의 다른 상품`), result)
     });
     
   } catch (err) {

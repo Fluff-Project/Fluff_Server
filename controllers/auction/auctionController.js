@@ -106,17 +106,9 @@ exports.auctionList = async (req, res) => {
   }
 };
 
-/*
-  
-  GET /auction/:id
-*/
-/*
-  POST /auction/:id/bid
-*/
-
 /**
  * @author ooeunz
- * @see GET auction/:id/bid
+ * @see POST auction/:id/bid
  * 
  * @param bid $obj: bid, msg
  * @param id $auction room id
@@ -126,6 +118,13 @@ exports.bid = async (req, res) => {
     const { id } = req.params;
     const { bid } = req.body;
     const io = req.app.get('io');
+
+    console.log(`id: ${id}`);
+    console.log(`bid: ${bid}`);
+
+    io.to(String(id)).emit('bid', bid);
+    
+    
 
     // if (!id) {
     //   console.log(`경매 상품 요청 파라미터 값이 잘못되었습니다.`);
@@ -184,9 +183,11 @@ exports.bid = async (req, res) => {
     // auction.bid.push(bidObj);
     // const result = await auction.update();
 
-    console.log(`입찰이 완료되었습니다.`);
-    io.to(id).emit('bid', bid);
-    console.log(result);
+    // console.log(`입찰이 완료되었습니다.`);
+    // io.to(id).emit('bid', bid);
+    // console.log(result);
+
+    
     
   } catch(err) {
     console.log(`입찰 서버 내부 오류`);
