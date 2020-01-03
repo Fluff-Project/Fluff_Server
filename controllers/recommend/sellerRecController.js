@@ -32,7 +32,7 @@ exports.sellerRec = async (req, res) => {
 
       let goods = await Goods.findOne()
         .where('sellerId').equals(seller[idx]._id)
-        .select('img');
+        .select('img'); 
 
       let obj = {
         sellerId: seller[idx]._id,
