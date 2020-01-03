@@ -11,6 +11,6 @@ router.get('/', (req, res) => {
 router.post('/:auctionId/bid', authMiddleware, auctionController.bid);
 router.get('/auctionList', authMiddleware, auctionController.auctionList);
 
-
+router.post('/register',  authMiddleware, auctionController.register);
 
 module.exports = router;
