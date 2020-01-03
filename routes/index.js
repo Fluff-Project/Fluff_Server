@@ -23,14 +23,8 @@ router.post('/', async (req, res) => {
 });
 
 // test
-router.get('/test', async (req, res) => {
-
-  let order = new Order();
-  order.orderName = 'abcdefg';
-  const result = await order.save();
-
-  console.log(result);
-  res.json(result);
-});
+// app.get('/test', function(req, res){
+//   res.sendFile(__dirname + '/index.html');
+// });
 
 module.exports = router;
