@@ -15,19 +15,37 @@ const { au, sc, rm } = require('../../modules/utils');
  * @param comment $판매자 한줄 평
  * @param condition $상품 상태
 */
-exports.regist = async (req, res) => {  // img는 multer로
+
+exports.register = async (req, res) => {  // img는 multer로
+  let sellerName = req.decoded._id;
+  //let files = req.files;
+  //let imageArr = files.map(it => it.location);
+  const id = req.decoded._id;
   try {
-    // 어느정도 동안 경매하고 싶은 지 period 넣어서 경매 인가 했을 때 경매 인가된 시간+period = deadline.
-    // body 받아올 때 p 까지... (채린언니한테 받기.)
-    const { auctionName, img, color, category, hashtag, size, startCost, comment, condition, style } = req.body;
-    const auction = new Auction({ auctionName, img, color, category, hashtag, size, startCost, comment, condition, style });
+    const { auctionName, color,  size, startCost, comment, condition, style , period } = req.body;
+    let auction = new Auction({ 
+      auctionName: auctionName,
+      // img: imageArr,
+      color: color, 
+      sellerName: sellerName,
+      size: size,
+      startCost: startCost,
+      comment: comment,
+      condition: condition,
+      style: style,
+      sellerId: id,
+      // restTime:'2019-01-02',
+      // authTime:'2019-91-30',
+      period: period,
+      saleAuth : true,
+    });
     auction.save();
     console.log(`경매 등록완료`);
+    console.log(auction);
     res.json({
       code: sc.OK,
       json: au.successTrue(rm.X_CREATE_SUCCESS(`경매`), auction)
     })
-    
   } catch (err) {
     console.log(`경매 등록실패`);
     res.json({
@@ -36,6 +54,27 @@ exports.regist = async (req, res) => {  // img는 multer로
     });
   }
 };
+// exports.regist = async (req, res) => {  // img는 multer로
+//   try {
+//     // 어느정도 동안 경매하고 싶은 지 period 넣어서 경매 인가 했을 때 경매 인가된 시간+period = deadline.
+//     // body 받아올 때 p 까지... (채린언니한테 받기.)
+//     const { auctionName, img, color, category, hashtag, size, startCost, comment, condition, style } = req.body;
+//     const auction = new Auction({ auctionName, img, color, category, hashtag, size, startCost, comment, condition, style });
+//     auction.save();
+//     console.log(`경매 등록완료`);
+//     res.json({
+//       code: sc.OK,
+//       json: au.successTrue(rm.X_CREATE_SUCCESS(`경매`), auction)
+//     })
+    
+//   } catch (err) {
+//     console.log(`경매 등록실패`);
+//     res.json({
+//       code: sc.BAD_REQUEST,
+//       json: au.successTrue(rm.X_CREATE_FAIL(`경매`), auction)
+//     });
+//   }
+// };
 
 /**
  * @author ooeunz
@@ -51,7 +90,7 @@ exports.authorize = async (req, res) => {
   try {
     if (auth) {
       auction.authorize = true; 
-      auction.authTime = Date.now(); // 인가 시간 넣기
+      auction.authTime = Date.now() ; // 인가 시간 넣기
 
       console.log(auction.authTime)
       const result = await auction.update();

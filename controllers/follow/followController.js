@@ -36,10 +36,14 @@ exports.followingList = async (req, res) => {
       });
     } else {
       const following = followList.following;
-
+      const result = []
+      for ( var i =0 ; i<following.length;i++){
+        let t = await User.findById(following[i]._id).select('sellerImg username grade style _id');
+        result.push(t)
+      }
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.FOLLOWING_READ_SUCCESS, following)
+        json: au.successTrue(rm.FOLLOWING_READ_SUCCESS, result )
       });
     };
   } catch (err) {

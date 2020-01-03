@@ -8,6 +8,7 @@
 
 let User = require('../../models/User');
 let Order = require('../../models/Order');
+let Goods = require('../../models/Goods');
 ObjectId = require('mongodb').ObjectID;
 const { au, sc, rm } = require('../../modules/utils');
 
@@ -22,7 +23,7 @@ exports.orderList = async (req,res)=>{
       order.orderList.push(orderList[i]);
     };
     const re = await order.save();
-    console.log(re._id)
+
   
     if (order.nModified === 0) { 
       return res.json({
@@ -52,7 +53,7 @@ exports.orderList = async (req,res)=>{
   }
 };
 
-/* e
+/* 
   주문 리스트 조회하기
   GET | order/goodsList
 */
@@ -61,9 +62,8 @@ exports.readOrder = async (req, res)=>{
   const userId = req.decoded._id;
 
   try{
-
-    const orderList = await User.findOne({ _id:userId }).populate('order');
-    console.log(orderList);
+    const orderList = await User.findById(userId).select('order')
+    .populate('cartGoods')
     
     if (orderList.length == 0) { 
       return res.json({
@@ -73,19 +73,19 @@ exports.readOrder = async (req, res)=>{
     } else {
       //  populate 2번써서 오더 id 타고 [] 타고 goods 정보 가져오기.
       // 클라에게 줄 값 : img, 오더 id의 createdAt, sellerName, goodsName, price
-      
-      // const result = [];
-      // console.log(orderList.order[0]._id);
-      // for (var i=0;i< orderList.order.length; i++) {
-      //   var t = await Goods.findById(orderList.order[i]);
-      //   var createdAt = t.createdAt;
-      //   var sellerName = orderList.username;
-      //   var Img = t.mainImg;
-      //   var goodsName = t.goodsName;
-      //   var price = t.price;
-      //   result.push({createdAt,sellerName,Img,goodsName,price});
-      // };
+      const result = [];
+      const r = [];
+      for (var i=0;i< orderList.order.length; i++) {
+        var t= await Order.findById(orderList.order[i])
+        for (var j =0; j< t.orderList.length;j++){
+          r.push(t.orderList[j])
+        }
+      };
+      for (var i=0; i< r.length; i++){
+        var t = await Goods.findById(r[i]._id).select('img sellerName goodsName price')
+        result.push(t)
 
+      }
       res.json({
         code: sc.OK,
         json: au.successTrue(rm.ORDER_READ_SUCCESS,result) 
