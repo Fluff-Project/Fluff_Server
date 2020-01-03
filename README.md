@@ -15,15 +15,15 @@
 
 ## 우리가 모인 이유
 ```
-🗣 목표    슬로우패션 문화를 대중화시키고 빠르게 변하는 세상 속               우리가 잊고 있는 가치를 일깨워준다.
+🗣 목표 슬로우패션 문화를 대중화시키고 빠르게 변하는 세상 속 우리가 잊고 있는 가치를 일깨워준다.
 ```
-#### **목표**
-* 
 
 #### **우리가 모여서 그리는 그림**
-* 우리가 해냄
-* 소통을 중시하고 대화하는 시간을 가질 수 있는 팀
-* 모든 팀원들이 낙오되지 않고 ‘내가 해냈다!’라는 성취감을 가질 수 있는 팀
+```
+🗣 우리가 해냄
+🗣 소통을 중시하고 대화하는 시간을 가질 수 있는 팀
+🗣  모든 팀원들이 낙오되지 않고 ‘내가 해냈다!’라는 성취감을 가질 수 있는 팀
+```
 
 \
 []()
@@ -51,8 +51,13 @@
 \
 \
 []()
-## Microsevice Architecture
-Architure image
+## Architecture
+**Architure image**
+<div align="center" style="display:flex;">
+	<img src="./readmeImg/fluff_architecture.jpeg" width="70%"/>
+</div>
+
+
 
 ### **Link**
 * [Admin Page Link](https://github.com/Fluff-Project/Fluff_Admin)
