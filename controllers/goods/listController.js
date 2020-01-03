@@ -16,7 +16,7 @@ exports.category = async (req, res) => {
     if (category) {
       goods = await Goods.find()
         .where('category').equals(category)
-        .select('img goodsName sellerName price _id')
+        .select('img goodsName sellerName sellerId price _id')
         .limit(Number(page));
 
       console.log(goods);
@@ -25,9 +25,9 @@ exports.category = async (req, res) => {
     if (sort === 'newest') {
       goods = await Goods.find()
         .sort('createAt')
-        .select('img goodsName sellerName price _id')
+        .select('img goodsName sellerName sellerId price _id')
         .limit(Number(page))
-    } else if (sort === 'ole');
+    }
 
     if (!goods) {
       console.log(`${category} 리스트 조회 실패`);
@@ -42,21 +42,19 @@ exports.category = async (req, res) => {
 
     let result = [];
     for (good of goods) {
-
       let isExist = (like.indexOf(good._id)!== -1)
       let obj = {
-        img: good.img,
+        mainImg: good.img[0],
         price: good.price,
         _id: good._id.toString(),
         goodsName: good.goodsName,
-        sellerName: good.sellerName
+        sellerName: good.sellerName,
+        sellerId: good.sellerId
       }
 
-      if (isExist) {
-        obj.like = true;
-      } else {
-        obj.like = false
-      }
+      if (isExist) obj.like = true;
+      else obj.like = false;
+
       result.push(obj)
     }
 

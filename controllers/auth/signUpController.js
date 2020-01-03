@@ -38,6 +38,42 @@ exports.checkEmail = async (req, res) => {
   }
 }
 
+/* 
+  이메일 중복 체크
+  POST /auth/checkUsername
+  {
+    email
+  }
+*/
+exports.checkUsername = async (req, res) => {
+  try {
+    const { username } = req.body;
+    const savedUser = await User.findOne().where('username').equals(username);
+    if (savedUser) {
+      console.log(`${username}는 이미 회원가입한 username입니다.`);
+      res.json({
+        code: sc.OK,
+        json: au.successTrue(rm.DB_DUPLICATE_ENTRY_ERROR, { username, duplication: true })
+      }); // rm is not an error here.
+    }
+
+    console.log(`${username}는 회원가입 가능한 username입니다.`);
+      res.json({
+        code: sc.OK,
+        json: au.successTrue(rm.DB_NOT_MATCHED_ERROR, { username, duplication: false })
+      });
+      
+  } catch (err) {
+    console.log(`username 중복 조회를 실패하였습니다.`);
+    console.log(`Error Code: ${err}`);
+    
+    res.json({
+      code: sc.INTERNAL_SERVER_ERROR,
+      json: au.successFalse(rm.DB_ERROR)
+    });
+  }
+}
+
 /*
   이메일 인증 없이 바로 가입
   POST /auth/directSignUp

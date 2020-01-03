@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { User, Goods, Order } = require('../models');
-
-let Survey = require('../models/Survey')
+const { User, Goods, Auction, Magazine, Survey,  } = require('../models');
 
 
 /* GET home page. */
@@ -22,15 +20,14 @@ router.post('/', async (req, res) => {
   console.log(result);
 });
 
-// test
-router.get('/test', async (req, res) => {
-
-  let order = new Order();
-  order.orderName = 'abcdefg';
-  const result = await order.save();
-
-  console.log(result);
-  res.json(result);
+router.get('/test', (req, res) => {
+  res.render('index');
 });
+
+
+router.get('/export', async (req, res) => {
+  const result = await Auction.find();
+  res.json(result);
+})
 
 module.exports = router;

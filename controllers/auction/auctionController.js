@@ -18,9 +18,10 @@ const { au, sc, rm } = require('../../modules/utils');
 
 exports.register = async (req, res) => {  // img는 multer로
   let sellerName = req.decoded._id;
-  //let files = req.files;
-  //let imageArr = files.map(it => it.location);
+  let files = req.files;
+  let imageArr = files.map(it => it.location);
   const id = req.decoded._id;
+
   try {
     const { auctionName, color,  size, startCost, comment, condition, style , period } = req.body;
     let auction = new Auction({ 
@@ -82,6 +83,7 @@ exports.register = async (req, res) => {  // img는 multer로
  * 
  * @param auth $boolean
 */
+// not use controller in app jam.
 exports.authorize = async (req, res) => {
   const { auth } = req.body;
   const { id } = req.params;
@@ -147,17 +149,9 @@ exports.auctionList = async (req, res) => {
   }
 };
 
-/*
-  
-  GET /auction/:id
-*/
-/*
-  POST /auction/:id/bid
-*/
-
 /**
  * @author ooeunz
- * @see GET auction/:id/bid
+ * @see POST auction/:id/bid
  * 
  * @param bid $obj: bid, msg
  * @param id $auction room id
