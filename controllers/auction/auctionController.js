@@ -127,15 +127,25 @@ exports.auctionList = async (req, res) => {
   try {
     // response
     // let result = await Auction.find().where('saleAuth').equals(true).sort(createdAt);
-    let result = await Auction.find().where('saleAuth').equals(true).sort('createdAt');
+    let auction = await Auction.find().where('saleAuth').equals(true).sort('createdAt')
+      .select('img auctionName bid size condition comment');
 
-    if (!result) {
+    if (!auction) {
       console.log(`경매 상품 리스트가 존재하지 않습니다.`);
       res.json({
         code: sc.FORBIDDEN,
         json: au.successFalse(rm.DB_NOT_MATCHED_ERROR)
       });
     }
+
+    const result = {
+      mainImg: auction.img[0],
+      highCost: auction.bid[-1].bid,
+      size: auction.size,
+      condition: auction.condition,
+      comment: auction.comment
+    }
+
     console.log(`경매 상품 리스트 조회 성공`);
     res.json({
       code: sc.OK,
