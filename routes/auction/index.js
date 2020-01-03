@@ -13,5 +13,5 @@ router.get('/test', (req, res) => {
   app.get('io').to(3).emit('test', bid);
   res.send('success')
 })
-
+router.post('/register',  authMiddleware, auctionController.register);
 module.exports = router;

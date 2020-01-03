@@ -12,7 +12,7 @@ const auctionSchema = new Schema({
 
   color: { type: [String], required: true, unique: false },
 
-  startCost: { type: Number, default: 10000, required: true },
+  startCost: { type: Number, required: true },
 
   size: { type: String, required: true },
 
@@ -26,15 +26,21 @@ const auctionSchema = new Schema({
 
   saleAuth: { type: Boolean, default: false },
 
-  // 마감 시간(남은 시간)
-  deadline: { type: Date, default: true }, 
+  // 경매 종료까지 남은 시간
+  restTime: { type: Date, default: true }, 
 
   // 경매 인가(시작) 시간
   authTime: { type: Date, default: true },
 
+  // 마감 시간
+  deadline: { type: Date },
+
+  // 경매 참가자가 희망하는 시간
+  period : { type: Number , required: true },
+
   bid: [{
       userId: { type: mongoose.Schema.Types.ObjectId, ref:'User'},
-      bid: Number, // default : startCost 로 수정하기
+      bid: { type: Number }, // 처음 가격으로 설정
       createdAt: { type: Date, default: Date.now }
   }],
 
