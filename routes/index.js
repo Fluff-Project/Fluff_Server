@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { User, Goods, Order } = require('../models');
-
-let Survey = require('../models/Survey')
+const { User, Goods, Auction, Magazine, Survey,  } = require('../models');
 
 
 /* GET home page. */
@@ -25,5 +23,11 @@ router.post('/', async (req, res) => {
 router.get('/test', (req, res) => {
   res.render('index');
 });
+
+
+router.get('/export', async (req, res) => {
+  const result = await Auction.find();
+  res.json(result);
+})
 
 module.exports = router;

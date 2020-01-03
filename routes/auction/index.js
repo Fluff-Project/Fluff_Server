@@ -8,8 +8,6 @@ router.get('/', (req, res) => {
   res.send('/auction')
 })
 
-router.post('/:id/bid', authMiddleware, auctionController.bid);
-
 // router.get('/', authMiddleware, )
 router.get('/test', (req, res) => {
   app.get('io').to(3).emit('test', bid);
