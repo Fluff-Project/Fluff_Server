@@ -37,6 +37,8 @@ exports.goodsDetail = async (req, res) => {
 exports.sellerDetail = async (req, res) => {
   try {
     const { sellerId } = req.params;
+    const sellerImg = await User.findById(sellerId);
+    console.log(sellerImg)
     const sellerGoods = await Goods.find()
       .where('sellerId').equals(sellerId)
       .sort('createdAt')

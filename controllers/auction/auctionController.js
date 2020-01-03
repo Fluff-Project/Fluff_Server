@@ -19,6 +19,8 @@ const { au, sc, rm } = require('../../modules/utils');
 // not use controller in app jam.
 exports.regist = async (req, res) => {  // img는 multer로
   try {
+    // 어느정도 동안 경매하고 싶은 지 period 넣어서 경매 인가 했을 때 경매 인가된 시간+period = deadline.
+    // body 받아올 때 p 까지... (채린언니한테 받기.)
     const { auctionName, img, color, category, hashtag, size, startCost, comment, condition, style } = req.body;
     const auction = new Auction({ auctionName, img, color, category, hashtag, size, startCost, comment, condition, style });
     auction.save();
@@ -51,7 +53,10 @@ exports.authorize = async (req, res) => {
 
   try {
     if (auth) {
-      auction.authorize = true;
+      auction.authorize = true; 
+      auction.authTime = Date.now(); // 인가 시간 넣기
+
+      console.log(auction.authTime)
       const result = await auction.update();
       console.log(`경매 상품을 인가하였습니다.`);
       res.json({
@@ -75,17 +80,14 @@ exports.authorize = async (req, res) => {
 };
 
 /* 
+  경매 상품 리스트 조회
   GET auction?sort={정렬방식}
+  sort=deadline : 경매시간이 남지않은 순으로 조회.
 */
 exports.auctionList = async (req, res) => {
   try {
-    const { sort } = req.query;
-    let result;
-    if (sort === deadline) {
-      result = await Auction.find().where('saleAuth').equals(true).sort(createdAt);
-    } else {
-      result = await Auction.find().where('saleAuth').equals(true);
-    }
+    // response
+    let result = await Auction.find().where('saleAuth').equals(true).sort(createdAt);
 
     if (!result) {
       console.log(`경매 상품 리스트가 존재하지 않습니다.`);
@@ -116,123 +118,78 @@ exports.auctionList = async (req, res) => {
  * @param bid $obj: bid, msg
  * @param id $auction room id
 */
-exports.bid = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { bid } = req.body;
-    const io = req.app.get('io');
+// exports.bid = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const { bid } = req.body;
+//     const io = req.app.get('io');
 
+//     // if (!id) {
+//     //   console.log(`경매 상품 요청 파라미터 값이 잘못되었습니다.`);
+//     //   res.json({
+//     //     code: sc.BAD_REQUEST,
+//     //     json: au.successFalse(rm.OUT_OF_VALUE)
+//     //   })
+//     // }
 
-    console.log(`@@@@@@@@@@@@@@@@@@@@@@`);
-    socket.join(id, () => {
-      console.log(`[${req.decoded.username}]님이 [${id}]방으로 입장하셨습니다.`);
-      io.to(id).emit('bid', `[${req.decoded.username}]님이 [${id}]방으로 입장하셨습니다.`);
-    });
+//     // const auction = await Auction.findById(id);
+//     // if (!auction) {
+//     //   console.log(`요청에 일치하는 경매 상품이 없습니다.`);
+//     //   res.json({
+//     //     code: sc.NO_CONTENT,
+//     //     json: au.successFalse(rm.DB_NOT_MATCHED_ERROR)
+//     //   });
+//     // }
 
-    socket.on('bid', (bid) => {
-      console.log(`${bid}원이 입찰되었습니다.`);
-      io.emit('bid', bid);
-    });
+//     // if (new Date(auction.createdAt.valueOf() + (24 * 64 * 64 * 1000)) < new Date()) {
+//     //   console.log(`경매가 이미 종료 되었습니다.`);
+//     //   res.json({
+//     //     code: sc.FORBIDDEN,
+//     //     json: au.successFalse(`경매가 이미 종료 되었습니다.`)
+//     //   });
+//     // }
 
-    // io.socket.join(`${id}`, () => {
-    //   console.log(`[${req.decoded.username}]님이 [${id}]방으로 입장하셨습니다.`);
-    //   io.to(`${id}`).emit('bid', `[${req.decoded.username}]님이 [${id}]방으로 입장하셨습니다.`);
-    // })
-    // console.log(`${req.decoded.username}님 반가워요`);
-    // io.to(`${id}`).emit('bid', `${req.decoded.username}님 반가워요`);
-    // // io.emit('bid', `${req.decoded.username}님 반가워요`);
+//     // if (!bid) {
+//     //   console.log(`입찰 정보가 유효하지 않습니다.`);
+//     //   res.json({
+//     //     code: sc.FORBIDDEN,
+//     //     json: au.successFalse(`입찰 정보가 유효하지 않습니다.`)
+//     //   })
+//     // }
 
-    res.json({
-      code: 200,
-      json: au.successTrue('윤자이 멋쟁이', { bid: bid })
-    })
+//     // if (bid.bid <= auction.startCost) {
+//     //   console.log(`시작 가격보다 높게 입찰해야 합니다.`);
+//     //   res.json({
+//     //     code: sc.FORBIDDEN,
+//     //     json: au.successFalse(`시작 가격보다 높게 입찰해야 합니다.`)
+//     //   });
+//     // }
 
-    if (!id) {
-      console.log(`경매 상품 요청 파라미터 값이 잘못되었습니다.`);
-      res.json({
-        code: sc.BAD_REQUEST,
-        json: au.successFalse(rm.OUT_OF_VALUE)
-      })
-    }
+//     // if (auction.bid[0] && auction.bid[-1] >= bid) {
+//     //   console.log(`이전 입찰가보다 높아야 합니다.`);
+//     //   res.json({
+//     //     code: sc.FORBIDDEN,
+//     //     json: au.successFalse(`이전 입찰가보다 높아야 합니다.`)
+//     //   });
+//     // }
 
-    const auction = await Auction.findById(id);
-    if (!auction) {
-      console.log(`요청에 일치하는 경매 상품이 없습니다.`);
-      res.json({
-        code: sc.NO_CONTENT,
-        json: au.successFalse(rm.DB_NOT_MATCHED_ERROR)
-      });
-    }
+//     // const bidObj = {
+//     //   userId: req.decoded._id,
+//     //   bid: bid.bid,
+//     //   msg: bid.msg
+//     // };
+//     // auction.bid.push(bidObj);
+//     // const result = await auction.update();
 
-    if (new Date(auction.createdAt.valueOf() + (24 * 64 * 64 * 1000)) < new Date()) {
-      console.log(`경매가 이미 종료 되었습니다.`);
-      res.json({
-        code: sc.FORBIDDEN,
-        json: au.successFalse(`경매가 이미 종료 되었습니다.`)
-      });
-    }
-
-    if (!bid) {
-      console.log(`입찰 정보가 유효하지 않습니다.`);
-      res.json({
-        code: sc.FORBIDDEN,
-        json: au.successFalse(`입찰 정보가 유효하지 않습니다.`)
-      })
-    }
-
-    if (bid <= auction.startCost) {
-      console.log(`시작 가격보다 높게 입찰해야 합니다.`);
-      res.json({
-        code: sc.FORBIDDEN,
-        json: au.successFalse(`시작 가격보다 높게 입찰해야 합니다.`)
-      });
-    }
-
-    if (auction.bid[0] && auction.bid[-1] >= bid) {
-      console.log(`이전 입찰가보다 높아야 합니다.`);
-      res.json({
-        code: sc.FORBIDDEN,
-        json: au.successFalse(`이전 입찰가보다 높아야 합니다.`)
-      });
-    }
-
-    const bidObj = {
-      userId: req.decoded._id,
-      bid: bid,
-    };
-    auction.bid.push(bidObj);
-    const result = await auction.update();
-
-
+//     console.log(`입찰이 완료되었습니다.`);
+//     io.to(id).emit('bid', bid);
+//     console.log(result);
     
-  } catch(err) {
-    console.log(`입찰 서버 내부 오류`);
-    console.log(`Error Code: ${err}`);
-    
-    res.json({
-      code: sc.INTERNAL_SERVER_ERROR,
-      json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
-    });
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//   } catch(err) {
+//     console.log(`입찰 서버 내부 오류`);
+//     res.json({
+//       code: sc.INTERNAL_SERVER_ERROR,
+//       json: au.successFalse(rm.INTERNAL_SERVER_ERROR)
+//     });
+//   }
+// }
