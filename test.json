@@ -1,0 +1,15 @@
+{
+  "auctionName": "경매 이름",
+  "sellerName": "판매자 이름",
+  "sellerId": <ObjectId>,
+  "comment": "한줄 평",
+  "color": ["red", "blue"],
+  "startCost": 20000,
+  "size": "xxlg",
+  "condition": 10,
+  "authorize": true,
+  "style": ["simple", "sporty", "pretty"],
+  "img": [
+    "ima uri"
+  ]
+}
