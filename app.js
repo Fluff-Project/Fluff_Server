@@ -17,6 +17,10 @@ app.use(function(req,res,next){
   next();
 })
 
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+app.engine('html', require('ejs').renderFile);
+
 connect();
 
 app.use(logger('dev'));

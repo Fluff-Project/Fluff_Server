@@ -22,15 +22,8 @@ router.post('/', async (req, res) => {
   console.log(result);
 });
 
-// test
-router.get('/test', async (req, res) => {
-
-  let order = new Order();
-  order.orderName = 'abcdefg';
-  const result = await order.save();
-
-  console.log(result);
-  res.json(result);
+router.get('/test', (req, res) => {
+  res.render('index');
 });
 
 module.exports = router;

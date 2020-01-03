@@ -15,6 +15,8 @@ const { au, sc, rm } = require('../../modules/utils');
  * @param comment $판매자 한줄 평
  * @param condition $상품 상태
 */
+
+// not use controller in app jam.
 exports.regist = async (req, res) => {  // img는 multer로
   try {
     // 어느정도 동안 경매하고 싶은 지 period 넣어서 경매 인가 했을 때 경매 인가된 시간+period = deadline.
@@ -43,6 +45,7 @@ exports.regist = async (req, res) => {  // img는 multer로
  * 
  * @param auth $boolean
 */
+// not use controller in app jam.
 exports.authorize = async (req, res) => {
   const { auth } = req.body;
   const { id } = req.params;
@@ -108,17 +111,9 @@ exports.auctionList = async (req, res) => {
   }
 };
 
-/*
-  
-  GET /auction/:id
-*/
-/*
-  POST /auction/:id/bid
-*/
-
 /**
  * @author ooeunz
- * @see GET auction/:id/bid
+ * @see POST auction/:id/bid
  * 
  * @param bid $obj: bid, msg
  * @param id $auction room id

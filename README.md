@@ -1,20 +1,29 @@
 # Fluff
-<img src="./readmeImg/FluffMainLogo.png" width="30%"/>
 
+<div align="center" style="display:flex;">
+	<img src="./readmeImg/FluffMainLogo.png" width="30%"/>
+</div>
+
+<div align="center">
 세상에 옷은 충분합니다. 우리는 버려지는 옷의 숨겨진 가치를 발견하고 그 옷에 새 숨을 불어 넣습니다.
 이것은 시작에 불과합니다. 합리적인 비용으로 더 많은 사람들이 자신만의 유니크한 스타일을 찾고 환경을 보호함으로써 슬로우 패션의 가치를 세상에 퍼트립니다.
 바로 이것이 fluff가 그리는 미래입니다.
+</div>
 
-\
-[]()
+&nbsp;
+&nbsp;
+
 ## 우리가 모인 이유
-#### **목표**
-* 슬로우패션 문화를 대중화시키고 빠르게 변하는 세상 속 우리가 잊고 있는 가치를 일깨워준다.
+```
+🗣 목표 슬로우패션 문화를 대중화시키고 빠르게 변하는 세상 속 우리가 잊고 있는 가치를 일깨워준다.
+```
 
 #### **우리가 모여서 그리는 그림**
-* 우리가 해냄
-* 소통을 중시하고 대화하는 시간을 가질 수 있는 팀
-* 모든 팀원들이 낙오되지 않고 ‘내가 해냈다!’라는 성취감을 가질 수 있는 팀
+```
+🗣 우리가 해냄
+🗣 소통을 중시하고 대화하는 시간을 가질 수 있는 팀
+🗣  모든 팀원들이 낙오되지 않고 ‘내가 해냈다!’라는 성취감을 가질 수 있는 팀
+```
 
 \
 []()
@@ -42,8 +51,13 @@
 \
 \
 []()
-## Microsevice Architecture
-Architure image
+## Architecture
+**Architure image**
+<div align="center" style="display:flex;">
+	<img src="./readmeImg/fluff_architecture.jpeg" width="70%"/>
+</div>
+
+
 
 ### **Link**
 * [Admin Page Link](https://github.com/Fluff-Project/Fluff_Admin)
