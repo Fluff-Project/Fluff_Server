@@ -15,30 +15,39 @@ let Goods = require('../../models/Goods');
 let ObjectId = require('mongodb').ObjectID;
 const { au, sc, rm } = require('../../modules/utils');
 
-// 항상 true일때는 데이터로 반환해주기.(클라 요청)
-// 해당 제품의 id 값만.
 exports.cartAdd = async (req, res) => {
   const userId = req.decoded._id;
-  const   {cartId}  = req.body;
-  
+  const { cartId } = req.body;
+
   try {
     let cartList = await User.findById(userId);
+    
+    // 중복으로 들어가는 거 막기
+    let goodsCheck = await User.findOne( {cart :{_id:cartId}}).where({_id:userId});
   
-    if (cartList.length === 0) {
+    if(goodsCheck){
+      console.log("이미 장바구니에 담긴 상품입니다.")
+      res.json({
+        code: sc.BAD_REQUEST,
+        json: au.successFalse(rm.ITEM_ALREADY_EXIST)
+      });
+    }else{
+      if (cartList.length === 0) {
       return res.json({
         code: sc.BAD_REQUEST,
         json: au.successFalse(rm.DB_CART_INPUT_FALSE)
       });
-    } else {
-      // 일단 객체인 goodsIdList 값을 cart에 넣기
-      cartList.cart.push({_id: ObjectId(cartId)});
+    } else{
+      cartList.cart.push({_id: ObjectId(cartId)})
       cartList.save();
-    
+      
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.DB_CART_INPUT_SUCCESS,cartList.cart) 
+        json: au.successTrue(rm.DB_CART_INPUT_SUCCESS,cartList.cart)
       });
     };
+    }
+    
   } catch (err) {
     console.log(err);
     res.json({
@@ -76,7 +85,6 @@ exports.cartList = async (req, res) => {
       const goodsList = [];
       console.log(c);
 
-      // 이거가 여러개일 때 어떻게 배열로 넣어서 주지? -> shopper/dib도 같은 이슈였음.
       for (var i=0;i< c.length; i++) {
         var user_name = await User.findById(c[i].sellerId);
         var userName = user_name.username;
@@ -123,9 +131,9 @@ exports.cartDelete = async (req, res) => {
         json: au.successFalse(rm.DB_NOT_MATCHED_ERROR)
       });
     }
-    // 여기서 삭제하고 싶다고 요청이 들어온 값만 삭제할 것!!
+  
     const cart = cartList.cart;
-    console.log(cart);
+
     if (cart.length === 0) {
       console.log('장바구니가 비어있음.');
       res.json({
@@ -134,17 +142,17 @@ exports.cartDelete = async (req, res) => {
       });
     } else {
       const count = [];
-      // for문으로 일단 하나씩 뽑아서 array.indexOf(n)=>일치하는 값의 idx 순서 찾아내기. 
+     
       for (id in deleteId) {
         count.push(cart.findIndex(i => i._id == deleteId[id]));
       };
 
-      // count라는 변수에 담아서 array.splice(0,1)
-      for (i in count) {
-        i -= -1;
+      for (var i= count.length-1; i>=0;i--) { 
+        console.log(i);
         cart.splice(count[i], 1);
+        count.slice(count[i]);
       };
-
+     
       if (cartList.nModified === 0) {
         return res.json({
           code: sc.BAD_REQUEST,

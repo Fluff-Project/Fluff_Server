@@ -37,12 +37,14 @@ exports.goodsDetail = async (req, res) => {
 exports.sellerDetail = async (req, res) => {
   try {
     const { sellerId } = req.params;
+    const sellerImg = await User.findById(sellerId);
+    console.log(sellerImg)
     const sellerGoods = await Goods.find()
       .where('sellerId').equals(sellerId)
       .sort('createdAt')
-      .select('_id goodsName mainImg price')
+      .select('_id goodsName mainImg price img')// sellerImg 넣어주기
       .limit(5);
-    console.log(sellerGoods,sellerId)
+    // sellerGoods.push({});
     if (!sellerGoods) {
       console.log(`존재하지 않는 판매자 입니다.`);
       res.json({
