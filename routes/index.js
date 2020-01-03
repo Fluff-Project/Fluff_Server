@@ -24,10 +24,4 @@ router.get('/test', (req, res) => {
   res.render('index');
 });
 
-
-router.get('/export', async (req, res) => {
-  const result = await Auction.find();
-  res.json(result);
-})
-
 module.exports = router;

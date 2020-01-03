@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
 let Goods = require('../../models/Goods');
 let User = require('../../models/User');
-ObjectId = require('mongodb').ObjectID;
+const ObjectId = require('mongodb').ObjectID;
 const { au, sc, rm } = require('../../modules/utils');
 
 /*
@@ -9,13 +8,14 @@ const { au, sc, rm } = require('../../modules/utils');
   GET /goods/:goodsId
 */
 exports.goodsDetail = async (req, res) => {
+  const id = req.decoded._id;
   try {
     const { goodsId } = req.params;
     console.log(`goodId: ${goodsId}`);
 
     const goodsDetail = await Goods.findById(goodsId)
-      .select('_id img size condition comment grade sellerId');
-    console.log(`goodsDetail: ${goodsDetail}`);
+      .select('_id mainImg img size condition comment grade sellerName ')
+      .populate({ path: 'sellerId', select: 'sellerImg'});
 
     res.json({
       code: sc.OK,
@@ -101,7 +101,7 @@ exports.checkLike = async (req, res) => {
       console.log(`존재하지 않는 좋아요 입니다.`);
       res.json({
         code: sc.OK,
-        json: au.successTrue(rm.NO_X(`좋아요`), { goodsId: user._id, like: true })
+        json: au.successTrue(rm.NO_X(`좋아요`), { goodsId: user._id, like: false })
       });
     };
     

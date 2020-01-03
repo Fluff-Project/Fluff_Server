@@ -11,7 +11,7 @@ module.exports = async (server, app) => {
 
     // debug
     console.log(`\n@@@ DEBUG`);
-    console.log(`token: ${token}`);
+    // console.log(`token: ${token}`);
     console.log(`Auction Id : ${auctionId}`);
 
     // const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -47,10 +47,7 @@ module.exports = async (server, app) => {
 
     socket.on('bid', async (bid) => {
       console.log(`${bid}원 입찰 요청이 들어왔습니다.`);
-      const decoded = jwt.verify(token);
-      const result = await auction.checkVaild(auctionId, bid, decoded);
-
-      io.to(auctionId).emit('bid', Number(result));
+      io.to(auctionId).emit('bid', Number(bid));
     });
 
     
