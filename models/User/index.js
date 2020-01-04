@@ -42,7 +42,7 @@ const userSchema = new Schema({
   // 평점
   grade: { type: Number, required: false },
   
-  // 관심사
+  // 관심사 s
   style: { type: [String], required: false },
   
   // 생성 시간
