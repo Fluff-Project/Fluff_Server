@@ -247,21 +247,19 @@ exports.bid = async (req, res) => {
     }
     console.log(`6`);
 
-
     req.app.get('io').to(auctionId).emit('bid', bid);
     console.log(`${bid}원 입찰 완료!!!`);
-    res.json({
-      code: 200,
-      json: au.successTrue(`성공`, { bid: bid })
-    })
-    
+
     auction.bid.push({
       userId: req.decoded._id,
       bid: bid
     })
     const result = await auction.save();
     console.log(`Push bid in database: ${result}`);
-    
+    res.json({
+      code: 200,
+      json: au.successTrue(`성공`, { bid: bid })
+    });
   } catch (err) {
     console.log(`\n입찰가 유효성 체크 중 Error 발생!`);
     console.log(`Error Code: ${err}`);

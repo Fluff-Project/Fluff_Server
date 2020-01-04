@@ -82,7 +82,7 @@
 
 ## :key: Core Tech
 1. **추천 알고리즘**\
-유저의 취향을 바탕으로 **contest based filtering** 추천 알고리즘을 적용하여 유저에게 맞춤형 상품을 제공한다.
+회원가입 초기시 조사한 유저의 취향을 바탕으로 모든 상품에 score를 매겨서  **contest based filtering**을 사용한 추천 알고리즘을 적용하여 유저에게 맞춤형 상품을 제공한다.
 
 <div align="center" style="display:flex;">
 	<img src="./readmeImg/style_rec.png" width="80%"/>
@@ -99,6 +99,9 @@ docker를 이용한 멀티 컨테이너 배포로 배포의 효율성을 늘리�
 
 5. **Mutl Processing**\
 추천 알고리즘과 같은 딥러닝 기반 기능들로 인한 cpu 사용량 증가로 성능저하를 cluster를 사용하여 싱글 스레드인 Node.js의 한계를 multi processing으로 극복하였다.
+
+6. **Redis Cache Memory**\
+Redis를 사용하여서 회원가입 데이터를 가가입 상태로 분리하고, 회원가입시 입력한 이메일로 토큰 값을 포함한 인증 메일을 발송하여, 인증완료시 Database로 회원정보를 저장하여 회원가입 로직을 완료한다.
 
 <div align="center" style="display:flex;">
 	<img src="./readmeImg/cluster.png" width="80%"/>

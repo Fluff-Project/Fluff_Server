@@ -13,7 +13,7 @@ exports.styleRec = async (req, res) => {
 
   try {
     const recList = await contentRecommend(req.decoded, page);
-    console.log(`@@@ ${req.username}님의 추천 목록`);
+    console.log(`@@@ ${req.decoded.username}님의 추천 목록`);
     console.log(recList);
 
     const userLike = await User.findById(req.decoded._id).select('like -_id');

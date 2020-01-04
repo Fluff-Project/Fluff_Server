@@ -2,7 +2,6 @@ let { Goods, User } = require('../../models');
 const { au, sc, rm } = require('../../modules/utils');
 const ObjectId = require('mongodb').ObjectID;
 
-
 /**
  * @author ooeunz
  * @see GET /goods?category=category&page=7
@@ -20,7 +19,7 @@ exports.category = async (req, res) => {
         .select('img goodsName sellerName sellerId price _id')
         .limit(Number(page));
 
-      console.log(goods);
+      // console.log(goods);
       
     };
     if (sort === 'newest') {
@@ -43,12 +42,7 @@ exports.category = async (req, res) => {
 
     let result = [];
     for (good of goods) {
-      console.log(`DEBUG @@@@@@@@@@@@@@@@@@@@@`);
-      const temp = like[0].toString();
-      console.log(`like: ${temp}`);
-      console.log(`goodId: ${good._id}\n`);
-      
-      let isExist = (like.indexOf(ObjectId(good._id))!== -1)
+      // make object
       let obj = {
         mainImg: good.img[0],
         price: good.price,
@@ -58,11 +52,14 @@ exports.category = async (req, res) => {
         sellerId: good.sellerId
       }
 
-      if (isExist) obj.like = true;
-      else obj.like = false;
-
+      for (li of like) {
+        if (String(li._id) === String(good._id)) {
+          obj.like = true;
+        } else {
+          obj.like = false;
+        }
+      }
       console.log(obj);
-
       result.push(obj)
     }
 
