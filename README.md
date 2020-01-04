@@ -97,11 +97,12 @@ docker를 이용한 멀티 컨테이너 배포로 배포의 효율성을 늘리�
 4. **이미지 리사이징 서버**\
 쇼핑몰 특성상 이미지 업로드 양이 많기 때문에 AWS의 대표적인 serverless 서비스인 Lambda를 이용하여 이미지 리사이징 기능을 추가하였다.
 
-5. **Mutl Processing**\
-추천 알고리즘과 같은 딥러닝 기반 기능들로 인한 cpu 사용량 증가로 성능저하를 cluster를 사용하여 싱글 스레드인 Node.js의 한계를 multi processing으로 극복하였다.
-
-6. **Redis Cache Memory**\
+5. **Redis Cache Memory**\
 Redis를 사용하여서 회원가입 데이터를 가가입 상태로 분리하고, 회원가입시 입력한 이메일로 토큰 값을 포함한 인증 메일을 발송하여, 인증완료시 Database로 회원정보를 저장하여 회원가입 로직을 완료한다.
+
+6. **Mutl Processing**\
+추천 알고리즘과 같은 딥러닝 기반 기능들로 인한, cpu의 부하를 cluster의 multi processing을 이용하여 Node.js의 싱글스레드의 효율성을 극대화한다.
+
 
 <div align="center" style="display:flex;">
 	<img src="./readmeImg/cluster.png" width="80%"/>
