@@ -48,9 +48,6 @@ exports.category = async (req, res) => {
       console.log(`like: ${temp}`);
       console.log(`goodId: ${good._id}\n`);
       
-      
-      
-
       let isExist = (like.indexOf(ObjectId(good._id))!== -1)
       let obj = {
         mainImg: good.img[0],

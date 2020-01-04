@@ -127,10 +127,10 @@ exports.auctionList = async (req, res) => {
   try {
     // response
     // let result = await Auction.find().where('saleAuth').equals(true).sort(createdAt);
-    let auction = await Auction.find().where('saleAuth').equals(true).sort('createdAt')
+    let auctions = await Auction.find().where('saleAuth').equals(true).sort('createdAt')
       .select('img auctionName bid size condition comment');
 
-    if (!auction) {
+    if (!auctions) {
       console.log(`경매 상품 리스트가 존재하지 않습니다.`);
       res.json({
         code: sc.FORBIDDEN,
@@ -138,12 +138,22 @@ exports.auctionList = async (req, res) => {
       });
     }
 
-    const result = {
-      mainImg: auction.img[0],
-      highCost: auction.bid[-1].bid,
-      size: auction.size,
-      condition: auction.condition,
-      comment: auction.comment
+    let result = [];
+    for (idx in auctions) {
+      // console.log(auctions[idx]);
+      
+      const obj = {
+        mainImg: auctions[idx].img[0],
+        auctionName: auctions[idx].auctionName,
+        bid: auctions[idx].bid[auctions[idx].bid.length-1].bid,
+        _id: auctions[idx]._id,
+        size: auctions[idx].size,
+        condition: auctions[idx].condition,
+        comment: auctions[idx].comment
+      };
+      console.log(obj);
+      
+      result.push(obj);
     }
 
     console.log(`경매 상품 리스트 조회 성공`);
