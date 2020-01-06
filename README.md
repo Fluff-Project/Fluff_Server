@@ -38,42 +38,48 @@
 ## ⚙️ Dependencies
 ```json
 "dependencies": {
-    "aws-sdk": "^2.596.0",
     "content-based-recommender": "^1.4.0",
-    "cookie-parser": "~1.4.4",
-    "debug": "~2.6.9",
-    "dotenv": "^8.2.0",
-    "ejs": "^3.0.1",
-    "express": "~4.16.1",
-    "http-errors": "^1.7.3",
-    "jade": "~1.11.0",
-    "jsonwebtoken": "^8.5.1",
-    "moment": "^2.24.0",
     "mongoose": "^5.8.3",
-    "morgan": "^1.9.1",
     "multer": "^1.4.2",
     "multer-s3": "^2.9.0",
-    "mysql2": "^2.0.2",
-    "nodemailer": "^6.4.2",
-    "passport": "^0.4.1",
-    "path": "^0.12.7",
-    "rand-token": "^0.4.0",
-    "redis": "^2.8.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.5",
-    "sequelize": "^5.21.3",
-    "socket.io": "^2.3.0",
-    "sse": "0.0.8"
   }
 ```
-&nbsp;
+> content-based-filtering을 빠른 시간내에 구현할 수 있는 content-based-recommender 모듈을 사용하여 추천 알고리즘을 적용하였고, 그 외에 관련된 정보들을 데이터베이스에 일관성있게 저장 하였다.
+
+\
+[]()
+```json
+"dependencies": {
+    "dotenv": "^8.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.4.2",
+    "passport": "^0.4.1",
+    "rand-token": "^0.4.0",
+    "redis": "^2.8.0",
+    "sequelize": "^5.21.3",
+  }
+```
+> dotenv를 이용해 내부적으로 security key를 통합적으로 관리하였고, redis 메모리를 이용한 데이터 임시 저장, 마지막으로 JWT를 이용해서 회원인증과 같은 보안에 신경을 썼다.
+
+\
+[]()
+```json
+"dependencies": {
+    "socket.io": "^2.3.0",
+    "sse": "0.0.8",
+    "moment": "^2.24.0",
+  }
+```
+> 실시간 경매 기능을 위항 양방향 통신인 socket.io를 이용하여 실시간으로 경매 참여자들이 최고가를 알림 받을 수 있도록 하였다. 또한 단방향 통신 server send event를 사용하여 서버에서 실시간으로 클라이언트에게 현재 시간을 전송함으로써 클라이언트에서 시간을 조작하여 불적합한 경로로 경매에 참여하는 것을 방지하였다.
+
+\
+[]()
 
 ---
 
-&nbsp;
-
-&nbsp;
-
+\
+\
+[]()
 ## :triangular_ruler: Architecture
 > Microservices Architecture
 <div align="center" style="display:flex;">
