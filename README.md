@@ -6,13 +6,17 @@
 
 <div align="center">
 
-세상에 옷은 충분합니다. 
+세상에 옷은 충분합니다.
 
-우리는 버려지는 옷의 숨겨진 가치를 발견하고 그 옷에 새 숨을 불어 넣습니다.
+
+우리는 버려지는 옷의 숨겨진 가치를 발견하고 그 옷에 새 숨을 불어넣습니다.
+
 
 이것은 시작에 불과합니다.
 
-합리적인 비용으로 더 많은 사람들이 자신만의 유니크한 스타일을 찾고 
+
+합리적인 비용으로 더 많은 사람들이 자신만의 유니크한 스타일을 찾고
+
 
 환경을 보호함으로써 슬로우 패션의 가치를 세상에 퍼트립니다.
 
@@ -20,13 +24,15 @@
 바로 이것이 fluff가 그리는 미래입니다.
 </div>
 
----
+\
+[]()
 
+---
 \
 \
 []()
-## 우리가 일하는 방식
-:bookmark:[Fluff Notin Link]( https://www.notion.so/74c4e53d65ff4312be05f55a601a8a95)
+## :bookmark:우리가 일하는 방식
+- [Fluff Notin Link]( https://www.notion.so/74c4e53d65ff4312be05f55a601a8a95)
 
 \
 []()
@@ -133,9 +139,10 @@
 &nbsp;
 ## :open_file_folder: Database Modeling
 
-| RDB | NoSQL |
+| NoSQL | RDB |
 |:---:|:---:|
 |<img src="./readmeImg/MongoDB.jpg" width="50%"/>|<img src="./readmeImg/ERD.jpeg" width="100%"/>|
+> 현재는 NoSQL을 사용하여 개발하였지만, 추후에 RDB로 변경할 여지가 있다.
 \
 []()
 
@@ -155,6 +162,7 @@
 []()
 
 ---
+\
 \
 []()
 ## :link: **Repository Link**
