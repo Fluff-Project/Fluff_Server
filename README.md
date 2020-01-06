@@ -69,8 +69,14 @@
     "sse": "0.0.8"
   }
 ```
----
 &nbsp;
+
+---
+
+&nbsp;
+
+&nbsp;
+
 ## :triangular_ruler: Architecture
 > Microservices Architecture
 <div align="center" style="display:flex;">
@@ -81,41 +87,48 @@
 &nbsp;
 
 ## :key: Core Tech
-1. **추천 알고리즘**\
-회원가입 초기시 조사한 유저의 취향을 바탕으로 모든 상품에 score를 매겨서  **contest based filtering**을 사용한 추천 알고리즘을 적용하여 유저에게 맞춤형 상품을 제공한다.
+**추천 알고리즘**
+> 회원가입 초기시 조사한 유저의 취향을 바탕으로 모든 상품에 score를 매겨서  **contest based filtering**을 사용한 추천 알고리즘을 적용하여 유저에게 맞춤형 상품을 제공한다.
 
 <div align="center" style="display:flex;">
 	<img src="./readmeImg/style_rec.png" width="80%"/>
 </div>
+&nbsp;
 
-2. **경매**\
-socket을 이용하여 **실시간으로 경매에 참여할 수 있다.** 또한 server sent event로 클라이언트에게 1초에 한번씩 실시간으로 경매 마감시간을 전송함으로써 클라이언트에서 시간을 변경하여 서버에 접근하는 보안 사고를 사전에 차단하였다.
+**경매**
+> socket을 이용하여 **실시간으로 경매에 참여할 수 있다.** 또한 server sent event로 클라이언트에게 1초에 한번씩 실시간으로 경매 마감시간을 전송함으로써 클라이언트에서 시간을 변경하여 서버에 접근하는 보안 사고를 사전에 차단하였다.
+&nbsp;
 
-3. **멀티 컨테이너**
-docker를 이용한 멀티 컨테이너 배포로 배포의 효율성을 늘리고, 마이크로 서비스들을 내부 통신망으로 묶어 아키텍처 관리를 하였다.
+**멀티 컨테이너**
+> docker를 이용한 멀티 컨테이너 배포로 배포의 효율성을 늘리고, 마이크로 서비스들을 내부 통신망으로 묶어 아키텍처 관리를 하였다.
+&nbsp;
 
-4. **이미지 리사이징 서버**\
-쇼핑몰 특성상 이미지 업로드 양이 많기 때문에 AWS의 대표적인 serverless 서비스인 Lambda를 이용하여 이미지 리사이징 기능을 추가하였다.
+**이미지 리사이징 서버**
+> 쇼핑몰 특성상 이미지 업로드 양이 많기 때문에 AWS의 대표적인 serverless 서비스인 Lambda를 이용하여 이미지 리사이징 기능을 추가하였다.
 
-5. **Redis Cache Memory**\
-Redis를 사용하여서 회원가입 데이터를 가가입 상태로 분리하고, 회원가입시 입력한 이메일로 토큰 값을 포함한 인증 메일을 발송하여, 인증완료시 Database로 회원정보를 저장하여 회원가입 로직을 완료한다.
+**Redis Cache Memory**
+&nbsp;Redis를 사용하여서 회원가입 데이터를 가가입 상태로 분리하고, 회원가입시 입력한 이메일로 토큰 값을 포함한 인증 메일을 발송하여, 인증완료시 Database로 회원정보를 저장하여 회원가입 로직을 완료한다.
+&nbsp;
 
-6. **Mutl Processing**\
-추천 알고리즘과 같은 딥러닝 기반 기능들로 인한, cpu의 부하를 cluster의 multi processing을 이용하여 Node.js의 싱글스레드의 효율성을 극대화한다.
+**Mutl Processing**
+> 추천 알고리즘과 같은 딥러닝 기반 기능들로 인한, cpu의 부하를 cluster의 multi processing을 이용하여 Node.js의 싱글스레드의 효율성을 극대화한다.
 
 
 <div align="center" style="display:flex;">
 	<img src="./readmeImg/cluster.png" width="80%"/>
 </div>
+&nbsp;
 
+---
+&nbsp;
 
 &nbsp;
----
 ## :open_file_folder: Database Modeling
 
-<div align="center" style="display:flex;">
-	<img src="./readmeImg/MongoDB.jpg" width="80%"/>
-</div>
+| RDB | NoSQL |
+|:---:|:---:|:---:|:---:|
+|<img src="./readmeImg/MongoDB.jpg" width="50%"/>|<img src="./readmeImg/ERD.jpeg" width="100%"/>|
+
 
 &nbsp;
 ---

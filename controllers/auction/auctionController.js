@@ -185,28 +185,28 @@ exports.bid = async (req, res) => {
     const { bid } = req.body;
     const { auctionId } = req.params;
 
-    if (!auctionId) {
-      console.log(`경매 상품 요청 파라미터 값이 잘못되었습니다.`);
-      res.json({
-        code: sc.BAD_REQUEST,
-        json: au.successFalse(rm.OUT_OF_VALUE)
-      });
-    }
-    console.log('1');
+    // if (!auctionId) {
+    //   console.log(`경매 상품 요청 파라미터 값이 잘못되었습니다.`);
+    //   res.json({
+    //     code: sc.BAD_REQUEST,
+    //     json: au.successFalse(rm.OUT_OF_VALUE)
+    //   });
+    // }
+    // console.log('1');
     
-    if (!bid) {
-      console.log(`입찰 정보가 유효하지 않습니다.`);
-      res.json({
-        code: sc.FORBIDDEN,
-        json: au.successFalse(`입찰 정보가 유효하지 않습니다.`)
-      })
-    }
-    console.log('2');
+    // if (!bid) {
+    //   console.log(`입찰 정보가 유효하지 않습니다.`);
+    //   res.json({
+    //     code: sc.FORBIDDEN,
+    //     json: au.successFalse(`입찰 정보가 유효하지 않습니다.`)
+    //   })
+    // }
+    // console.log('2');
 
 
-    // basic debug
-    console.log(`[Debug] router-id: ${auctionId}`);
-    console.log(`[Debug] router-bid: ${bid}`);
+    // // basic debug
+    // console.log(`[Debug] router-id: ${auctionId}`);
+    // console.log(`[Debug] router-bid: ${bid}`);
 
     const auction = await Auction.findById(auctionId);
     if (!auction) {
@@ -218,36 +218,35 @@ exports.bid = async (req, res) => {
     }
     console.log('3');
 
+    // if (new Date(auction.createdAt.valueOf() + (24 * 64 * 64 * 1000)) < new Date()) {
+    //   console.log(`경매가 이미 종료 되었습니다.`);
+    //   res.json({
+    //     code: sc.FORBIDDEN,
+    //     json: au.successFalse(`경매가 이미 종료 되었습니다.`)
+    //   });
+    // }
+    // console.log('4');
 
-    if (new Date(auction.createdAt.valueOf() + (24 * 64 * 64 * 1000)) < new Date()) {
-      console.log(`경매가 이미 종료 되었습니다.`);
-      res.json({
-        code: sc.FORBIDDEN,
-        json: au.successFalse(`경매가 이미 종료 되었습니다.`)
-      });
-    }
-    console.log('4');
 
-
-    if (bid <= auction.startCost) {
-      console.log(`시작 가격보다 높게 입찰해야 합니다.`);
-      res.json({
-        code: sc.FORBIDDEN,
-        json: au.successFalse(`시작 가격보다 높게 입찰해야 합니다.`)
-      });
-    } 
-    console.log('5');
+    // if (bid <= auction.startCost) {
+    //   console.log(`시작 가격보다 높게 입찰해야 합니다.`);
+    //   res.json({
+    //     code: sc.FORBIDDEN,
+    //     json: au.successFalse(`시작 가격보다 높게 입찰해야 합니다.`)
+    //   });
+    // } 
+    // console.log('5');
     
-    if (auction.bid[0] && auction.bid[-1] >= bid) {
-      console.log(`이전 입찰가보다 높아야 합니다.`);
-      res.json({
-        code: sc.FORBIDDEN,
-        json: au.successFalse(`이전 입찰가보다 높아야 합니다.`)
-      });
-    }
-    console.log(`6`);
+    // if (auction.bid[0] && auction.bid[-1] >= bid) {
+    //   console.log(`이전 입찰가보다 높아야 합니다.`);
+    //   res.json({
+    //     code: sc.FORBIDDEN,
+    //     json: au.successFalse(`이전 입찰가보다 높아야 합니다.`)
+    //   });
+    // }
+    // console.log(`6`);
 
-    req.app.get('io').to(auctionId).emit('bid', bid);
+    req.app.get('io').to(String(auctionId)).emit('bid', bid);
     console.log(`${bid}원 입찰 완료!!!`);
 
     auction.bid.push({
