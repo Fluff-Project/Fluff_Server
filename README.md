@@ -42,7 +42,7 @@
 \
 []()
 ## 🎬 Usage Video
-* 아래의 이미지 클릭
+* 아래의 이미지 클릭 시 영상으로 
 
 [![Video](./readmeImg/sticker.png)](https://youtu.be/ljDO_WRQLz4)
 
