@@ -30,7 +30,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.5",
     "sequelize": "^5.21.3",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "sse": "0.0.8"
   }
 }
